@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2020 at 08:35 PM
+-- Generation Time: Feb 18, 2020 at 09:49 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -43,8 +44,8 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `name`, `email`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin Demo', 'admin@demo.com', '$2y$10$0yJS.nQUWWHTkqaUqgSn.u/5tUoehI7H4KFxyhAdGPC1V5/IXxiqa', NULL, NULL, '2020-02-10 14:04:52', '2020-02-10 14:04:52');
+INSERT INTO `admins` (`id`, `unqId`, `name`, `email`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, '26cf3c9f', 'Admin Demo', 'admin@demo.com', '$2y$10$F8JG1jGZsg3SoKWDLQPBE.qyOpR4POAXxLstrfm8JInAN7jSHVVge', NULL, NULL, '2020-02-18 14:21:03', '2020-02-18 14:21:03');
 
 -- --------------------------------------------------------
 
@@ -54,6 +55,7 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `deleted_at`, `remember
 
 CREATE TABLE `clinic_admins` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -67,8 +69,8 @@ CREATE TABLE `clinic_admins` (
 -- Dumping data for table `clinic_admins`
 --
 
-INSERT INTO `clinic_admins` (`id`, `name`, `email`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Clinic Demo', 'clinic@demo.com', '$2y$10$9ZtD1B8iEAqvjM5I1ioLQukwQvX7XJadMRI1P03sVs6TKvZp0gvRm', NULL, NULL, '2020-02-10 14:04:52', '2020-02-10 14:04:52');
+INSERT INTO `clinic_admins` (`id`, `unqId`, `name`, `email`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'd8fed580', 'Clinic Demo', 'clinic@demo.com', '$2y$10$9Gt6Kox2tV9wXSMC/CDMu.UatwAOkmQjOildIogKvraNyMoUM3d0.', NULL, NULL, '2020-02-18 14:21:03', '2020-02-18 14:21:03');
 
 -- --------------------------------------------------------
 
@@ -87,10 +89,12 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2020_02_10_153636_create_admins_table', 1),
-(4, '2020_02_10_154025_create_clinic_admins_table', 1);
+(19, '2014_10_12_000000_create_users_table', 1),
+(20, '2014_10_12_100000_create_password_resets_table', 1),
+(21, '2020_02_10_153636_create_admins_table', 1),
+(22, '2020_02_10_154025_create_clinic_admins_table', 1),
+(23, '2020_02_18_162807_create_products_table', 1),
+(24, '2020_02_18_163241_create_product_images_table', 1);
 
 -- --------------------------------------------------------
 
@@ -107,11 +111,53 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdByAdminId` bigint(20) UNSIGNED NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remarks` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stockQuantity` int(11) NOT NULL DEFAULT '0',
+  `stockStatus` enum('in_stock','out_of_stock') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'in_stock',
+  `regularPrice` decimal(6,2) NOT NULL,
+  `sellingPrice` decimal(6,2) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_images`
+--
+
+CREATE TABLE `product_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `productId` bigint(20) UNSIGNED NOT NULL,
+  `originalImagePath` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `smallImagePath` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mediumImagePath` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `largeImagePath` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
@@ -126,8 +172,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'User Demo', 'user@demo.com', NULL, '$2y$10$pvSMvpwQvcj05AA4L1kpQe8xfqHcLbfr5WDQ1N4..Gfn6z0MiPlfe', NULL, NULL, '2020-02-10 14:04:52', '2020-02-10 14:04:52');
+INSERT INTO `users` (`id`, `unqId`, `name`, `email`, `email_verified_at`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'e9664885', 'User Demo', 'user@demo.com', NULL, '$2y$10$bSZoSNnrkp/eqDbnSdNI7eIRX0OqT4wOpHqAK1VidERVBA7vGQL6a', NULL, NULL, '2020-02-18 14:21:03', '2020-02-18 14:21:03');
 
 --
 -- Indexes for dumped tables
@@ -138,14 +184,16 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `de
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `admins_email_unique` (`email`);
+  ADD UNIQUE KEY `admins_email_unique` (`email`),
+  ADD KEY `admins_unqid_index` (`unqId`);
 
 --
 -- Indexes for table `clinic_admins`
 --
 ALTER TABLE `clinic_admins`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `clinic_admins_email_unique` (`email`);
+  ADD UNIQUE KEY `clinic_admins_email_unique` (`email`),
+  ADD KEY `clinic_admins_unqid_index` (`unqId`);
 
 --
 -- Indexes for table `migrations`
@@ -160,11 +208,28 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `products_slug_unique` (`slug`),
+  ADD KEY `products_unqid_index` (`unqId`),
+  ADD KEY `products_createdbyadminid_foreign` (`createdByAdminId`);
+
+--
+-- Indexes for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_images_productid_foreign` (`productId`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD KEY `users_unqid_index` (`unqId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -186,13 +251,41 @@ ALTER TABLE `clinic_admins`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_images`
+--
+ALTER TABLE `product_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_createdbyadminid_foreign` FOREIGN KEY (`createdByAdminId`) REFERENCES `admins` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD CONSTRAINT `product_images_productid_foreign` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

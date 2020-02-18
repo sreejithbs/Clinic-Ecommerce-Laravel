@@ -15,6 +15,7 @@ class CreateClinicAdminstable extends Migration
     {
         Schema::create('clinic_admins', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('unqId')->index();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
