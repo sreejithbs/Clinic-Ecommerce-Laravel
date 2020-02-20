@@ -17,9 +17,7 @@ Route::get('/clear', function(){
 	Artisan::call('config:cache');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Auth\LoginController@showAdminLoginForm')->name('home');
 
 Auth::routes();
 
