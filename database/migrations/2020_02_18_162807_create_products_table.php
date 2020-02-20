@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->text('title');
             $table->string('slug')->unique();
             $table->longText('description');
-            $table->text('remarks');
+            $table->text('remarks')->nullable();
             $table->integer('stockQuantity')->default(0);
             $table->enum('stockStatus', ['in_stock', 'out_of_stock'])->default('in_stock');
             $table->decimal('regularPrice', 6, 2);

@@ -11,13 +11,13 @@
             <li class="navigation-header">
                 <span data-i18n="nav.category.ui">Inventory Management</span>
             </li>
-            <li class="nav-item">
+            <li class="nav-item open">
                 <a href="javascript:void(0);"><i class="la la-list"></i>
                     <span class="menu-title">Products</span>
                 </a>
                 <ul class="menu-content">
                     <li>
-                        <a class="menu-item" href="card-bootstrap.html">Add New Product</a>
+                        <a class="menu-item" href="{{ route('admin_poduct_create') }}">Add New Product</a>
                     </li>
                 </ul>
             </li>

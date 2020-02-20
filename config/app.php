@@ -226,6 +226,13 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * My Custom Aliases...
+         */
+        'StringHelper' => App\Helpers\StringHelper::class,
+        'ArrayHelper' => App\Helpers\ArrayHelper::class,
+        'MiscHelper' => App\Helpers\MiscHelper::class,
+
     ],
 
 ];

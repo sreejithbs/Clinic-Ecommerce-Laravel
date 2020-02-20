@@ -37,6 +37,9 @@ Route::prefix('admin')->group(function () {
 	Route::post('/register', 'Auth\RegisterController@createAdmin');
 
 	Route::get('/dashboard', 'Admin\DashboardController@index')->name('admin_dashboard');
+
+	Route::get('/product/create', 'Admin\ProductController@create')->name('admin_poduct_create');
+	Route::post('/product/create', 'Admin\ProductController@store')->name('admin_poduct_store');
 });
 
 

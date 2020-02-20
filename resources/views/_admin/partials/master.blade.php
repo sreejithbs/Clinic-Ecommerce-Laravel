@@ -36,7 +36,9 @@
 				</div>
 				<div class="content-header-right col-md-6 col-12">
 					<div class="dropdown float-md-right">
-						<button class="btn btn-info round btn-glow px-2" type="button">Back to Home</button>
+						<a href="{{ route('admin_dashboard') }}" class="btn btn-info round btn-glow px-2">
+						    <i class="la la-home"></i> Home
+						</a>
 					</div>
 				</div>
 			</div>

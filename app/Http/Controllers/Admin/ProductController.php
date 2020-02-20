@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Admin\Product;
+use App\Models\Admin\ProductImage;
+use Auth;
+use File;
+use StringHelper;
 
 class ProductController extends Controller
 {
@@ -15,6 +20,8 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
+        $this->abs_upload_path = public_path('/uploads/products');
+        $this->rel_upload_path = '/uploads/products/';
     }
 
     const PRODUCT_CREATE = 'Product has been added successfully';
@@ -36,7 +43,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('_admin.product_create');
     }
 
     /**
@@ -47,7 +54,51 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, [
+            'product_title' => 'required',
+            'product_desc' => 'required',
+            'remarks' => 'required',
+            'product_imgs.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'stock_qty' => 'required',
+            'regular_price' => 'required',
+            'selling_price' => 'required',
+        ]);
+
+        $product = new Product();
+        $product->createdByAdminId = Auth::guard('admin')->user()->id;
+        $product->title = $request->product_title;
+        $product->description = $request->product_desc;
+        $product->remarks = $request->remarks;
+        $product->stockQuantity = $request->stock_qty;
+        $product->regularPrice = $request->regular_price;
+        $product->sellingPrice = $request->selling_price;
+        if($request->stock_qty == 0){
+            $product->stockStatus = 'out_of_stock';
+        }
+
+        if($product->save() && $request->hasFile('product_imgs')){
+            if (!is_dir($this->abs_upload_path)) {
+                File::makeDirectory($this->abs_upload_path, 0777, true);
+            }
+            foreach ($request->product_imgs as $key => $singleImg) {
+                $realName = $singleImg->getClientOriginalName();
+                $fileName = pathinfo($realName, PATHINFO_FILENAME);
+                $fileName = StringHelper::uniqueSlugString($fileName);
+                $extension = pathinfo($realName, PATHINFO_EXTENSION);
+
+                $originalImagePath = $fileName.'.'. $extension;
+
+                if($singleImg->move($this->abs_upload_path, $originalImagePath)){           
+                    $product_img = new ProductImage();
+                    $product_img->productId = $product->id;
+                    $product_img->originalImagePath = $this->rel_upload_path . $originalImagePath;
+                    $product_img->save();
+                }
+            }
+        }
+
+        return back()->with('success', static::PRODUCT_CREATE);
     }
 
     /**

@@ -1,4 +1,4 @@
-<!-- jQuery -->
+ jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <!-- Bootstrap -->
@@ -23,5 +23,8 @@
 <!-- Jquery UI -->
 <script src="{{ asset('modern_admin_assets/js/core/libraries/jquery_ui/jquery-ui.min.js') }}" type="text/javascript"></script>
 
+<!-- Parsley -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.js" type="text/javascript"></script>
+
 <!-- SweetAlert -->
-<script src="{{ asset('js/sweetalert2.all.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('modern_admin_assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script>
