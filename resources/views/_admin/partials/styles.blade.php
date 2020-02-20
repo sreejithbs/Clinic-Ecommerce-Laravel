@@ -14,7 +14,7 @@ rel="stylesheet">
 <!-- END MODERN CSS-->
 
 <!-- BEGIN Page Level CSS-->
-<link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/css/core/menu/menu-types/vertical-menu-modern.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/css/core/menu/menu-types/vertical-content-menu.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/css/core/colors/palette-gradient.css')}}">
 <!-- END Page Level CSS-->
 

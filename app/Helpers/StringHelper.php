@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helpers;
+use Illuminate\Support\Facades\Route;
 
 class StringHelper {
 
@@ -38,5 +39,16 @@ class StringHelper {
     public static function uniqueSlugString($str)
     {
         return time() . '-' . str_slug($str, "-");
+    }
+
+    /**
+     * Set css class if the specific URI is current URI
+     *
+     * @param string $path
+     * @return string
+     */
+    public static function setActive(string $route, string $className = "active")
+    {
+        return str_is($route, Route::currentRouteName()) ? $className :  '';
     }
 }

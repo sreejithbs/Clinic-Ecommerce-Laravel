@@ -18,30 +18,31 @@
 	@yield('page_styles')
 
 </head>
-<body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+
+<body class="vertical-layout vertical-content-menu 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-content-menu" data-col="2-columns">
 
 	<!-- NAVBAR -->
 	@include('_admin.partials.navbar')
 
-	<!-- Sidebar-->
-	@include('_admin.partials.sidebar')
-
 	<div class="app-content content">
 		<div class="content-wrapper">
 			<div class="content-header row">
-				<div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-					<h3 class="content-header-title mb-0 d-inline-block">
+				<div class="content-header-left col-md-6 col-12 mb-2">
+					<h3 class="content-header-title">
 						@yield('page_heading')
 					</h3>
 				</div>
 				<div class="content-header-right col-md-6 col-12">
-					<div class="dropdown float-md-right">
+					<div class="float-md-right">
 						<a href="{{ route('admin_dashboard') }}" class="btn btn-info round btn-glow px-2">
 						    <i class="la la-home"></i> Home
 						</a>
 					</div>
 				</div>
 			</div>
+
+			<!-- Sidebar-->
+			@include('_admin.partials.sidebar')
 
 			<div class="content-body">
 

@@ -38,8 +38,8 @@ Route::prefix('admin')->group(function () {
 
 	Route::get('/dashboard', 'Admin\DashboardController@index')->name('admin_dashboard');
 
-	Route::get('/product/create', 'Admin\ProductController@create')->name('admin_poduct_create');
-	Route::post('/product/create', 'Admin\ProductController@store')->name('admin_poduct_store');
+	Route::get('/product/create', 'Admin\ProductController@create')->name('admin_product_create');
+	Route::post('/product/create', 'Admin\ProductController@store')->name('admin_product_store');
 });
 
 
