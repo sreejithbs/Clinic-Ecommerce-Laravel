@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use File;
+use Auth;
+
 use App\Models\Admin\Product;
 use App\Models\Admin\ProductImage;
-use Auth;
-use File;
 use StringHelper;
 
 class ProductController extends Controller
@@ -25,6 +27,7 @@ class ProductController extends Controller
     }
 
     const PRODUCT_CREATE = 'Product has been added successfully';
+    const PRODUCT_DELETE = 'Product has been deleted successfully';
 
     /**
      * Show the application dashboard.
@@ -33,7 +36,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::with('product_images')->latest()->get();
+        return view('_admin.product_listing', compact('products'));
     }
 
     /**
@@ -98,7 +102,7 @@ class ProductController extends Controller
             }
         }
 
-        return back()->with('success', static::PRODUCT_CREATE);
+        return redirect()->route('admin_product_list')->with('success', static::PRODUCT_CREATE);
     }
 
     /**
@@ -141,8 +145,23 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($uuid){
+
+        $product = Product::where('unqId', $uuid)->firstOrFail();
+
+        // Handle Product Images
+        $product_images = $product->product_images()->pluck('originalImagePath');
+        foreach ($product_images as $single) {
+            $img_path = public_path($single);
+            if (is_file($img_path)) {
+                unlink($img_path);
+            }
+        }
+
+        $product_images = $product->product_images()->delete();
+        $product->delete();
+        
+        return back()->with('success', static::PRODUCT_DELETE);
     }
+
 }

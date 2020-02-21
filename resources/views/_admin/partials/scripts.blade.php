@@ -31,4 +31,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.js" type="text/javascript"></script>
 
 <!-- SweetAlert -->
-<script src="{{ asset('modern_admin_assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/sweetalert2.all.min.js') }}" type="text/javascript"></script>
+<!-- <script src="{{ asset('modern_admin_assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script> -->
+
+<script type="text/javascript">
+	
+	// Basic Datatable Initialization
+	$(document).ready(function() {
+		$('.dtTable').DataTable();
+	});
+
+	// SweetAlert in all DELETE BUTTONS
+	$('.delSwal').on('click',function(event){
+		event.preventDefault();
+		swal({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this operation.",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3c9fce',
+			cancelButtonColor: '#e86256',
+			confirmButtonText: 'Yes, delete it',
+			cancelButtonText: 'No, cancel'
+		}).then((result) => {
+			if (result.value) {
+				$(this).closest("form.delSwalForm").submit();
+			}
+		})
+	});
+</script>

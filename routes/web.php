@@ -36,8 +36,10 @@ Route::prefix('admin')->group(function () {
 
 	Route::get('/dashboard', 'Admin\DashboardController@index')->name('admin_dashboard');
 
+	Route::get('/product/all', 'Admin\ProductController@index')->name('admin_product_list');
 	Route::get('/product/create', 'Admin\ProductController@create')->name('admin_product_create');
 	Route::post('/product/create', 'Admin\ProductController@store')->name('admin_product_store');
+	Route::delete('/product/delete/{uuid}', 'Admin\ProductController@destroy')->name('admin_product_delete');
 });
 
 

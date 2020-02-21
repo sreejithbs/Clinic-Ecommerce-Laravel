@@ -37,4 +37,9 @@ class Product extends Model
         return 'slug';
     }
 
+    // Relation
+    public function product_images(){
+        return $this->hasMany(ProductImage::class, 'productId');
+    }
+
 }

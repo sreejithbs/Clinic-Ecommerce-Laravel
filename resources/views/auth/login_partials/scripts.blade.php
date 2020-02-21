@@ -16,9 +16,9 @@
 <!-- TOASTR -->
 <script src="{{ asset('modern_admin_assets/vendors/js/extensions/toastr.min.js') }}" type="text/javascript"></script>
 
+<!-- Parsley -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.js" type="text/javascript"></script>
 
 <!-- SweetAlert -->
 <script src="{{ asset('js/sweetalert2.all.min.js') }}" type="text/javascript"></script>
-
-<!-- Custom JS-->
-<script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
+<!-- <script src="{{ asset('modern_admin_assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script> -->

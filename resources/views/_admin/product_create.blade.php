@@ -1,6 +1,6 @@
 @extends('_admin.partials.master')
-@section('page_title', 'Add New Product | Inner Beauty')
-@section('page_heading', 'Add New Product')
+@section('page_title', 'Add new Product | Inner Beauty')
+@section('page_heading', 'Add new Product')
 
 @section('content')
 

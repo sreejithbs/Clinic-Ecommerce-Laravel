@@ -17,7 +17,11 @@
                 </a>
                 <ul class="menu-content">
                     <li class="{{ \StringHelper::setActive('admin_product_create') }}">
-                        <a class="menu-item" href="{{ route('admin_product_create') }}">Add New Product</a>
+                        <a class="menu-item" href="{{ route('admin_product_create') }}">Add new Product</a>
+                    </li>
+
+                    <li class="{{ \StringHelper::setActive('admin_product_list') }}">
+                        <a class="menu-item" href="{{ route('admin_product_list') }}">List all Products</a>
                     </li>
                 </ul>
             </li>

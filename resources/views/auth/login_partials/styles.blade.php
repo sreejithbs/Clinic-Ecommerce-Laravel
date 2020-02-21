@@ -19,6 +19,3 @@
 
 <!-- TOASTR -->
 <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/extensions/toastr.css') }}">
-
-<!-- BEGIN Custom CSS-->
-<link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
