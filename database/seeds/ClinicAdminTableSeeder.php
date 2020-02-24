@@ -12,10 +12,10 @@ class ClinicAdminTableSeeder extends Seeder
      */
     public function run()
     {
-    	$clinic_admin = new Clinic;
-    	$clinic_admin->name = 'Clinic Demo';
-    	$clinic_admin->email = 'clinic@demo.com';
-    	$clinic_admin->password = bcrypt('clinic@123');
-    	$clinic_admin->save();
+    	Clinic::create([
+            'name' => 'Clinic Demo',
+            'email' => 'clinic@demo.com',
+            'password' => bcrypt('clinic@123')
+        ]);
     }
 }

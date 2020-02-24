@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\UuidTrait;
 
+use App\Models\Admin\ClinicProfile;
+
 class Clinic extends Authenticatable
 {
     use Notifiable;
@@ -36,4 +38,9 @@ class Clinic extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    // Relation
+    public function clinic_profile(){
+        return $this->hasOne(ClinicProfile::class, 'clinicAdminId');
+    }
 }

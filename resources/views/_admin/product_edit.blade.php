@@ -1,6 +1,6 @@
 @extends('_admin.partials.master')
-@section('page_title', 'Add new Product | Inner Beauty')
-@section('page_heading', 'Add new Product')
+@section('page_title', 'Edit Product | Inner Beauty')
+@section('page_heading', 'Edit Product')
 
 @section('content')
 
@@ -16,7 +16,7 @@
                         <!-- <div class="card-text">
                             <p>Info</p>
                         </div> -->
-                        <form method="post" action="{{ route('admin_product_store') }}" enctype="multipart/form-data" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
+                        <form method="post" action="{{ route('admin_product_update', $product->unqId) }}" enctype="multipart/form-data" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
                         	{{ csrf_field() }}
                             <div class="form-body">
                                 <h4 class="form-section">
@@ -25,19 +25,19 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="product_title">Product Title *</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="product_title" class="form-control" placeholder="Product Title" name="product_title" required data-parsley-required-message="Please enter Product Title">
+                                        <input type="text" id="product_title" class="form-control" value="{{ $product->title }}" placeholder="Product Title" name="product_title" required data-parsley-required-message="Please enter Product Title">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                 	<label class="col-md-3 label-control" for="product_desc">Product Description *</label>
                                 	<div class="col-md-9">
-                                	    <textarea id="product_desc" rows="5" class="form-control" name="product_desc" placeholder="Product Description" required data-parsley-required-message="Please enter Product Description"></textarea>
+                                	    <textarea id="product_desc" rows="5" class="form-control" name="product_desc" placeholder="Product Description" required data-parsley-required-message="Please enter Product Description">{{ $product->description }}</textarea>
                                 	</div>
                                 </div>
                                 <div class="form-group row last">
                                 	<label class="col-md-3 label-control" for="remarks">Remarks</label>
                                 	<div class="col-md-9">
-                                	    <textarea id="remarks" rows="5" class="form-control" name="remarks" placeholder="Remarks"></textarea>
+                                	    <textarea id="remarks" rows="5" class="form-control" name="remarks" placeholder="Remarks">{{ $product->remarks }}</textarea>
                                 	</div>
                                 </div>
 
@@ -48,12 +48,21 @@
                                 	<label class="col-md-3 label-control">Select Images *</label>
                                     <div class="col-md-9">
                                     	<div class="controls">
-                                    		<input type="file" name="product_imgs[]" class="form-control" accept="image/*" multiple required data-parsley-required-message="Please select Product Images" onchange="previewThumbnail(this);">
+                                    		<input type="file" name="product_imgs[]" class="form-control" accept="image/*" multiple onchange="previewThumbnail(this);" data-parsley-validate-if-empty="true" data-parsley-required-if=".existingImgs">
                                     		<div class="help-block">
                                     			<small>Only Image files (jpeg, jpg, png, gif) format allowed</small>
                                     		</div>
                                     	</div>
-                                    	<div class="row" id="previewThumbnailDiv"></div>
+
+                                        <div class="row" id="previewThumbnailDiv">
+                                            @foreach($product->product_images as $single)
+                                                <div class="col-md-6" style="margin-top:10px;">
+                                                    <img src="{{ asset($single->originalImagePath) }}" height="200px" width="250px">
+                                                    <i class="ft-trash-2 delImg"></i>
+                                                    <input type="hidden" class="existingImgs" name="existingImgs[]" value="{{ $single->id }}">
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
 
@@ -63,7 +72,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="stock_qty">Stock Quantity *</label>
                                     <div class="col-md-9">
-                                        <input type="number" id="stock_qty" class="form-control" placeholder="Stock Quantity" name="stock_qty" min="0" required data-parsley-required-message="Please enter Stock Quantity">
+                                        <input type="number" id="stock_qty" class="form-control" value="{{ $product->stockQuantity }}" placeholder="Stock Quantity" name="stock_qty" min="0" required data-parsley-required-message="Please enter Stock Quantity">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -73,7 +82,7 @@
                                     		<div class="input-group-prepend">
                                     			<span class="input-group-text">$</span>
                                     		</div>
-                                    		<input type="number" id="regular_price" class="form-control" placeholder="Regular Price" name="regular_price" min="0" step="0.01" required data-parsley-required-message="Please enter Regular Price" data-parsley-errors-container="#reg_div">
+                                    		<input type="number" id="regular_price" class="form-control" value="{{ $product->regularPrice }}" placeholder="Regular Price" name="regular_price" min="0" step="0.01" required data-parsley-required-message="Please enter Regular Price" data-parsley-errors-container="#reg_div">
                                     	</div>
                                         <div id="reg_div"></div>
                                     </div>
@@ -85,7 +94,7 @@
                                     		<div class="input-group-prepend">
                                     			<span class="input-group-text">$</span>
                                     		</div>
-                                    		<input type="number" id="selling_price" class="form-control" placeholder="Selling Price" name="selling_price" min="0" step="0.01" required data-parsley-required-message="Please enter Selling Price" data-parsley-errors-container="#sel_div">
+                                    		<input type="number" id="selling_price" class="form-control" value="{{ $product->sellingPrice }}" placeholder="Selling Price" name="selling_price" min="0" step="0.01" required data-parsley-required-message="Please enter Selling Price" data-parsley-errors-container="#sel_div">
                                     	</div>
                                         <div id="sel_div"></div>
                                     </div>
@@ -97,7 +106,7 @@
                                     <i class="ft-x"></i> Cancel
                                 </button>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="la la-check-square-o"></i> Save
+                                    <i class="la la-check-square-o"></i> Update
                                 </button>
                             </div>
                         </form>
@@ -129,5 +138,28 @@
 			}
 		}
 
+        // Custom Parsley Validator for Image Upload Section
+        window.Parsley.addValidator("requiredIf", {
+            messages: {en: 'Please select atleast one Product Image'},
+            validateString : function(value, requirement) {
+              if (! jQuery(requirement).length){
+                 return !!value;
+              } 
+
+              return true;
+           },
+           priority: 33
+        })
+
+        $(function(){
+            $(".delImg").click(function(){
+                $(this).parent().fadeOut(300, function(){
+                    $(this).remove();
+                });
+            })
+        })
+
 	</script>
 @endpush
+
+

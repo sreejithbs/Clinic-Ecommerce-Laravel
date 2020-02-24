@@ -8,6 +8,8 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\UuidTrait;
 
+use App\Models\Admin\ProductImage;
+
 class Product extends Model
 {
 	use SoftDeletes;  // enable Soft Delete
@@ -25,6 +27,7 @@ class Product extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+            // ->doNotGenerateSlugsOnUpdate();
     }
     
     /**

@@ -27,6 +27,7 @@ class ProductController extends Controller
     }
 
     const PRODUCT_CREATE = 'Product has been added successfully';
+    const PRODUCT_UPDATE = 'Product has been updated successfully';
     const PRODUCT_DELETE = 'Product has been deleted successfully';
 
     /**
@@ -58,11 +59,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'product_title' => 'required',
             'product_desc' => 'required',
-            'remarks' => 'required',
             'product_imgs.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'stock_qty' => 'required',
             'regular_price' => 'required',
@@ -93,7 +92,7 @@ class ProductController extends Controller
 
                 $originalImagePath = $fileName.'.'. $extension;
 
-                if($singleImg->move($this->abs_upload_path, $originalImagePath)){           
+                if($singleImg->move($this->abs_upload_path, $originalImagePath)){
                     $product_img = new ProductImage();
                     $product_img->productId = $product->id;
                     $product_img->originalImagePath = $this->rel_upload_path . $originalImagePath;
@@ -122,9 +121,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($uuid)
     {
-        //
+        $product = Product::where('unqId', $uuid)->firstOrFail();
+        return view('_admin.product_edit', compact('product'));
     }
 
     /**
@@ -134,9 +134,65 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {
-        //
+        $this->validate($request, [
+            'product_title' => 'required',
+            'product_slug' => 'required',
+            'product_desc' => 'required',
+            // 'product_imgs.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'stock_qty' => 'required',
+            'regular_price' => 'required',
+            'selling_price' => 'required',
+        ]);
+
+        $product = Product::where('unqId', $uuid)->firstOrFail();
+        $product->title = $request->product_title;
+        $product->description = $request->product_desc;
+        $product->remarks = $request->remarks;
+        $product->stockQuantity = $request->stock_qty;
+        $product->regularPrice = $request->regular_price;
+        $product->sellingPrice = $request->selling_price;
+        if($request->stock_qty == 0){
+            $product->stockStatus = 'out_of_stock';
+        } else{
+            $product->stockStatus = 'in_stock';
+        }
+
+
+        // Delete removed entries from existing product images
+        $product_images = $product->product_images()->whereNotIn('id', $request->existingImgs)->get();
+        foreach ($product_images as $single) {
+            $img_path = public_path($single->originalImagePath);
+            if (is_file($img_path)) {
+                unlink($img_path);
+            }
+            $single->forcedelete();
+        }
+
+        // Save newly uploaded images
+        if($product->save() && $request->hasFile('product_imgs')){
+            if (!is_dir($this->abs_upload_path)) {
+                File::makeDirectory($this->abs_upload_path, 0777, true);
+            }
+            foreach ($request->product_imgs as $key => $singleImg) {
+                $realName = $singleImg->getClientOriginalName();
+                $fileName = pathinfo($realName, PATHINFO_FILENAME);
+                $fileName = StringHelper::uniqueSlugString($fileName);
+                $extension = pathinfo($realName, PATHINFO_EXTENSION);
+
+                $originalImagePath = $fileName.'.'. $extension;
+
+                if($singleImg->move($this->abs_upload_path, $originalImagePath)){
+                    $product_img = new ProductImage();
+                    $product_img->productId = $product->id;
+                    $product_img->originalImagePath = $this->rel_upload_path . $originalImagePath;
+                    $product_img->save();
+                }
+            }
+        }
+
+        return redirect()->route('admin_product_list')->with('success', static::PRODUCT_UPDATE);
     }
 
     /**
@@ -149,18 +205,16 @@ class ProductController extends Controller
 
         $product = Product::where('unqId', $uuid)->firstOrFail();
 
-        // Handle Product Images
-        $product_images = $product->product_images()->pluck('originalImagePath');
+        // Delete Product Images
+        $product_images = $product->product_images()->get();
         foreach ($product_images as $single) {
-            $img_path = public_path($single);
+            $img_path = public_path($single->originalImagePath);
             if (is_file($img_path)) {
                 unlink($img_path);
             }
+            $single->forcedelete();
         }
 
-        $product_images = $product->product_images()->delete();
-        $product->delete();
-        
         return back()->with('success', static::PRODUCT_DELETE);
     }
 

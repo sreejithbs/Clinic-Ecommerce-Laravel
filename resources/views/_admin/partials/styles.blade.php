@@ -47,6 +47,7 @@
 	}
 
 	.parsley-errors-list {
+		color: red;
 		margin: 2px 0 3px;
 		padding: 0;
 		list-style-type: none;

@@ -29,7 +29,7 @@
 			<div class="content-header row">
 				<div class="content-header-left col-md-6 col-12 mb-2">
 					<h3 class="content-header-title">
-						@yield('page_heading')
+						<strong> @yield('page_heading') </strong>
 					</h3>
 				</div>
 				<div class="content-header-right col-md-6 col-12">

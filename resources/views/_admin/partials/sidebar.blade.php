@@ -13,7 +13,7 @@
             </li> -->
             <li class="nav-item {{ \StringHelper::setActive('admin_product_*', 'open') }}">
                 <a href="javascript:void(0);"><i class="la la-list"></i>
-                    <span class="menu-title">Inventory Management</span>
+                    <span class="menu-title">Products Management</span>
                 </a>
                 <ul class="menu-content">
                     <li class="{{ \StringHelper::setActive('admin_product_create') }}">
@@ -23,6 +23,21 @@
                     <li class="{{ \StringHelper::setActive('admin_product_list') }}">
                         <a class="menu-item" href="{{ route('admin_product_list') }}">List all Products</a>
                     </li>
+                </ul>
+            </li>
+
+            <li class="nav-item {{ \StringHelper::setActive('admin_clinic_*', 'open') }}">
+                <a href="javascript:void(0);"><i class="la la-institution"></i>
+                    <span class="menu-title">Clinics Management</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="{{ \StringHelper::setActive('admin_clinic_create') }}">
+                        <a class="menu-item" href="{{ route('admin_clinic_create') }}">Add new Clinic</a>
+                    </li>
+
+                    <!-- <li class="{{ \StringHelper::setActive('admin_clinic_list') }}">
+                        <a class="menu-item" href="{{ route('admin_clinic_list') }}">List all Clinics</a>
+                    </li> -->
                 </ul>
             </li>
         </ul>

@@ -12,10 +12,10 @@ class AdminTableSeeder extends Seeder
      */
     public function run()
     {
-        $admin = new Admin;
-        $admin->name = 'Admin Demo';
-        $admin->email = 'admin@demo.com';
-        $admin->password = bcrypt('admin@123');
-        $admin->save();
+        Admin::create([
+            'name' => 'Admin Demo',
+            'email' => 'admin@demo.com',
+            'password' => bcrypt('admin@123')
+        ]);
     }
 }

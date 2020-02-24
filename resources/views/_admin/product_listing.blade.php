@@ -38,7 +38,7 @@
                                         </td>
                                         <td>
                                             {{ $product->stockQuantity }}
-                                            
+
                                             @if($product->stockStatus == 'in_stock')
                                                 <span class="badge badge-success">In Stock</span>
                                             @else
@@ -49,6 +49,11 @@
                                         <!-- <td> ${{ $product->sellingPrice }} (<del> ${{ $product->regularPrice }} </del>)</td> -->
                                         <td> ${{ $product->sellingPrice }} </td>
                                         <td>
+
+                                            <a href="{{ route('admin_product_edit', $product->unqId ) }}" class="btn btn-icon btn-info btn-sm">
+                                                <i class="la la-eye"></i>
+                                            </a>
+
                                             {!! Form::open(array(
                                                     'route' => array('admin_product_delete', $product->unqId),
                                                     'method' => 'delete',
@@ -56,7 +61,9 @@
                                                     'style'=>'display:inline'
                                             )) !!}
 
-                                            <button type="submit" class="btn btn-danger btn-sm delSwal"> Delete </button>
+                                            <button type="submit" class="btn btn-icon btn-danger btn-sm delSwal">
+                                                <i class="la la-trash"></i>
+                                            </button>
 
                                             {!! Form::close() !!}
                                         </td>

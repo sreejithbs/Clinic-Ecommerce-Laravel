@@ -19,6 +19,7 @@ class CreateClinicAdminstable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->enum('status', ['active', 'suspend'])->default('active');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

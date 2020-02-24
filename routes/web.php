@@ -38,8 +38,14 @@ Route::prefix('admin')->group(function () {
 
 	Route::get('/product/all', 'Admin\ProductController@index')->name('admin_product_list');
 	Route::get('/product/create', 'Admin\ProductController@create')->name('admin_product_create');
-	Route::post('/product/create', 'Admin\ProductController@store')->name('admin_product_store');
+	Route::post('/product/store', 'Admin\ProductController@store')->name('admin_product_store');
+	Route::get('/product/edit/{uuid}', 'Admin\ProductController@edit')->name('admin_product_edit');
+	Route::post('/product/update/{uuid}', 'Admin\ProductController@update')->name('admin_product_update');
 	Route::delete('/product/delete/{uuid}', 'Admin\ProductController@destroy')->name('admin_product_delete');
+
+	Route::get('/clinic/all', 'Admin\ClinicController@index')->name('admin_clinic_list');
+	Route::get('/clinic/create', 'Admin\ClinicController@create')->name('admin_clinic_create');
+	Route::post('/clinic/store', 'Admin\ClinicController@store')->name('admin_clinic_store');
 });
 
 
