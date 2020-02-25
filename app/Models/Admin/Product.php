@@ -40,9 +40,10 @@ class Product extends Model
         return 'slug';
     }
 
-    // Relation
+    /**
+     * Relation
+     */
     public function product_images(){
         return $this->hasMany(ProductImage::class, 'productId');
     }
-
 }

@@ -39,7 +39,9 @@ class Clinic extends Authenticatable
         'password', 'remember_token',
     ];
 
-    // Relation
+    /**
+     * Relation
+     */
     public function clinic_profile(){
         return $this->hasOne(ClinicProfile::class, 'clinicAdminId');
     }

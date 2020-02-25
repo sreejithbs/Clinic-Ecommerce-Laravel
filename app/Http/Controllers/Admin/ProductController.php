@@ -26,9 +26,13 @@ class ProductController extends Controller
         $this->rel_upload_path = '/uploads/products/';
     }
 
+    // Define Constants
+    const IN_STOCK = 'in_stock';
+    const OUT_OF_STOCK = 'out_of_stock';
     const PRODUCT_CREATE = 'Product has been added successfully';
     const PRODUCT_UPDATE = 'Product has been updated successfully';
     const PRODUCT_DELETE = 'Product has been deleted successfully';
+    const PRODUCT_DELETE_FAIL = 'Product deletion has failed';
 
     /**
      * Show the application dashboard.
@@ -77,7 +81,7 @@ class ProductController extends Controller
         $product->regularPrice = $request->regular_price;
         $product->sellingPrice = $request->selling_price;
         if($request->stock_qty == 0){
-            $product->stockStatus = 'out_of_stock';
+            $product->stockStatus = static::OUT_OF_STOCK;
         }
 
         if($product->save() && $request->hasFile('product_imgs')){
@@ -94,9 +98,8 @@ class ProductController extends Controller
 
                 if($singleImg->move($this->abs_upload_path, $originalImagePath)){
                     $product_img = new ProductImage();
-                    $product_img->productId = $product->id;
                     $product_img->originalImagePath = $this->rel_upload_path . $originalImagePath;
-                    $product_img->save();
+                    $product->product_images()->save($product_img);
                 }
             }
         }
@@ -138,7 +141,6 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'product_title' => 'required',
-            'product_slug' => 'required',
             'product_desc' => 'required',
             // 'product_imgs.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'stock_qty' => 'required',
@@ -154,9 +156,9 @@ class ProductController extends Controller
         $product->regularPrice = $request->regular_price;
         $product->sellingPrice = $request->selling_price;
         if($request->stock_qty == 0){
-            $product->stockStatus = 'out_of_stock';
+            $product->stockStatus = static::OUT_OF_STOCK;
         } else{
-            $product->stockStatus = 'in_stock';
+            $product->stockStatus = static::IN_STOCK;
         }
 
 
@@ -185,9 +187,8 @@ class ProductController extends Controller
 
                 if($singleImg->move($this->abs_upload_path, $originalImagePath)){
                     $product_img = new ProductImage();
-                    $product_img->productId = $product->id;
                     $product_img->originalImagePath = $this->rel_upload_path . $originalImagePath;
-                    $product_img->save();
+                    $product->product_images()->save($product_img);
                 }
             }
         }
@@ -201,18 +202,26 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($uuid){
+    public function destroy($uuid)
+    {
+        try{
+            $product = Product::where('unqId', $uuid)->firstOrFail();
 
-        $product = Product::where('unqId', $uuid)->firstOrFail();
-
-        // Delete Product Images
-        $product_images = $product->product_images()->get();
-        foreach ($product_images as $single) {
-            $img_path = public_path($single->originalImagePath);
-            if (is_file($img_path)) {
-                unlink($img_path);
+            // Delete Product Images
+            $product_images = $product->product_images()->get();
+            foreach ($product_images as $single) {
+                $img_path = public_path($single->originalImagePath);
+                if (is_file($img_path)) {
+                    unlink($img_path);
+                }
+                $single->forcedelete();
             }
-            $single->forcedelete();
+
+            $product->delete();
+
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            return back()->withErrors(['error' => static::PRODUCT_DELETE_FAIL]);
         }
 
         return back()->with('success', static::PRODUCT_DELETE);

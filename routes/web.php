@@ -46,6 +46,9 @@ Route::prefix('admin')->group(function () {
 	Route::get('/clinic/all', 'Admin\ClinicController@index')->name('admin_clinic_list');
 	Route::get('/clinic/create', 'Admin\ClinicController@create')->name('admin_clinic_create');
 	Route::post('/clinic/store', 'Admin\ClinicController@store')->name('admin_clinic_store');
+	Route::get('/clinic/edit/{uuid}', 'Admin\ClinicController@edit')->name('admin_clinic_edit');
+	Route::post('/clinic/update/{uuid}', 'Admin\ClinicController@update')->name('admin_clinic_update');
+	Route::delete('/clinic/delete/{uuid}', 'Admin\ClinicController@destroy')->name('admin_clinic_delete');
 });
 
 

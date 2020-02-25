@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2020 at 09:02 PM
+-- Generation Time: Feb 25, 2020 at 06:09 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -45,7 +45,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `unqId`, `name`, `email`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'd38899a9', 'Admin Demo', 'admin@demo.com', '$2y$10$I.8McLo7YaFZ0K6aUNpLnueKC4oTpEJwQCVeDL/QjaDwLx20jiZAi', NULL, NULL, '2020-02-24 14:31:06', '2020-02-24 14:31:06');
+(1, '12aab4f1', 'Admin Demo', 'admin@demo.com', '$2y$10$QtIKaJXcHmHhz0MLfqhEyeGd2dLtxpoL45c7XpAeEQ9rj5KzZOW3i', NULL, NULL, '2020-02-25 11:39:22', '2020-02-25 11:39:22');
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,7 @@ CREATE TABLE `clinic_admins` (
 --
 
 INSERT INTO `clinic_admins` (`id`, `unqId`, `name`, `email`, `password`, `status`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '7dea88cb', 'Clinic Demo', 'clinic@demo.com', '$2y$10$dY5yOqAgCEo24LfqEo5Zbe3fF9hJgkAP9lCgGKXCZAbXkXY7ntE.q', 'active', NULL, NULL, '2020-02-24 14:31:06', '2020-02-24 14:31:06');
+(1, '0ae5e8f8', 'Clinic Demo', 'clinic@demo.com', '$2y$10$ZKO2t0wK1hI7vzJ/e8L4C.uvuU7j3SlzEQGsQbduCAoo1NyQa4HEy', 'active', NULL, NULL, '2020-02-25 11:39:22', '2020-02-25 11:39:22');
 
 -- --------------------------------------------------------
 
@@ -99,6 +99,13 @@ CREATE TABLE `clinic_profiles` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `clinic_profiles`
+--
+
+INSERT INTO `clinic_profiles` (`id`, `createdByAdminId`, `clinicAdminId`, `clinicReferenceId`, `clinicName`, `clinicAddress`, `phoneNumber`, `secondaryEmail`, `bankAcNumber`, `bankAcHolderName`, `bankName`, `bankCode`, `bankAddress`, `commissionPercentage`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'ref_67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-02-25 11:39:22', '2020-02-25 11:39:22');
+
 -- --------------------------------------------------------
 
 --
@@ -116,13 +123,13 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(104, '2014_10_12_000000_create_users_table', 1),
-(105, '2014_10_12_100000_create_password_resets_table', 1),
-(106, '2020_02_10_153636_create_admins_table', 1),
-(107, '2020_02_10_154025_create_clinic_admins_table', 1),
-(108, '2020_02_10_164025_create_clinic_profiles_table', 1),
-(109, '2020_02_18_162807_create_products_table', 1),
-(110, '2020_02_18_163241_create_product_images_table', 1);
+(29, '2014_10_12_000000_create_users_table', 1),
+(30, '2014_10_12_100000_create_password_resets_table', 1),
+(31, '2020_02_10_153636_create_admins_table', 1),
+(32, '2020_02_10_154025_create_clinic_admins_table', 1),
+(33, '2020_02_10_164025_create_clinic_profiles_table', 1),
+(34, '2020_02_18_162807_create_products_table', 1),
+(35, '2020_02_18_163241_create_product_images_table', 1);
 
 -- --------------------------------------------------------
 
@@ -201,7 +208,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `unqId`, `name`, `email`, `email_verified_at`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '09a8656a', 'User Demo', 'user@demo.com', NULL, '$2y$10$e8D6fmFem9NWFrBVYk7VMOE8AxhR4KDsC0BYv2Q9u7gYDp2CaSzNy', NULL, NULL, '2020-02-24 14:31:06', '2020-02-24 14:31:06');
+(1, 'ff3d0976', 'User Demo', 'user@demo.com', NULL, '$2y$10$8eyhGBIAAo8dotZLluZA1eSH2aB.HokMZsYmDSkH3XIqYD.xDusEa', NULL, NULL, '2020-02-25 11:39:22', '2020-02-25 11:39:22');
 
 --
 -- Indexes for dumped tables
@@ -228,6 +235,7 @@ ALTER TABLE `clinic_admins`
 --
 ALTER TABLE `clinic_profiles`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `clinic_profiles_clinicreferenceid_unique` (`clinicReferenceId`),
   ADD KEY `clinic_profiles_createdbyadminid_foreign` (`createdByAdminId`),
   ADD KEY `clinic_profiles_clinicadminid_foreign` (`clinicAdminId`);
 
@@ -287,13 +295,13 @@ ALTER TABLE `clinic_admins`
 -- AUTO_INCREMENT for table `clinic_profiles`
 --
 ALTER TABLE `clinic_profiles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `products`

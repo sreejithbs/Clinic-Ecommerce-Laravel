@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Auth;
 
 use App\Models\Clinic;
 use App\Models\Admin\ClinicProfile;
+use App\Events\ClinicWasCreatedEvent;
 
 class ClinicController extends Controller
 {
@@ -22,7 +22,11 @@ class ClinicController extends Controller
         $this->middleware('auth:admin');
     }
 
+    // Define Constants
     const CLINIC_CREATE = 'Clinic has been created successfully';
+    const CLINIC_UPDATE = 'Clinic has been updated successfully';
+    const CLINIC_DELETE = 'Clinic has been deleted successfully';
+    const CLINIC_DELETE_FAIL = 'Clinic deletion has failed';
 
     /**
      * Show the application dashboard.
@@ -70,18 +74,15 @@ class ClinicController extends Controller
             'commission_percentage' => 'required',
         ]);
 
-        $clinic_admin = Clinic::create([
+        $clinic = Clinic::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => bcrypt($request->password),
         ]);
 
-        // Trigger Mail Here
-
-        if($clinic_admin){
+        if($clinic){
             $clinic_profile = new ClinicProfile();
             $clinic_profile->createdByAdminId = Auth::guard('admin')->user()->id;
-            $clinic_profile->clinicAdminId = $clinic_admin->id;
             $clinic_profile->clinicReferenceId = $request->clinic_reference_id;
             $clinic_profile->clinicName = $request->clinic_name;
             $clinic_profile->clinicAddress = $request->clinic_address;
@@ -93,8 +94,11 @@ class ClinicController extends Controller
             $clinic_profile->bankCode = $request->bank_code;
             $clinic_profile->bankAddress = $request->bank_address;
             $clinic_profile->commissionPercentage = $request->commission_percentage;
-            $clinic_profile->save();
+            $clinic->clinic_profile()->save($clinic_profile);
         }
+
+        // ##### EMAIL TODO : Trigger Mail Here
+        // event(new ClinicWasCreatedEvent($clinic));
 
         return redirect()->route('admin_clinic_list')->with('success', static::CLINIC_CREATE);
     }
@@ -116,9 +120,10 @@ class ClinicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($uuid)
     {
-        //
+        $clinic = Clinic::where('unqId', $uuid)->firstOrFail();
+        return view('_admin.clinic_edit', compact('clinic'));
     }
 
     /**
@@ -128,9 +133,39 @@ class ClinicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {
-        //
+        $this->validate($request, [
+            'clinic_name' => 'required',
+            'clinic_address' => 'required',
+            'phone_number' => 'required',
+            'secondary_email' => 'required|email',
+            'name' => 'required',
+            'ac_number' => 'required',
+            'ac_holder_name' => 'required',
+            'bank_name' => 'required',
+            'bank_code' => 'required',
+            'bank_address' => 'required',
+            'commission_percentage' => 'required',
+        ]);
+
+        $clinic = Clinic::where('unqId', $uuid)->firstOrFail();
+
+        if($clinic->update(['name'=> $request->name])){
+            $clinic->clinic_profile->clinicName = $request->clinic_name;
+            $clinic->clinic_profile->clinicAddress = $request->clinic_address;
+            $clinic->clinic_profile->phoneNumber = $request->phone_number;
+            $clinic->clinic_profile->secondaryEmail = $request->secondary_email;
+            $clinic->clinic_profile->bankAcNumber = $request->ac_number;
+            $clinic->clinic_profile->bankAcHolderName = $request->ac_holder_name;
+            $clinic->clinic_profile->bankName = $request->bank_name;
+            $clinic->clinic_profile->bankCode = $request->bank_code;
+            $clinic->clinic_profile->bankAddress = $request->bank_address;
+            $clinic->clinic_profile->commissionPercentage = $request->commission_percentage;
+            $clinic->clinic_profile->save();
+        }
+
+        return redirect()->route('admin_clinic_list')->with('success', static::CLINIC_UPDATE);
     }
 
     /**
@@ -139,8 +174,18 @@ class ClinicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($uuid)
     {
-        //
+        try{
+            $clinic = Clinic::where('unqId', $uuid)->firstOrFail();
+            $clinic->clinic_profile->delete();
+            $clinic->delete();
+
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            return back()->withErrors(['error' => static::CLINIC_DELETE_FAIL]);
+        }
+
+        return back()->with('success', static::CLINIC_DELETE);
     }
 }

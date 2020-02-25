@@ -35,9 +35,9 @@
                         <a class="menu-item" href="{{ route('admin_clinic_create') }}">Add new Clinic</a>
                     </li>
 
-                    <!-- <li class="{{ \StringHelper::setActive('admin_clinic_list') }}">
+                    <li class="{{ \StringHelper::setActive('admin_clinic_list') }}">
                         <a class="menu-item" href="{{ route('admin_clinic_list') }}">List all Clinics</a>
-                    </li> -->
+                    </li>
                 </ul>
             </li>
         </ul>
