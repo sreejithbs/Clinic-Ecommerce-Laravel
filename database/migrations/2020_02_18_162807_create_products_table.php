@@ -16,12 +16,13 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('unqId')->index();
-            $table->unsignedBigInteger('createdByAdminId');
+            $table->unsignedBigInteger('createdByAdminId')->nullable();
             $table->text('title');
             $table->string('slug')->unique();
             $table->longText('description');
             $table->text('remarks')->nullable();
-            $table->integer('stockQuantity')->default(0);
+            $table->integer('initialStockQuantity')->default(0);
+            $table->integer('stockQuantity');
             $table->enum('stockStatus', ['in_stock', 'out_of_stock'])->default('in_stock');
             $table->decimal('regularPrice', 6, 2);
             $table->decimal('sellingPrice', 6, 2);
@@ -33,7 +34,7 @@ class CreateProductsTable extends Migration
          * Foreign Key Constraint
          */
         Schema::table('products', function (Blueprint $table) {
-            $table->foreign('createdByAdminId')->references('id')->on('admins')->onDelete('cascade');
+            $table->foreign('createdByAdminId')->references('id')->on('admins')->onDelete('set null');
         });
     }
 

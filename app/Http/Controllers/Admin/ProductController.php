@@ -77,7 +77,7 @@ class ProductController extends Controller
         $product->title = $request->product_title;
         $product->description = $request->product_desc;
         $product->remarks = $request->remarks;
-        $product->stockQuantity = $request->stock_qty;
+        $product->initialStockQuantity = $product->stockQuantity = $request->stock_qty;
         $product->regularPrice = $request->regular_price;
         $product->sellingPrice = $request->selling_price;
         if($request->stock_qty == 0){
@@ -143,7 +143,6 @@ class ProductController extends Controller
             'product_title' => 'required',
             'product_desc' => 'required',
             // 'product_imgs.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'stock_qty' => 'required',
             'regular_price' => 'required',
             'selling_price' => 'required',
         ]);
@@ -152,15 +151,8 @@ class ProductController extends Controller
         $product->title = $request->product_title;
         $product->description = $request->product_desc;
         $product->remarks = $request->remarks;
-        $product->stockQuantity = $request->stock_qty;
         $product->regularPrice = $request->regular_price;
         $product->sellingPrice = $request->selling_price;
-        if($request->stock_qty == 0){
-            $product->stockStatus = static::OUT_OF_STOCK;
-        } else{
-            $product->stockStatus = static::IN_STOCK;
-        }
-
 
         // Delete removed entries from existing product images
         $product_images = $product->product_images()->whereNotIn('id', $request->existingImgs)->get();

@@ -70,9 +70,15 @@
                                 	<i class="ft-clipboard"></i> Product Attributes
                                 </h4>
                                 <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="stock_qty">Stock Quantity *</label>
+                                    <label class="col-md-3 label-control" for="stock_qty">Initial Stock Quantity</label>
                                     <div class="col-md-9">
-                                        <input type="number" id="stock_qty" class="form-control" value="{{ $product->stockQuantity }}" placeholder="Stock Quantity" name="stock_qty" min="0" required data-parsley-required-message="Please enter Stock Quantity">
+                                        <input type="number" id="stock_qty" class="form-control" value="{{ $product->initialStockQuantity }}" placeholder="Stock Quantity" name="stock_qty" min="0" required data-parsley-required-message="Please enter Stock Quantity" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control" for="stock_qty">Total Stock Quantity</label>
+                                    <div class="col-md-9">
+                                        <input type="number" id="stock_qty" class="form-control" value="{{ $product->stockQuantity }}" placeholder="Stock Quantity" name="stock_qty" min="0" required data-parsley-required-message="Please enter Stock Quantity" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group row">

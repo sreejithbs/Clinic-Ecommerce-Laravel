@@ -20,7 +20,7 @@
                                     <th>Image</th>
                                     <th>Title</th>
                                     <th>Description</th>
-                                    <th>Stock Qty</th>
+                                    <th>Total Stock Qty</th>
                                     <th>Selling Price</th>
                                     <th>Actions</th>
                                 </tr>
