@@ -72,7 +72,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="stock_qty">Initial Stock Quantity</label>
                                     <div class="col-md-9">
-                                        <input type="number" id="stock_qty" class="form-control" value="{{ $product->initialStockQuantity }}" placeholder="Stock Quantity" name="stock_qty" min="0" required data-parsley-required-message="Please enter Stock Quantity" disabled>
+                                        <input type="number" id="stock_qty" class="form-control" value="{{ $product->initialStockQuantity }}" placeholder="Initial Stock Quantity" name="stock_qty" min="0" required data-parsley-required-message="Please enter Initial Stock Quantity" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -88,7 +88,7 @@
                                     		<div class="input-group-prepend">
                                     			<span class="input-group-text">$</span>
                                     		</div>
-                                    		<input type="number" id="regular_price" class="form-control" value="{{ $product->regularPrice }}" placeholder="Regular Price" name="regular_price" min="0" step="0.01" required data-parsley-required-message="Please enter Regular Price" data-parsley-errors-container="#reg_div">
+                                    		<input type="number" id="regular_price" class="form-control" value="{{ $product->regularPrice }}" placeholder="Regular Price" name="regular_price" min="0" step="0.1" required data-parsley-required-message="Please enter Regular Price" data-parsley-errors-container="#reg_div">
                                     	</div>
                                         <div id="reg_div"></div>
                                     </div>
@@ -100,7 +100,7 @@
                                     		<div class="input-group-prepend">
                                     			<span class="input-group-text">$</span>
                                     		</div>
-                                    		<input type="number" id="selling_price" class="form-control" value="{{ $product->sellingPrice }}" placeholder="Selling Price" name="selling_price" min="0" step="0.01" required data-parsley-required-message="Please enter Selling Price" data-parsley-errors-container="#sel_div">
+                                    		<input type="number" id="selling_price" class="form-control" value="{{ $product->sellingPrice }}" placeholder="Selling Price" name="selling_price" min="0" step="0.1" required data-parsley-required-message="Please enter Selling Price" data-parsley-errors-container="#sel_div">
                                     	</div>
                                         <div id="sel_div"></div>
                                     </div>

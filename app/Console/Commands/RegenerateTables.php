@@ -8,7 +8,7 @@ use DB;
 use Illuminate\Support\Facades\Schema;
 use Artisan;
 
-class DropTables extends Command
+class RegenerateTables extends Command
 {
     use ConfirmableTrait;
 

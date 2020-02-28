@@ -12,4 +12,13 @@ class Supplier extends Model
     use UuidTrait;  // to assign Uuid value as default
 
 	protected $table = 'suppliers';
+
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+	    'name', 'email', 'phoneNumber', 'companyName', 'companyAddress'
+	];
 }

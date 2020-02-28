@@ -40,6 +40,21 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="nav-item {{ \StringHelper::setActive('admin_inventory_purchase_*', 'open') }}">
+                <a href="javascript:void(0);"><i class="la la-institution"></i>
+                    <span class="menu-title">Inventory Management</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="{{ \StringHelper::setActive('admin_inventory_purchase_create') }}">
+                        <a class="menu-item" href="{{ route('admin_inventory_purchase_create') }}">Add new Inventory Purchase</a>
+                    </li>
+
+                    {{-- <li class="{{ \StringHelper::setActive('admin_inventory_purchase_list') }}">
+                        <a class="menu-item" href="{{ route('admin_inventory_purchase_list') }}">List all Inventory Purchases</a>
+                    </li> --}}
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

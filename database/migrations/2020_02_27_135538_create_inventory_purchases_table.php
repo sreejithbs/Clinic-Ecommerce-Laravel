@@ -22,10 +22,10 @@ class CreateInventoryPurchasesTable extends Migration
             $table->integer('quantity');
             $table->decimal('totalPrice', 10, 2);
             $table->timestamp('dateTime');
-            $table->longText('note');
-            $table->string('attachment');
+            $table->longText('notes');
+            $table->string('attachment')->nullable();
             $table->enum('paymentMode', ['cash', 'credit']);
-            $table->enum('paymentStatus', ['ordered', 'pending', 'received']);
+            $table->enum('purchaseStatus', ['ordered', 'pending', 'received']);
             $table->softDeletes();
             $table->timestamps();
         });

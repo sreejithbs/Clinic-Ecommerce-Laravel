@@ -25,6 +25,15 @@
 <!-- LOADERS -->
 <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/css/plugins/loaders/loaders.min.css') }}">
 
+<!-- SELECT2 -->
+<link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/forms/selects/select2.min.css') }}">
+
+<!-- iCheck -->
+<link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/forms/icheck/icheck.css') }}">
+
+<!-- jQuery DateTimePicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
+
 <!-- Jquery UI -->
 <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/ui/jquery-ui.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/css/plugins/ui/jqueryui.css') }}">
@@ -34,18 +43,20 @@
 
 <style type="text/css">
 	/* Parsley CSS */
-	.parsley-success {
+	input:not([type=radio]).parsley-success,
+	textarea.parsley-success,
+	select.parsley-success {
 		color: #468847;
 		background-color: #DFF0D8;
 		border: 1px solid #D6E9C6;
 	}
-
-	.parsley-error {
+	input:not([type=radio]).parsley-error,
+	textarea.parsley-error,
+	select.parsley-error {
 		color: #B94A48;
 		background-color: #F2DEDE;
 		border: 1px solid #EED3D7;
 	}
-
 	.parsley-errors-list {
 		color: red;
 		margin: 2px 0 3px;
@@ -60,7 +71,6 @@
 		-moz-transition: all .3s ease-in;
 		-webkit-transition: all .3s ease-in;
 	}
-
 	.parsley-errors-list.filled {
 		opacity: 1;
 	}

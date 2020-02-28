@@ -24,6 +24,15 @@
 <!-- Datatable -->
 <script src="{{ asset('modern_admin_assets/vendors/js/tables/datatable/datatables.min.js') }}" type="text/javascript"></script>
 
+<!-- SELECT2 -->
+<script src="{{ asset('modern_admin_assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
+
+<!-- iCheck -->
+<script src="{{ asset('modern_admin_assets/vendors/js/forms/icheck/icheck.min.js') }}" type="text/javascript"></script>
+
+<!-- jQuery DateTimePicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
 <!-- Jquery UI -->
 <script src="{{ asset('modern_admin_assets/js/core/libraries/jquery_ui/jquery-ui.min.js') }}" type="text/javascript"></script>
 
@@ -39,6 +48,24 @@
 	// Basic Datatable Initialization
 	$(document).ready(function() {
 		$('.dtTable').DataTable();
+
+		// Basic Select2 select
+		$(".select2").select2({
+			placeholder: "-- Select an option --",
+			allowClear: true
+		});
+
+		$('.skin-square input').iCheck({
+		     // radioClass: 'iradio_square-blue',
+		     radioClass: 'iradio_square-green',
+		 });
+
+		$('#datetimepicker').datetimepicker({
+			format: 'd/m/Y h:i A',
+			formatTime: 'h:i A',
+			defaultTime : true,
+			validateOnBlur: false
+		});
 	});
 
 	// SweetAlert in all DELETE BUTTONS

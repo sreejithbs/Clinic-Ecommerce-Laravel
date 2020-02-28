@@ -49,6 +49,12 @@ Route::prefix('admin')->group(function () {
 	Route::get('/clinic/edit/{uuid}', 'Admin\ClinicController@edit')->name('admin_clinic_edit');
 	Route::post('/clinic/update/{uuid}', 'Admin\ClinicController@update')->name('admin_clinic_update');
 	Route::delete('/clinic/delete/{uuid}', 'Admin\ClinicController@destroy')->name('admin_clinic_delete');
+
+	Route::prefix('inventory')->group(function () {
+		Route::get('/purchase/create', 'Admin\InventoryPurchaseController@create')->name('admin_inventory_purchase_create');
+		Route::get('/purchase/store', 'Admin\InventoryPurchaseController@store')->name('admin_inventory_purchase_store');
+	});
+
 });
 
 

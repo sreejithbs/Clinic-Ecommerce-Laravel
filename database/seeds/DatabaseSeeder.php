@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
     	// // Ask for db migration refresh, default is no
-     //    if ($this->command->confirm('Do you wish to delete and re-create all existing tables before seeding ? It will clear all old data.')) {
+     //    if ($this->command->confirm('Do you wish to delete and re-create all existing tables before seeding ?')) {
      //        $this->command->call('migrate:refresh');
      //        $this->command->warn("Data cleared successfully. Starting from blank database.");
      //    }
@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
     	$this->call(AdminTableSeeder::class);
         $this->call(ClinicAdminTableSeeder::class);
     	$this->call(UserTableSeeder::class);
+        $this->call(SupplierTableSeeder::class);
     }
 }
