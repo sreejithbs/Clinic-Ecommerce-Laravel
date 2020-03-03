@@ -130,7 +130,7 @@
                             </div>
                             <div class="form-actions">
                                 <a href="{{ route('admin_clinic_list' ) }}" class="btn btn-warning mr-1">
-                                    <i class="ft-x"></i> Cancel
+                                    <i class="la la-close"></i> Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="la la-check-square-o"></i> Update

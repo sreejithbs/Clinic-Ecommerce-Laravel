@@ -47,7 +47,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">$</span>
                                             </div>
-                                            <input type="number" id="total_price" class="form-control" placeholder="Total Price" name="total_price" min="0" step="0.1" required data-parsley-required-message="Please enter Total Price" data-parsley-errors-container="#total_errorDiv">
+                                            <input type="number" id="total_price" class="form-control" placeholder="Total Price" name="total_price" min="0" step="0.01" required data-parsley-required-message="Please enter Total Price" data-parsley-errors-container="#total_errorDiv">
                                         </div>
                                         <div id="total_errorDiv"></div>
                                     </div>
@@ -59,11 +59,20 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="supplier">Select Supplier *</label>
                                     <div class="col-md-9">
-                                        <select id="supplier" class="form-control select2" name="supplier" required data-parsley-required-message="Please select a Supplier" data-parsley-errors-container="#supplier_errorDiv">
-                                            <option value="">-- Select an option --</option>
-                                            <option value="1">Lalaine</option>
-                                        </select>
-                                        <div id="supplier_errorDiv"></div>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <select id="supplier" class="form-control select2" name="supplier" required data-parsley-required-message="Please select a Supplier" data-parsley-errors-container="#supplier_errorDiv">
+                                                    <option value="">-- Select an option --</option>
+                                                    <option value="1">Lalaine</option>
+                                                </select>
+                                                <div id="supplier_errorDiv"></div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addSupplierModal">
+                                                    <i class="la la-plus-square"></i> Add New Supplier
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -91,22 +100,22 @@
                                     <div class="col-md-9">
                                         <div class="input-group skin skin-square">
                                             <div class="d-inline-block custom-control custom-radio" style="padding-left: 0px;">
-                                                <input type="radio" name="payment_status" class="custom-control-input" id="ordered" required data-parsley-required-message="Please choose Purchase Status" data-parsley-errors-container="#status_errorDiv">
+                                                <input type="radio" name="purchase_status" class="custom-control-input" id="ordered" value="ordered" required data-parsley-required-message="Please choose Purchase Status" data-parsley-errors-container="#status_errorDiv">
                                                 <label for="ordered">Ordered</label>
                                             </div>
                                             <div class="d-inline-block custom-control custom-radio">
-                                                <input type="radio" name="payment_status" class="custom-control-input" id="pending">
+                                                <input type="radio" name="purchase_status" class="custom-control-input" id="pending" value="pending">
                                                 <label for="pending">Pending</label>
                                             </div>
                                             <div class="d-inline-block custom-control custom-radio">
-                                                <input type="radio" name="payment_status" class="custom-control-input" id="received">
+                                                <input type="radio" name="purchase_status" class="custom-control-input" id="received" value="received">
                                                 <label for="received">Received</label>
                                             </div>
                                         </div>
                                         <div id="status_errorDiv"></div>
-                                        <div class="help-block">
+                                        <!-- <div class="help-block">
                                             <small>N.B: Only stocks with Purchase status as <strong>received</strong> will be added to available stocks.</small>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="form-group row last">
@@ -114,11 +123,11 @@
                                     <div class="col-md-9">
                                         <div class="input-group skin skin-square">
                                             <div class="d-inline-block custom-control custom-radio" style="padding-left: 0px;">
-                                                <input type="radio" name="payment_mode" class="custom-control-input" id="cash" required data-parsley-required-message="Please choose Payment Mode" data-parsley-errors-container="#mode_errorDiv">
+                                                <input type="radio" name="payment_mode" class="custom-control-input" id="cash"  value="cash" required data-parsley-required-message="Please choose Payment Mode" data-parsley-errors-container="#mode_errorDiv">
                                                 <label for="cash">Cash</label>
                                             </div>
                                             <div class="d-inline-block custom-control custom-radio">
-                                                <input type="radio" name="payment_mode" class="custom-control-input" id="credit">
+                                                <input type="radio" name="payment_mode" class="custom-control-input" id="credit" value="credit">
                                                 <label for="credit">Credit</label>
                                             </div>
                                         </div>
@@ -128,9 +137,9 @@
 
                             </div>
                             <div class="form-actions">
-                                {{-- <a href="{{ route('admin_product_list' ) }}" class="btn btn-warning mr-1">
-                                    <i class="ft-x"></i> Cancel
-                                </a> --}}
+                                <a href="{{ route('admin_inventory_purchase_list' ) }}" class="btn btn-warning mr-1">
+                                    <i class="la la-close"></i> Cancel
+                                </a>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="la la-check-square-o"></i> Save
                                 </button>
@@ -143,4 +152,52 @@
     </div>
 </section>
 
+<!-- Modal -->
+<div class="modal fade text-left" id="addSupplierModal" tabindex="-1" role="dialog" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addSupplierModalLabel"><i class="la la-road2"></i> Basic Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5><i class="la la-arrow-right"></i> Check First Paragraph</h5>
+                <p>Oat cake ice cream candy chocolate cake chocolate cake cotton candy dragée apple pie. Brownie carrot cake candy canes bonbon fruitcake topping halvah. Cake sweet roll cake cheesecake cookie chocolate cake liquorice. Apple pie sugar plum powder donut soufflé.
+                </p>
+                <p>Sweet roll biscuit donut cake gingerbread. Chocolate cupcake chocolate bar ice cream. Danish candy cake.
+                </p>
+                <hr>
+                <h5><i class="la la-lightbulb-o"></i> Some More Text</h5>
+                <p>Cupcake sugar plum dessert tart powder chocolate fruitcake jelly. Tootsie roll bonbon toffee danish. Biscuit sweet cake gummies danish. Tootsie roll cotton candy tiramisu lollipop candy cookie biscuit pie.
+                </p>
+                <div class="alert alert-success" role="alert">
+                    <span class="text-bold-600">Well done!</span> You successfully read this important alert message.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn grey btn-outline-warning" data-dismiss="modal">
+                    <i class="la la-close"></i> Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="la la-check-square-o"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
+
+
+@push('page_scripts')
+    <script type="text/javascript">
+
+        // $(function(){
+        //     $("#addSupplier")
+        // })
+
+
+    </script>
+@endpush

@@ -126,7 +126,7 @@ class ProductController extends Controller
      */
     public function edit($uuid)
     {
-        $product = Product::where('unqId', $uuid)->firstOrFail();
+        $product = Product::fetchModelByUnqId($uuid);
         return view('_admin.product_edit', compact('product'));
     }
 
@@ -147,7 +147,7 @@ class ProductController extends Controller
             'selling_price' => 'required',
         ]);
 
-        $product = Product::where('unqId', $uuid)->firstOrFail();
+        $product = Product::fetchModelByUnqId($uuid);
         $product->title = $request->product_title;
         $product->description = $request->product_desc;
         $product->remarks = $request->remarks;
@@ -197,7 +197,7 @@ class ProductController extends Controller
     public function destroy($uuid)
     {
         try{
-            $product = Product::where('unqId', $uuid)->firstOrFail();
+            $product = Product::fetchModelByUnqId($uuid);
 
             // Delete Product Images
             $product_images = $product->product_images()->get();

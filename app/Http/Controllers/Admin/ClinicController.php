@@ -122,7 +122,7 @@ class ClinicController extends Controller
      */
     public function edit($uuid)
     {
-        $clinic = Clinic::where('unqId', $uuid)->firstOrFail();
+        $clinic = Clinic::fetchModelByUnqId($uuid);
         return view('_admin.clinic_edit', compact('clinic'));
     }
 
@@ -149,7 +149,7 @@ class ClinicController extends Controller
             'commission_percentage' => 'required',
         ]);
 
-        $clinic = Clinic::where('unqId', $uuid)->firstOrFail();
+        $clinic = Clinic::fetchModelByUnqId($uuid);
 
         if($clinic->update(['name'=> $request->name])){
             $clinic->clinic_profile->clinicName = $request->clinic_name;
@@ -177,7 +177,7 @@ class ClinicController extends Controller
     public function destroy($uuid)
     {
         try{
-            $clinic = Clinic::where('unqId', $uuid)->firstOrFail();
+            $clinic = Clinic::fetchModelByUnqId($uuid);
             $clinic->clinic_profile->delete();
             $clinic->delete();
 

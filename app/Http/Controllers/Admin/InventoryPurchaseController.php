@@ -6,6 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Admin\Product;
+use App\Models\Admin\Supplier;
+use App\Models\Admin\InventoryPurchase;
+
+use File;
+use DB;
+use Auth;
+use Carbon\Carbon;
+use StringHelper;
 
 class InventoryPurchaseController extends Controller
 {
@@ -17,7 +25,12 @@ class InventoryPurchaseController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
+        $this->abs_upload_path = public_path('/uploads/inventory');
+        $this->rel_upload_path = '/uploads/inventory/';
     }
+
+    // Define Constants
+    const INVENTORY_PURCHASE_CREATE = 'Inventory Purchase has been added successfully';
 
     /**
      * Show the application dashboard.
@@ -26,7 +39,8 @@ class InventoryPurchaseController extends Controller
      */
     public function index()
     {
-        // 
+        $inventory_purchases = InventoryPurchase::latest()->get();
+        return view('_admin.inventory_purchase_listing', compact('inventory_purchases'));
     }
 
     /**
@@ -48,7 +62,62 @@ class InventoryPurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'product' => 'required',
+            'quantity' => 'required',
+            'total_price' => 'required',
+            'supplier' => 'required',
+            'purchase_date_time' => 'required',
+            'notes' => 'required',
+            'purchase_status' => 'required',
+            'payment_mode' => 'required',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            $inventory_purchase = new InventoryPurchase();
+            $inventory_purchase->createdByAdminId = Auth::guard('admin')->user()->id;
+            $inventory_purchase->productId = Product::fetchModelByUnqId($request->product)->id;
+            $inventory_purchase->quantity = $request->quantity;
+
+            Product::fetchModelByUnqId($request->product)->increment('stockQuantity', $request->quantity);
+
+            $inventory_purchase->totalPrice = $request->total_price;
+            // $inventory_purchase->supplierId = Supplier::fetchModelByUnqId($request->supplier)->id;
+            $inventory_purchase->supplierId = 1;
+            $inventory_purchase->dateTime = InventoryPurchase::createTimestampFromDateTime($request->purchase_date_time);
+            $inventory_purchase->notes = $request->notes;
+
+            if($request->hasFile('attachment')){
+                if (!is_dir($this->abs_upload_path)) {
+                    File::makeDirectory($this->abs_upload_path, 0777, true);
+                }
+
+                $realName = $request->attachment->getClientOriginalName();
+                $fileName = pathinfo($realName, PATHINFO_FILENAME);
+                $fileName = StringHelper::uniqueSlugString($fileName);
+                $extension = pathinfo($realName, PATHINFO_EXTENSION);
+
+                $originalImagePath = $fileName.'.'. $extension;
+
+                if($request->attachment->move($this->abs_upload_path, $originalImagePath)){
+                    $inventory_purchase->attachment = $this->rel_upload_path . $originalImagePath;
+                }
+            }
+
+            $inventory_purchase->purchaseStatus = $request->purchase_status;
+            $inventory_purchase->paymentMode = $request->payment_mode;
+            $inventory_purchase->save();
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+
+        return redirect()->route('admin_inventory_purchase_list')->with('success', static::INVENTORY_PURCHASE_CREATE);
     }
 
     /**

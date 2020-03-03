@@ -88,7 +88,7 @@
                                     		<div class="input-group-prepend">
                                     			<span class="input-group-text">$</span>
                                     		</div>
-                                    		<input type="number" id="regular_price" class="form-control" value="{{ $product->regularPrice }}" placeholder="Regular Price" name="regular_price" min="0" step="0.1" required data-parsley-required-message="Please enter Regular Price" data-parsley-errors-container="#reg_div">
+                                    		<input type="number" id="regular_price" class="form-control" value="{{ $product->regularPrice }}" placeholder="Regular Price" name="regular_price" min="0" step="0.01" required data-parsley-required-message="Please enter Regular Price" data-parsley-errors-container="#reg_div">
                                     	</div>
                                         <div id="reg_div"></div>
                                     </div>
@@ -100,7 +100,7 @@
                                     		<div class="input-group-prepend">
                                     			<span class="input-group-text">$</span>
                                     		</div>
-                                    		<input type="number" id="selling_price" class="form-control" value="{{ $product->sellingPrice }}" placeholder="Selling Price" name="selling_price" min="0" step="0.1" required data-parsley-required-message="Please enter Selling Price" data-parsley-errors-container="#sel_div">
+                                    		<input type="number" id="selling_price" class="form-control" value="{{ $product->sellingPrice }}" placeholder="Selling Price" name="selling_price" min="0" step="0.01" required data-parsley-required-message="Please enter Selling Price" data-parsley-errors-container="#sel_div">
                                     	</div>
                                         <div id="sel_div"></div>
                                     </div>
@@ -109,7 +109,7 @@
                             </div>
                             <div class="form-actions">
                                 <a href="{{ route('admin_product_list' ) }}" class="btn btn-warning mr-1">
-                                    <i class="ft-x"></i> Cancel
+                                    <i class="la la-close"></i> Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="la la-check-square-o"></i> Update
