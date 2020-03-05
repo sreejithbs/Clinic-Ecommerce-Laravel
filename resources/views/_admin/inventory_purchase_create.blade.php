@@ -27,13 +27,12 @@
                                     <div class="col-md-9">
                                         <div class="row">
                                             <div class="col-md-8">
-                                                <select id="product" class="form-control select2" name="product" required data-parsley-required-message="Please select a Product" data-parsley-errors-container="#prod_errorDiv">
+                                                <select id="product" class="form-control select2" name="product">
                                                     <option value="">-- Select an option --</option>
                                                     @foreach($products as $product)
                                                         <option value="{{ $product->unqId }}"> {{ $product->title }} </option>
                                                     @endforeach
                                                 </select>
-                                                <div id="prod_errorDiv"></div>
                                             </div>
                                             <div class="col-md-4">
                                                 <a href="{{ route('admin_product_create') }}" class="btn btn-info btn-sm round">
@@ -44,27 +43,32 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="quantity">Quantity *</label>
-                                    <div class="col-md-9">
-                                        <div class="input-group mt-0">
-                                            <!-- <div class="input-group-prepend">
-                                                <span class="input-group-text">Current Stock : 0</span>
-                                                <span class="input-group-text">+</span>
-                                            </div> -->
-                                            <input type="number" id="quantity" class="form-control" placeholder="Quantity" name="quantity" min="1" required data-parsley-required-message="Please enter Quantity">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-responsive table-bordered mb-0 table-lg">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product Name</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Current Stock</th>
+                                                        <th>Quantity</th>
+                                                        <th>Unit SubTotal</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="appendDiv">
+                                                    <tr class="no-data">
+                                                        <td colspan="6">No Purchases added</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row last">
-                                    <label class="col-md-3 label-control" for="total_price">Total Price *</label>
+                                    <label class="col-md-3 label-control" for="total_price">Total Price</label>
                                     <div class="col-md-9">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">$</span>
-                                            </div>
-                                            <input type="number" id="total_price" class="form-control" placeholder="Total Price" name="total_price" min="0" step="0.01" required data-parsley-required-message="Please enter Total Price" data-parsley-errors-container="#total_errorDiv">
-                                        </div>
-                                        <div id="total_errorDiv"></div>
+                                        <input type="text" id="total_price" class="form-control" value="0">
                                     </div>
                                 </div>
 
@@ -142,7 +146,7 @@
                                     <div class="col-md-9">
                                         <div class="input-group skin skin-square">
                                             <div class="d-inline-block custom-control custom-radio" style="padding-left: 0px;">
-                                                <input type="radio" name="payment_mode" class="custom-control-input" id="cash"  value="cash" required data-parsley-required-message="Please choose Payment Mode" data-parsley-errors-container="#mode_errorDiv">
+                                                <input type="radio" name="payment_mode" class="custom-control-input" id="cash" value="cash" required data-parsley-required-message="Please choose Payment Mode" data-parsley-errors-container="#mode_errorDiv">
                                                 <label for="cash">Cash</label>
                                             </div>
                                             <div class="d-inline-block custom-control custom-radio">
@@ -249,8 +253,25 @@
 @push('page_scripts')
     <script type="text/javascript">
 
+        function normalizePrices(){
+            var mainTotal = 0;
+            $(".appendDiv tr").not('.no-data').each(function(){
+                var subTotal = 0;
+
+                var unit_price = parseFloat( $(this).find('.unit_price').val() );
+                var unit_qty = parseInt( $(this).find('.quantity').val() );
+
+                subTotal = unit_price * unit_qty;
+                $(this).find('.unit_sub_total').val(subTotal);
+
+                mainTotal += subTotal;
+                $("#total_price").val(mainTotal);
+            });
+        }
+
         $(function(){
 
+            // Create New Supplier
             $("#supplierForm").submit(function(e){
                 e.preventDefault();
                 var formData = $("#supplierForm").serialize();
@@ -281,14 +302,8 @@
                         } else{
 
                             if(response.errors) {
-                                if(response.errors.name){
-                                    toastr.error(response.errors.name[0], 'Error !', {timeOut: 2000});
-                                }
-                                if(response.errors.email){
-                                    toastr.error(response.errors.email[0], 'Error !', {timeOut: 2000});
-                                }
-                                if(response.errors.phone_number){
-                                    toastr.error(response.errors.phone_number[0], 'Error !', {timeOut: 2000});
+                                for (var target in response.errors) {
+                                    toastr.error(target[0], 'Error !', {timeOut: 2000});
                                 }
                             }
                         }
@@ -297,6 +312,56 @@
                         console.log('inisde ajax error handler');
                     }
                 });
+            });
+
+            // Select product from product list
+            $('body').on('change', '#product', function(){
+
+                var $elm = $(this).find('option:selected');
+                if($elm.val() == ""){
+                  toastr.error('Please select a Product', 'Error !', {timeOut: 2000});
+                  return;
+                }
+
+                $.ajax({
+                    url: "{{ URL::route('admin_inventory_purchase_append_product') }}",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {
+                        // '_token': CSRF_TOKEN,
+                        'product' : $elm.val()
+                    },
+                    success:function(response){
+                        if (response.status) {
+
+                            $elm.prop('disabled', true);
+                            $('#product').select2();
+
+                            $(".no-data").remove();
+                            $("#appendDiv").append(response.renderHtml);
+                        }
+                    },
+                    error:function(response) {
+                        console.log('inisde ajax error handler');
+                    }
+                });
+            });
+
+            // Product Quantity Change
+            $('body').on('change', '.quantity', function(){
+
+                if(isNaN( $(this).val() )){
+                    toastr.error('Please enter a valid quantity', 'Error !', {timeOut: 2000});
+                    return;
+                }
+
+                normalizePrices();
+            });
+
+            // Product Remove
+            $('body').on('change', '.delProdBtn', function(){
+                $(this).parents('tr').remove();
+                normalizePrices();
             });
 
         });

@@ -49,15 +49,16 @@
 	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	    }
 	});
+	// var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
 
 	// var BASE_URL = '{!! url('/') !!}';
 	var BASE_URL = '{!! URL::to('/') !!}';
-	console.log("BASE_URL : " + BASE_URL);
 
 </script>
 
 <script type="text/javascript">
-	
+
 	$(document).ready(function() {
 
 		// Basic Datatable Initialization

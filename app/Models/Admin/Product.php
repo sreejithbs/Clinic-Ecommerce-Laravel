@@ -20,7 +20,7 @@ class Product extends Model
 	protected $table = 'products';
 
 	use HasSlug;
-    
+
     /**
      * Get the options for generating the slug.
      */
@@ -31,7 +31,7 @@ class Product extends Model
             ->saveSlugsTo('slug');
             // ->doNotGenerateSlugsOnUpdate();
     }
-    
+
     /**
      * Get the route key for the model.
      *
@@ -54,7 +54,8 @@ class Product extends Model
      */
     public function inventory_purchases()
     {
-        return $this->belongsToMany(InventoryPurchase::class, 'inventory_purchase_product', 'productId', 'inventoryPurchaseId')->withTimestamps();
+        return $this->belongsToMany(InventoryPurchase::class, 'inventory_purchase_product', 'productId', 'inventoryPurchaseId')
+        ->withTimestamps();
     }
 
     /**
@@ -62,6 +63,7 @@ class Product extends Model
      */
     public function inventory_transfers()
     {
-        return $this->belongsToMany(InventoryTransfer::class, 'inventory_transfer_product', 'productId', 'inventoryTransferId')->withTimestamps();
+        return $this->belongsToMany(InventoryTransfer::class, 'inventory_transfer_product', 'productId', 'inventoryTransferId')
+        ->withTimestamps();
     }
 }

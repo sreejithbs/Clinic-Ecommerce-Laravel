@@ -59,6 +59,7 @@ Route::prefix('admin')->group(function () {
 	    Route::get('/create', 'Admin\InventoryPurchaseController@create')->name('create');
 	    Route::post('/store', 'Admin\InventoryPurchaseController@store')->name('store');
 	    Route::post('/storeSupplier', 'Admin\InventoryPurchaseController@storeSupplier')->name('store_supplier');
+	    Route::post('/appendProduct', 'Admin\InventoryPurchaseController@appendProduct')->name('append_product');
 	});
 
 });

@@ -26,6 +26,8 @@ class InventoryTransfer extends Model
 	 */
 	public function products()
 	{
-	    return $this->belongsToMany(Product::class, 'inventory_transfer_product', 'inventoryTransferId', 'productId')->withTimestamps();
+	    return $this->belongsToMany(Product::class, 'inventory_transfer_product', 'inventoryTransferId', 'productId')
+	    ->withPivot('quantity', 'subTotalPrice')
+	    ->withTimestamps();
 	}
 }

@@ -26,6 +26,8 @@ class InventoryPurchase extends Model
 	 */
 	public function products()
 	{
-	    return $this->belongsToMany(Product::class, 'inventory_purchase_product', 'inventoryPurchaseId', 'productId')->withTimestamps();
+	    return $this->belongsToMany(Product::class, 'inventory_purchase_product', 'inventoryPurchaseId', 'productId')
+	    ->withPivot('quantity', 'subTotalPrice')
+	    ->withTimestamps();
 	}
 }

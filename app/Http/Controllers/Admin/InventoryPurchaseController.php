@@ -66,9 +66,7 @@ class InventoryPurchaseController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'product' => 'required',
             'quantity' => 'required',
-            'total_price' => 'required',
             'supplier' => 'required',
             'purchase_date_time' => 'required',
             'notes' => 'required',
@@ -80,17 +78,24 @@ class InventoryPurchaseController extends Controller
 
         try {
 
+            $sync_data = [];
+            $mainTotal = 0;
+            foreach ($request->quantity as $prdt => $qty) {
+                $product =  Product::fetchModelByUnqId($prdt);
+                $product->increment('stockQuantity', $qty); // Increment Overall Stock Qty
+
+                $subTotal = (float)$product->sellingPrice * (int)$qty;
+                $mainTotal += $subTotal;
+
+                // $inventory_purchase->products()->attach($product->id, ['quantity' => $qty, 'subTotalPrice' => $subTotal]);
+                $sync_data[$product->id] = ['quantity' => $qty, 'subTotalPrice' => $subTotal];
+            }
+
             $inventory_purchase = new InventoryPurchase();
             $inventory_purchase->createdByAdminId = Auth::guard('admin')->user()->id;
-            $inventory_purchase->productId = Product::fetchModelByUnqId($request->product)->id;
-            $inventory_purchase->quantity = $request->quantity;
-
-            Product::fetchModelByUnqId($request->product)->increment('stockQuantity', $request->quantity);
-
-            $inventory_purchase->totalPrice = $request->total_price;
-            // $inventory_purchase->supplierId = Supplier::fetchModelByUnqId($request->supplier)->id;
-            $inventory_purchase->supplierId = 1;
+            $inventory_purchase->supplierId = Supplier::fetchModelByUnqId($request->supplier)->id;
             $inventory_purchase->dateTime = InventoryPurchase::createTimestampFromDateTime($request->purchase_date_time);
+            $inventory_purchase->totalPrice = $mainTotal;
             $inventory_purchase->notes = $request->notes;
 
             if($request->hasFile('attachment')){
@@ -110,9 +115,10 @@ class InventoryPurchaseController extends Controller
                 }
             }
 
-            $inventory_purchase->purchaseStatus = $request->purchase_status;
             $inventory_purchase->paymentMode = $request->payment_mode;
             $inventory_purchase->save();
+
+            $inventory_purchase->products()->sync($sync_data);
 
             DB::commit();
 
@@ -168,35 +174,43 @@ class InventoryPurchaseController extends Controller
         //
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Create New Supplier
     public function storeSupplier(Request $request)
     {
-        $validation = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:suppliers',
-            'phone_number' => 'required|string',
-        ]);
+        if($request->ajax()){
+            $validation = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:suppliers',
+                'phone_number' => 'required|string',
+            ]);
 
-        if ($validation->passes()) {
+            if ($validation->passes()) {
 
-            $supplier = new Supplier();
-            $supplier->createdByAdminId = Auth::guard('admin')->user()->id;
-            $supplier->name = $request->name;
-            $supplier->email = $request->email;
-            $supplier->phoneNumber = $request->phone_number;
-            $supplier->companyName = $request->company_name;
-            $supplier->companyAddress = $request->company_address;
-            $supplier->save();
+                $supplier = new Supplier();
+                $supplier->createdByAdminId = Auth::guard('admin')->user()->id;
+                $supplier->name = $request->name;
+                $supplier->email = $request->email;
+                $supplier->phoneNumber = $request->phone_number;
+                $supplier->companyName = $request->company_name;
+                $supplier->companyAddress = $request->company_address;
+                $supplier->save();
 
-            return response()->json(['status' => TRUE, 'data' => $supplier, 'message' => static::SUPPLIER_CREATE]);
+                return response()->json(['status' => TRUE, 'data' => $supplier, 'message' => static::SUPPLIER_CREATE]);
+            }
+
+            return response()->json(['status' => FALSE, 'errors' => $validation->errors()]);
         }
+    }
 
-        return response()->json(['status' => FALSE, 'errors' => $validation->errors()]);
+
+    // Append New Product Row
+    public function appendProduct(Request $request)
+    {
+        if($request->ajax()){
+            $product = Product::fetchModelByUnqId($request->product);
+            $contents = view('components.inventory_product_child', compact('product'))->render();
+
+            return response()->json(['status' => TRUE, 'renderHtml' => $contents]);
+        }
     }
 }
