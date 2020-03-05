@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInventoryPurchasesTable extends Migration
+class CreateInventoryTransfersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateInventoryPurchasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('inventory_purchases', function (Blueprint $table) {
+        Schema::create('inventory_transfers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('unqId')->index();
             $table->unsignedBigInteger('createdByAdminId')->nullable();
-            $table->unsignedBigInteger('supplierId')->nullable();
+            $table->unsignedBigInteger('clinicId')->nullable()->comment('which clinic product is to be transferred');
             $table->timestamp('dateTime');
             $table->decimal('totalPrice', 10, 2);
             $table->longText('notes');
             $table->string('attachment')->nullable();
-            $table->enum('paymentMode', ['cash', 'credit', 'others']);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,9 +29,9 @@ class CreateInventoryPurchasesTable extends Migration
         /**
          * Foreign Key Constraint
          */
-        Schema::table('inventory_purchases', function (Blueprint $table) {
+        Schema::table('inventory_transfers', function (Blueprint $table) {
             $table->foreign('createdByAdminId')->references('id')->on('admins')->onDelete('set null');
-            $table->foreign('supplierId')->references('id')->on('suppliers')->onDelete('set null');
+            $table->foreign('clinicId')->references('id')->on('clinic_admins')->onDelete('set null');
         });
     }
 
@@ -43,6 +42,6 @@ class CreateInventoryPurchasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inventory_purchases');
+        Schema::dropIfExists('inventory_transfers');
     }
 }

@@ -46,9 +46,6 @@
 
 			<div class="content-body">
 
-				<!-- Passing BASE URL to AJAX -->
-				<input id="base_url" type="hidden" value="{{ URL::to('/') }}">
-
 				@yield('content')
 
 			</div>

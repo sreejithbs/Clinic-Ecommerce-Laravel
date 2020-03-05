@@ -36,24 +36,29 @@ Route::prefix('admin')->group(function () {
 
 	Route::get('/dashboard', 'Admin\DashboardController@index')->name('admin_dashboard');
 
-	Route::get('/product/all', 'Admin\ProductController@index')->name('admin_product_list');
-	Route::get('/product/create', 'Admin\ProductController@create')->name('admin_product_create');
-	Route::post('/product/store', 'Admin\ProductController@store')->name('admin_product_store');
-	Route::get('/product/edit/{uuid}', 'Admin\ProductController@edit')->name('admin_product_edit');
-	Route::post('/product/update/{uuid}', 'Admin\ProductController@update')->name('admin_product_update');
-	Route::delete('/product/delete/{uuid}', 'Admin\ProductController@destroy')->name('admin_product_delete');
+	Route::group(['prefix' => 'product', 'as' => 'admin_product_'], function(){
+	    Route::get('/all', 'Admin\ProductController@index')->name('list');
+	    Route::get('/create', 'Admin\ProductController@create')->name('create');
+	    Route::post('/store', 'Admin\ProductController@store')->name('store');
+	    Route::get('/edit/{uuid}', 'Admin\ProductController@edit')->name('edit');
+	    Route::post('/update/{uuid}', 'Admin\ProductController@update')->name('update');
+	    Route::delete('/delete/{uuid}', 'Admin\ProductController@destroy')->name('delete');
+	});
 
-	Route::get('/clinic/all', 'Admin\ClinicController@index')->name('admin_clinic_list');
-	Route::get('/clinic/create', 'Admin\ClinicController@create')->name('admin_clinic_create');
-	Route::post('/clinic/store', 'Admin\ClinicController@store')->name('admin_clinic_store');
-	Route::get('/clinic/edit/{uuid}', 'Admin\ClinicController@edit')->name('admin_clinic_edit');
-	Route::post('/clinic/update/{uuid}', 'Admin\ClinicController@update')->name('admin_clinic_update');
-	Route::delete('/clinic/delete/{uuid}', 'Admin\ClinicController@destroy')->name('admin_clinic_delete');
+	Route::group(['prefix' => 'clinic', 'as' => 'admin_clinic_'], function(){
+	    Route::get('/all', 'Admin\ClinicController@index')->name('list');
+	    Route::get('/create', 'Admin\ClinicController@create')->name('create');
+	    Route::post('/store', 'Admin\ClinicController@store')->name('store');
+	    Route::get('/edit/{uuid}', 'Admin\ClinicController@edit')->name('edit');
+	    Route::post('/update/{uuid}', 'Admin\ClinicController@update')->name('update');
+	    Route::delete('/delete/{uuid}', 'Admin\ClinicController@destroy')->name('delete');
+	});
 
-	Route::prefix('inventory')->group(function () {
-		Route::get('/purchase/all', 'Admin\InventoryPurchaseController@index')->name('admin_inventory_purchase_list');
-		Route::get('/purchase/create', 'Admin\InventoryPurchaseController@create')->name('admin_inventory_purchase_create');
-		Route::post('/purchase/store', 'Admin\InventoryPurchaseController@store')->name('admin_inventory_purchase_store');
+	Route::group(['prefix' => 'inventory/purchase', 'as' => 'admin_inventory_purchase_'], function(){
+	    Route::get('/all', 'Admin\InventoryPurchaseController@index')->name('list');
+	    Route::get('/create', 'Admin\InventoryPurchaseController@create')->name('create');
+	    Route::post('/store', 'Admin\InventoryPurchaseController@store')->name('store');
+	    Route::post('/storeSupplier', 'Admin\InventoryPurchaseController@storeSupplier')->name('store_supplier');
 	});
 
 });

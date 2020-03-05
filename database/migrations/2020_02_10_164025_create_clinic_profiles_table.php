@@ -27,7 +27,7 @@ class CreateClinicProfilestable extends Migration
             $table->string('bankName');
             $table->string('bankCode', 50);
             $table->longText('bankAddress');
-            $table->decimal('commissionPercentage', 8, 2)->default('10.00');
+            $table->decimal('commissionPercentage', 6, 2)->default('10.00');
             $table->softDeletes();
             $table->timestamps();
         });

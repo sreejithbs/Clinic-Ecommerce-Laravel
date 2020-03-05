@@ -1,4 +1,4 @@
- jQuery -->
+
 <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script src="{{ asset('modern_admin_assets/js/core/libraries/jquery.min.js') }}" type="text/javascript"></script>
 
@@ -44,9 +44,23 @@
 <!-- <script src="{{ asset('modern_admin_assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script> -->
 
 <script type="text/javascript">
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+
+	// var BASE_URL = '{!! url('/') !!}';
+	var BASE_URL = '{!! URL::to('/') !!}';
+	console.log("BASE_URL : " + BASE_URL);
+
+</script>
+
+<script type="text/javascript">
 	
-	// Basic Datatable Initialization
 	$(document).ready(function() {
+
+		// Basic Datatable Initialization
 		$('.dtTable').DataTable();
 
 		// Basic Select2 select
@@ -66,24 +80,25 @@
 			defaultTime : true,
 			validateOnBlur: false
 		});
+
+		// SweetAlert in all DELETE BUTTONS
+		$('.delSwal').on('click',function(event){
+			event.preventDefault();
+			swal({
+				title: 'Are you sure?',
+				text: "You won't be able to revert this operation.",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3c9fce',
+				cancelButtonColor: '#e86256',
+				confirmButtonText: 'Yes, delete it',
+				cancelButtonText: 'No, cancel'
+			}).then((result) => {
+				if (result.value) {
+					$(this).closest("form.delSwalForm").submit();
+				}
+			})
+		});
 	});
 
-	// SweetAlert in all DELETE BUTTONS
-	$('.delSwal').on('click',function(event){
-		event.preventDefault();
-		swal({
-			title: 'Are you sure?',
-			text: "You won't be able to revert this operation.",
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3c9fce',
-			cancelButtonColor: '#e86256',
-			confirmButtonText: 'Yes, delete it',
-			cancelButtonText: 'No, cancel'
-		}).then((result) => {
-			if (result.value) {
-				$(this).closest("form.delSwalForm").submit();
-			}
-		})
-	});
 </script>

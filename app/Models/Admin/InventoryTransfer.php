@@ -9,12 +9,12 @@ use Carbon\Carbon;
 
 use App\Models\Admin\Product;
 
-class InventoryPurchase extends Model
+class InventoryTransfer extends Model
 {
 	use SoftDeletes;  // enable Soft Delete
     use UuidTrait;  // to assign Uuid value as default
 
-	protected $table = 'inventory_purchases';
+	protected $table = 'inventory_transfers';
 
 	public static function createTimestampFromDateTime($dateTime)
 	{
@@ -22,10 +22,10 @@ class InventoryPurchase extends Model
 	}
 
 	/**
-	 * The products that belong to the inventory_purchases.
+	 * The products that belong to the inventory_transfers.
 	 */
 	public function products()
 	{
-	    return $this->belongsToMany(Product::class, 'inventory_purchase_product', 'inventoryPurchaseId', 'productId')->withTimestamps();
+	    return $this->belongsToMany(Product::class, 'inventory_transfer_product', 'inventoryTransferId', 'productId')->withTimestamps();
 	}
 }

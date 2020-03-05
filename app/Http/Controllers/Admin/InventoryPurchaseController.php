@@ -9,6 +9,7 @@ use App\Models\Admin\Product;
 use App\Models\Admin\Supplier;
 use App\Models\Admin\InventoryPurchase;
 
+use Illuminate\Support\Facades\Validator;
 use File;
 use DB;
 use Auth;
@@ -31,6 +32,7 @@ class InventoryPurchaseController extends Controller
 
     // Define Constants
     const INVENTORY_PURCHASE_CREATE = 'Inventory Purchase has been added successfully';
+    const SUPPLIER_CREATE = 'Supplier has been created successfully';
 
     /**
      * Show the application dashboard.
@@ -51,7 +53,8 @@ class InventoryPurchaseController extends Controller
     public function create()
     {
         $products = Product::latest()->get();
-        return view('_admin.inventory_purchase_create', compact('products'));
+        $suppliers = Supplier::latest()->get();
+        return view('_admin.inventory_purchase_create', compact('products', 'suppliers'));
     }
 
     /**
@@ -163,5 +166,37 @@ class InventoryPurchaseController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSupplier(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:suppliers',
+            'phone_number' => 'required|string',
+        ]);
+
+        if ($validation->passes()) {
+
+            $supplier = new Supplier();
+            $supplier->createdByAdminId = Auth::guard('admin')->user()->id;
+            $supplier->name = $request->name;
+            $supplier->email = $request->email;
+            $supplier->phoneNumber = $request->phone_number;
+            $supplier->companyName = $request->company_name;
+            $supplier->companyAddress = $request->company_address;
+            $supplier->save();
+
+            return response()->json(['status' => TRUE, 'data' => $supplier, 'message' => static::SUPPLIER_CREATE]);
+        }
+
+        return response()->json(['status' => FALSE, 'errors' => $validation->errors()]);
     }
 }

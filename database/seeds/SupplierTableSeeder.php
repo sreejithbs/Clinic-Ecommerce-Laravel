@@ -25,7 +25,7 @@ class SupplierTableSeeder extends Seeder
             'email' => 'supplier_john@demo.com',
             'phoneNumber' => '9219592195',
             'companyName' => "John's & Co Company",
-            'companyAddress' => "Test street, Test Avenue",
+            'companyAddress' => "Test street, Test Square",
         ]);
     }
 }

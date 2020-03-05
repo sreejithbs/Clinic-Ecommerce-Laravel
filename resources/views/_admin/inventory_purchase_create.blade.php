@@ -25,19 +25,34 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="product">Select Product *</label>
                                     <div class="col-md-9">
-                                        <select id="product" class="form-control select2" name="product" required data-parsley-required-message="Please select a Product" data-parsley-errors-container="#prod_errorDiv">
-                                            <option value="">-- Select an option --</option>
-                                            @foreach($products as $product)
-                                                <option value="{{ $product->unqId }}"> {{ $product->title }} </option>
-                                            @endforeach
-                                        </select>
-                                        <div id="prod_errorDiv"></div>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <select id="product" class="form-control select2" name="product" required data-parsley-required-message="Please select a Product" data-parsley-errors-container="#prod_errorDiv">
+                                                    <option value="">-- Select an option --</option>
+                                                    @foreach($products as $product)
+                                                        <option value="{{ $product->unqId }}"> {{ $product->title }} </option>
+                                                    @endforeach
+                                                </select>
+                                                <div id="prod_errorDiv"></div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <a href="{{ route('admin_product_create') }}" class="btn btn-info btn-sm round">
+                                                    <i class="la la-plus-square font-medium-2"></i> Add New Product
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="quantity">Quantity *</label>
                                     <div class="col-md-9">
-                                        <input type="number" id="quantity" class="form-control" placeholder="Quantity" name="quantity" min="1" required data-parsley-required-message="Please enter Quantity">
+                                        <div class="input-group mt-0">
+                                            <!-- <div class="input-group-prepend">
+                                                <span class="input-group-text">Current Stock : 0</span>
+                                                <span class="input-group-text">+</span>
+                                            </div> -->
+                                            <input type="number" id="quantity" class="form-control" placeholder="Quantity" name="quantity" min="1" required data-parsley-required-message="Please enter Quantity">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row last">
@@ -63,13 +78,17 @@
                                             <div class="col-md-8">
                                                 <select id="supplier" class="form-control select2" name="supplier" required data-parsley-required-message="Please select a Supplier" data-parsley-errors-container="#supplier_errorDiv">
                                                     <option value="">-- Select an option --</option>
-                                                    <option value="1">Lalaine</option>
+                                                    @foreach($suppliers as $supplier)
+                                                        <option value="{{ $supplier->unqId }}">
+                                                            {{ $supplier->name }} - {{ $supplier->companyName }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 <div id="supplier_errorDiv"></div>
                                             </div>
                                             <div class="col-md-4">
-                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addSupplierModal">
-                                                    <i class="la la-plus-square"></i> Add New Supplier
+                                                <button type="button" class="btn btn-info btn-sm round" data-toggle="modal" data-target="#addSupplierModal">
+                                                    <i class="la la-plus-square font-medium-2"></i> Add New Supplier
                                                 </button>
                                             </div>
                                         </div>
@@ -95,7 +114,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <!-- <div class="form-group row">
                                     <label class="col-md-3 label-control">Choose Purchase Status *</label>
                                     <div class="col-md-9">
                                         <div class="input-group skin skin-square">
@@ -113,11 +132,11 @@
                                             </div>
                                         </div>
                                         <div id="status_errorDiv"></div>
-                                        <!-- <div class="help-block">
+                                        <div class="help-block">
                                             <small>N.B: Only stocks with Purchase status as <strong>received</strong> will be added to available stocks.</small>
-                                        </div> -->
+                                        </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group row last">
                                     <label class="col-md-3 label-control">Choose Payment Mode *</label>
                                     <div class="col-md-9">
@@ -129,6 +148,10 @@
                                             <div class="d-inline-block custom-control custom-radio">
                                                 <input type="radio" name="payment_mode" class="custom-control-input" id="credit" value="credit">
                                                 <label for="credit">Credit</label>
+                                            </div>
+                                            <div class="d-inline-block custom-control custom-radio">
+                                                <input type="radio" name="payment_mode" class="custom-control-input" id="others" value="others">
+                                                <label for="others">Others</label>
                                             </div>
                                         </div>
                                         <div id="mode_errorDiv"></div>
@@ -157,33 +180,65 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="addSupplierModalLabel"><i class="la la-road2"></i> Basic Modal</h4>
+                <h4 class="modal-title" id="addSupplierModalLabel">
+                    <i class="la la-road2"></i> Add New Supplier
+                </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <h5><i class="la la-arrow-right"></i> Check First Paragraph</h5>
-                <p>Oat cake ice cream candy chocolate cake chocolate cake cotton candy dragée apple pie. Brownie carrot cake candy canes bonbon fruitcake topping halvah. Cake sweet roll cake cheesecake cookie chocolate cake liquorice. Apple pie sugar plum powder donut soufflé.
-                </p>
-                <p>Sweet roll biscuit donut cake gingerbread. Chocolate cupcake chocolate bar ice cream. Danish candy cake.
-                </p>
-                <hr>
-                <h5><i class="la la-lightbulb-o"></i> Some More Text</h5>
-                <p>Cupcake sugar plum dessert tart powder chocolate fruitcake jelly. Tootsie roll bonbon toffee danish. Biscuit sweet cake gummies danish. Tootsie roll cotton candy tiramisu lollipop candy cookie biscuit pie.
-                </p>
-                <div class="alert alert-success" role="alert">
-                    <span class="text-bold-600">Well done!</span> You successfully read this important alert message.
+
+            <form action="" method="POST" id="supplierForm" novalidate="" data-parsley-validate="">
+                {{ csrf_field() }}
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name"> Name *</label>
+                                <input type="text" id="name" class="form-control" placeholder="Name" name="name" required data-parsley-required-message="Please enter Name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" class="form-control" placeholder="Email" name="email" required data-parsley-required-message="Please enter Email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone_number">Phone Number *</label>
+                                <input type="number" id="phone_number" class="form-control" placeholder="Phone Number" name="phone_number" required data-parsley-required-message="Please enter Phone Number">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="company_name">Company Name</label>
+                                <input type="text" id="company_name" class="form-control" placeholder="Company Name" name="company_name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="company_address">Company Address</label>
+                                <textarea id="company_address" rows="5" class="form-control" name="company_address" placeholder="Company Address"></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn grey btn-outline-warning" data-dismiss="modal">
-                    <i class="la la-close"></i> Close
-                </button>
-                <button type="submit" class="btn btn-primary">
-                    <i class="la la-check-square-o"></i> Save
-                </button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn grey btn-outline-warning" data-dismiss="modal">
+                        <i class="la la-close"></i> Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="la la-check-square-o"></i> Save
+                    </button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
@@ -194,10 +249,57 @@
 @push('page_scripts')
     <script type="text/javascript">
 
-        // $(function(){
-        //     $("#addSupplier")
-        // })
+        $(function(){
 
+            $("#supplierForm").submit(function(e){
+                e.preventDefault();
+                var formData = $("#supplierForm").serialize();
+
+                $.ajax({
+                    url: "{{ URL::route('admin_inventory_purchase_store_supplier') }}",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: formData,
+                    success:function(response){
+                        if (response.status) {
+
+                            $("#addSupplierModal").modal('hide');
+                            toastr.success(response.message, 'Success', {timeOut: 2000});
+                            $("#supplierForm")[0].reset();
+                            $('#supplierForm').parsley().reset();
+
+                            // Select2 : Create a DOM Option and pre-select by default
+                            // var newOption = new Option(data.text, data.id, true, true);
+                            // $('#select2').append(newOption).trigger('change');
+
+                            // OR, working in IE8
+                            var optionText = response.data.name + ' - ' + response.data.companyName;
+                            var newOption = new Option(optionText, response.data.unqId, true, true);
+                            $(newOption).html(optionText); // jquerify the DOM object 'newOption' so we can use the html method
+                            $("#supplier").prepend(newOption);
+
+                        } else{
+
+                            if(response.errors) {
+                                if(response.errors.name){
+                                    toastr.error(response.errors.name[0], 'Error !', {timeOut: 2000});
+                                }
+                                if(response.errors.email){
+                                    toastr.error(response.errors.email[0], 'Error !', {timeOut: 2000});
+                                }
+                                if(response.errors.phone_number){
+                                    toastr.error(response.errors.phone_number[0], 'Error !', {timeOut: 2000});
+                                }
+                            }
+                        }
+                    },
+                    error:function(response) {
+                        console.log('inisde ajax error handler');
+                    }
+                });
+            });
+
+        });
 
     </script>
 @endpush

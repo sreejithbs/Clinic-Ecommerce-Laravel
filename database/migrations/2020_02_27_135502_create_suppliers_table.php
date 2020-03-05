@@ -16,13 +16,21 @@ class CreateSuppliersTable extends Migration
         Schema::create('suppliers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('unqId')->index();
+            $table->unsignedBigInteger('createdByAdminId')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phoneNumber', 20);
-            $table->string('companyName');
-            $table->longText('companyAddress');
+            $table->string('companyName')->nullable();
+            $table->longText('companyAddress')->nullable();
             $table->softDeletes();
             $table->timestamps();
+        });
+
+        /**
+         * Foreign Key Constraint
+         */
+        Schema::table('suppliers', function (Blueprint $table) {
+            $table->foreign('createdByAdminId')->references('id')->on('admins')->onDelete('set null');
         });
     }
 
