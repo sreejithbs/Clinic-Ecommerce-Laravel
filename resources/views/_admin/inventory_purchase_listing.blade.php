@@ -1,6 +1,6 @@
 @extends('_admin.partials.master')
-@section('page_title', 'List all Products | Inner Beauty')
-@section('page_heading', 'List all Products')
+@section('page_title', 'List all Inventory Purchases | Inner Beauty')
+@section('page_heading', 'List all Inventory Purchases')
 
 @section('content')
 
@@ -16,56 +16,35 @@
                         <table class="table table-striped table-bordered dtTable">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Image</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Total Stock Qty</th>
-                                    <th>Selling Price</th>
+                                    <th>Date</th>
+                                    <th>Products</th>
+                                    <th>Total Price</th>
+                                    <th>Supplier Name</th>
+                                    <th>Payment Mode</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($products as $product)
+                                @foreach($inventory_purchases as $inventory_purchase)
                                     <tr>
-                                        <td> {{ $loop->iteration }}</td>
+                                        <td> {{ $inventory_purchase->dateTime }} </td>
                                         <td>
-                                            <img src="{{ asset($product->product_images()->first()->originalImagePath) }}" height="100px" width="100px">
+                                            @php
+                                                $count = $inventory_purchase->products()->count();
+                                                $title = $inventory_purchase->products()->first()->title;
+                                                if($count > 1){
+                                                    $title .= "<strong> & " . ($count-1) ." more products</strong>";
+                                                }
+                                                echo $title;
+                                            @endphp
                                         </td>
-                                        <td> {{ $product->title }}</td>
+                                        <td> $ {{ $inventory_purchase->totalPrice }} </td>
+                                        <td> {{ $inventory_purchase->supplier->name }} </td>
+                                        <td> {{ ucfirst($inventory_purchase->paymentMode) }} </td>
                                         <td>
-                                            {!! Str::limit($product->description, 40, ' ...') !!}
-                                        </td>
-                                        <td>
-                                            {{ $product->stockQuantity }}
-
-                                            @if($product->stockStatus == 'in_stock')
-                                                <span class="badge badge-success">In Stock</span>
-                                            @else
-                                                <span class="badge badge-danger">Out of Stock</span>
-                                            @endif
-                                        </td>
-
-                                        <!-- <td> ${{ $product->sellingPrice }} (<del> ${{ $product->regularPrice }} </del>)</td> -->
-                                        <td> ${{ $product->sellingPrice }} </td>
-                                        <td>
-
-                                            <a href="{{ route('admin_product_edit', $product->unqId ) }}" class="btn btn-icon btn-info btn-sm">
+                                            <!-- <a href="" class="btn btn-icon btn-info btn-sm">
                                                 <i class="la la-eye"></i>
-                                            </a>
-
-                                            {!! Form::open(array(
-                                                    'route' => array('admin_product_delete', $product->unqId),
-                                                    'method' => 'delete',
-                                                    'class'=>'delSwalForm',
-                                                    'style'=>'display:inline'
-                                            )) !!}
-
-                                            <button type="submit" class="btn btn-icon btn-danger btn-sm delSwal">
-                                                <i class="la la-trash"></i>
-                                            </button>
-
-                                            {!! Form::close() !!}
+                                            </a> -->
                                         </td>
                                     </tr>
                                 @endforeach

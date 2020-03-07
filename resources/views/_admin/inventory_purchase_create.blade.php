@@ -22,53 +22,45 @@
                                 <h4 class="form-section">
                                 	<i class="ft-clipboard"></i> Purchase Product Info
                                 </h4>
-                                <div class="form-group row">
+                                <div class="form-group row last">
                                     <label class="col-md-3 label-control" for="product">Select Product *</label>
-                                    <div class="col-md-9">
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <select id="product" class="form-control select2" name="product">
-                                                    <option value="">-- Select an option --</option>
-                                                    @foreach($products as $product)
-                                                        <option value="{{ $product->unqId }}"> {{ $product->title }} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <a href="{{ route('admin_product_create') }}" class="btn btn-info btn-sm round">
-                                                    <i class="la la-plus-square font-medium-2"></i> Add New Product
-                                                </a>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-5">
+                                        <select id="product" class="form-control select2" name="product">
+                                            <option value="">-- Select an option --</option>
+                                            @foreach($products as $product)
+                                                <option value="{{ $product->unqId }}"> {{ $product->title }} </option>
+                                            @endforeach
+                                        </select>
                                     </div>
+
+                                    <table class="table table-bordered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Unit Price</th>
+                                                <th>Current Stock</th>
+                                                <th>Quantity</th>
+                                                <th>Unit SubTotal</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="appendDiv">
+                                            <tr class="no-data text-center">
+                                                <td colspan="6">-- No Products data added --</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table class="table table-responsive table-bordered mb-0 table-lg">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Product Name</th>
-                                                        <th>Unit Price</th>
-                                                        <th>Current Stock</th>
-                                                        <th>Quantity</th>
-                                                        <th>Unit SubTotal</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="appendDiv">
-                                                    <tr class="no-data">
-                                                        <td colspan="6">No Purchases added</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="form-group row last">
                                     <label class="col-md-3 label-control" for="total_price">Total Price</label>
-                                    <div class="col-md-9">
-                                        <input type="text" id="total_price" class="form-control" value="0">
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="text" id="total_price" class="form-control" value="0" disabled>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -118,29 +110,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="form-group row">
-                                    <label class="col-md-3 label-control">Choose Purchase Status *</label>
-                                    <div class="col-md-9">
-                                        <div class="input-group skin skin-square">
-                                            <div class="d-inline-block custom-control custom-radio" style="padding-left: 0px;">
-                                                <input type="radio" name="purchase_status" class="custom-control-input" id="ordered" value="ordered" required data-parsley-required-message="Please choose Purchase Status" data-parsley-errors-container="#status_errorDiv">
-                                                <label for="ordered">Ordered</label>
-                                            </div>
-                                            <div class="d-inline-block custom-control custom-radio">
-                                                <input type="radio" name="purchase_status" class="custom-control-input" id="pending" value="pending">
-                                                <label for="pending">Pending</label>
-                                            </div>
-                                            <div class="d-inline-block custom-control custom-radio">
-                                                <input type="radio" name="purchase_status" class="custom-control-input" id="received" value="received">
-                                                <label for="received">Received</label>
-                                            </div>
-                                        </div>
-                                        <div id="status_errorDiv"></div>
-                                        <div class="help-block">
-                                            <small>N.B: Only stocks with Purchase status as <strong>received</strong> will be added to available stocks.</small>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <div class="form-group row last">
                                     <label class="col-md-3 label-control">Choose Payment Mode *</label>
                                     <div class="col-md-9">
@@ -253,19 +222,22 @@
 @push('page_scripts')
     <script type="text/javascript">
 
-        function normalizePrices(){
+        function recalculatePrices(){
             var mainTotal = 0;
+            $("#total_price").val('0');
             $(".appendDiv tr").not('.no-data').each(function(){
                 var subTotal = 0;
 
-                var unit_price = parseFloat( $(this).find('.unit_price').val() );
                 var unit_qty = parseInt( $(this).find('.quantity').val() );
+                var unit_price = parseFloat( $(this).find('.unit_price').text() );
 
-                subTotal = unit_price * unit_qty;
-                $(this).find('.unit_sub_total').val(subTotal);
+                if(!isNaN(unit_qty)){
+                    subTotal = unit_price * unit_qty;
+                    $(this).find('.unit_sub_total').text(subTotal);
 
-                mainTotal += subTotal;
-                $("#total_price").val(mainTotal);
+                    mainTotal += subTotal;
+                    $("#total_price").val(mainTotal);
+                }
             });
         }
 
@@ -293,7 +265,7 @@
                             // var newOption = new Option(data.text, data.id, true, true);
                             // $('#select2').append(newOption).trigger('change');
 
-                            // OR, working in IE8
+                            // OR, IE8 compatible
                             var optionText = response.data.name + ' - ' + response.data.companyName;
                             var newOption = new Option(optionText, response.data.unqId, true, true);
                             $(newOption).html(optionText); // jquerify the DOM object 'newOption' so we can use the html method
@@ -302,8 +274,14 @@
                         } else{
 
                             if(response.errors) {
-                                for (var target in response.errors) {
-                                    toastr.error(target[0], 'Error !', {timeOut: 2000});
+                                if(response.errors.name){
+                                    toastr.error(response.errors.name[0], 'Error !', {timeOut: 2000});
+                                }
+                                if(response.errors.email){
+                                    toastr.error(response.errors.email[0], 'Error !', {timeOut: 2000});
+                                }
+                                if(response.errors.phone_number){
+                                    toastr.error(response.errors.phone_number[0], 'Error !', {timeOut: 2000});
                                 }
                             }
                         }
@@ -313,6 +291,7 @@
                     }
                 });
             });
+
 
             // Select product from product list
             $('body').on('change', '#product', function(){
@@ -328,17 +307,16 @@
                     dataType: 'json',
                     type: 'POST',
                     data: {
-                        // '_token': CSRF_TOKEN,
                         'product' : $elm.val()
                     },
                     success:function(response){
                         if (response.status) {
 
                             $elm.prop('disabled', true);
-                            $('#product').select2();
+                            $('#product').select2().val('').trigger('change.select2');
 
                             $(".no-data").remove();
-                            $("#appendDiv").append(response.renderHtml);
+                            $(".appendDiv").append(response.renderHtml);
                         }
                     },
                     error:function(response) {
@@ -346,6 +324,7 @@
                     }
                 });
             });
+
 
             // Product Quantity Change
             $('body').on('change', '.quantity', function(){
@@ -355,15 +334,27 @@
                     return;
                 }
 
-                normalizePrices();
+                recalculatePrices();
             });
+
 
             // Product Remove
-            $('body').on('change', '.delProdBtn', function(){
-                $(this).parents('tr').remove();
-                normalizePrices();
-            });
+            $('body').on('click', '.delProdBtn', function(){
 
+                var prod_unq_id = $(this).attr('data-prod_unq_id');
+                $(this).parents('tr').fadeOut(300, function(){
+                    $(this).remove();
+                    
+                    if($(".appendDiv tr").length == 0){
+                        $(".appendDiv").append('<tr class="no-data text-center"><td colspan="6">-- No Products data added --</td></tr>');
+                    }
+
+                    $('#product option[value="' + prod_unq_id + '"]').prop('disabled', false);
+                    $('#product').select2();
+
+                    recalculatePrices();
+                });
+            });
         });
 
     </script>

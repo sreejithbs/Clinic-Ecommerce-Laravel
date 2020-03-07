@@ -32,6 +32,7 @@ class InventoryPurchaseController extends Controller
 
     // Define Constants
     const INVENTORY_PURCHASE_CREATE = 'Inventory Purchase has been added successfully';
+    const INVENTORY_PURCHASE_CREATE_FAIL = 'Something went wrong. Inventory Purchase creation failure.';
     const SUPPLIER_CREATE = 'Supplier has been created successfully';
 
     /**
@@ -70,7 +71,6 @@ class InventoryPurchaseController extends Controller
             'supplier' => 'required',
             'purchase_date_time' => 'required',
             'notes' => 'required',
-            'purchase_status' => 'required',
             'payment_mode' => 'required',
         ]);
 
@@ -87,7 +87,6 @@ class InventoryPurchaseController extends Controller
                 $subTotal = (float)$product->sellingPrice * (int)$qty;
                 $mainTotal += $subTotal;
 
-                // $inventory_purchase->products()->attach($product->id, ['quantity' => $qty, 'subTotalPrice' => $subTotal]);
                 $sync_data[$product->id] = ['quantity' => $qty, 'subTotalPrice' => $subTotal];
             }
 
@@ -124,6 +123,7 @@ class InventoryPurchaseController extends Controller
 
         } catch (\Exception $e) {
             DB::rollback();
+            return back()->withErrors(['error' => static::INVENTORY_PURCHASE_CREATE_FAIL]);
         }
 
         return redirect()->route('admin_inventory_purchase_list')->with('success', static::INVENTORY_PURCHASE_CREATE);

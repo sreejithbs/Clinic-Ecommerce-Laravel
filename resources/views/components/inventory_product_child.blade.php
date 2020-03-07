@@ -1,6 +1,6 @@
 <tr>
 	<td class="text-center">
-		{{ $product->title }}
+		<strong> {{ $product->title }} </strong>
 	</td>
 	<td class="text-center">
 		$ <span class="unit_price">
@@ -8,21 +8,19 @@
 		</span>
 	</td>
 	<td class="text-center">
-	    <div class="badge badge-pill badge-info">
-	    	{{ $product->stockQuantity }}
-	    </div>
+		<span class="badge badge-success">
+			{{ $product->stockQuantity }}
+		</span>
 	</td>
 	<td>
-		<div class="card-body">
-			<input type="number" class="form-control quantity" placeholder="Product Quantity" name="quantity[{{ $product->unqId }}]" min="1" required data-parsley-required-message="Please enter Product Quantity">
-		</div>
+		<input type="number" class="form-control input-sm quantity" placeholder="Quantity" name="quantity[{{ $product->unqId }}]" min="1" required data-parsley-required-message="Please enter Qty">
 	</td>
 	<td class="text-center">
 		$ <span class="unit_sub_total">0</span>
 	</td>
 	<td>
-		<button type="button" class="btn btn-icon btn-danger mr-1 delProdBtn">
-			<i class="ft-x"></i>
+		<button type="button" class="btn btn-sm btn-danger delProdBtn" data-prod_unq_id="{{ $product->unqId }}">
+			<i class="ft-trash-2"></i>
 		</button>
 	</td>
 </tr>

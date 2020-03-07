@@ -26,7 +26,7 @@ class ClinicController extends Controller
     const CLINIC_CREATE = 'Clinic has been created successfully';
     const CLINIC_UPDATE = 'Clinic has been updated successfully';
     const CLINIC_DELETE = 'Clinic has been deleted successfully';
-    const CLINIC_DELETE_FAIL = 'Clinic deletion has failed';
+    const CLINIC_DELETE_FAIL = 'Something went wrong. Clinic deletion failure.';
 
     /**
      * Show the application dashboard.

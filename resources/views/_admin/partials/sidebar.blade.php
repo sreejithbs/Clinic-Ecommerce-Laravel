@@ -8,9 +8,6 @@
                 </a>
             </li>
 
-            <!-- <li class="navigation-header">
-                <span>Inventory Management</span>
-            </li> -->
             <li class="nav-item {{ \StringHelper::setActive('admin_product_*', 'open') }}">
                 <a href="javascript:void(0);"><i class="la la-list"></i>
                     <span class="menu-title">Products Management</span>
@@ -42,7 +39,7 @@
             </li>
 
             <li class="nav-item {{ \StringHelper::setActive('admin_inventory_purchase_*', 'open') }}">
-                <a href="javascript:void(0);"><i class="la la-institution"></i>
+                <a href="javascript:void(0);"><i class="ft-refresh-ccw"></i>
                     <span class="menu-title">Inventory Management</span>
                 </a>
                 <ul class="menu-content">
@@ -50,9 +47,9 @@
                         <a class="menu-item" href="{{ route('admin_inventory_purchase_create') }}">Add new Inventory Purchase</a>
                     </li>
 
-                    {{-- <li class="{{ \StringHelper::setActive('admin_inventory_purchase_list') }}">
+                    <li class="{{ \StringHelper::setActive('admin_inventory_purchase_list') }}">
                         <a class="menu-item" href="{{ route('admin_inventory_purchase_list') }}">List all Inventory Purchases</a>
-                    </li> --}}
+                    </li>
                 </ul>
             </li>
         </ul>

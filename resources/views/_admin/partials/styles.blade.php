@@ -74,4 +74,12 @@
 	.parsley-errors-list.filled {
 		opacity: 1;
 	}
+
+	.appendDiv tr:not(.no-data){
+		background-color: #d7e7ff;
+	}
+
+	.no-data{
+		background-color: #ffb1b19e;
+	}
 </style>

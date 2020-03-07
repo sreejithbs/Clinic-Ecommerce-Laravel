@@ -32,7 +32,7 @@ class ProductController extends Controller
     const PRODUCT_CREATE = 'Product has been added successfully';
     const PRODUCT_UPDATE = 'Product has been updated successfully';
     const PRODUCT_DELETE = 'Product has been deleted successfully';
-    const PRODUCT_DELETE_FAIL = 'Product deletion has failed';
+    const PRODUCT_DELETE_FAIL = 'Something went wrong. Product deletion failure.';
 
     /**
      * Show the application dashboard.
