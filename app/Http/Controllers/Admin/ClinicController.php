@@ -97,8 +97,8 @@ class ClinicController extends Controller
             $clinic->clinic_profile()->save($clinic_profile);
         }
 
-        // ##### EMAIL TODO : Trigger Mail Here
-        // event(new ClinicWasCreatedEvent($clinic));
+        // Trigger Mail
+        event(new ClinicWasCreatedEvent($clinic, $request->only('password')));
 
         return redirect()->route('admin_clinic_list')->with('success', static::CLINIC_CREATE);
     }

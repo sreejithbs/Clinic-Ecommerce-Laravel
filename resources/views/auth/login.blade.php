@@ -13,16 +13,13 @@
                     </div>
                 </div>
                 <h6 class="card-subtitle line-on-side text-muted text-center font-small-4 pt-2">
-                    <span><strong> {{ isset($url) ? ucwords($url) : ""}} {{ __('Login') }} </strong></span>
+                    <span><strong> {{ __('Login') }} </strong></span>
                 </h6>
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    @isset($url)
-                        <form class="form-horizontal form-simple" method="POST" action='{{ url("$url/login") }}' aria-label="{{ __('Login') }}">
-                    @else
-                        <form class="form-horizontal form-simple" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                    @endisset
+
+                    <form class="form-horizontal form-simple" method="POST" action="{{ route('common_login_handle') }}" aria-label="{{ __('Login') }}">
 
                         {{ csrf_field() }}
 

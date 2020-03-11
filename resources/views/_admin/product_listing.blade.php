@@ -5,6 +5,18 @@
 @section('content')
 
 <section id="basic-form-layouts">
+    
+    <div class="row">
+        <div class="col-md-3 ml-auto">
+            <div class="float-md-right">
+                <a href="{{ route('admin_product_create') }}" class="btn btn-info btn-sm">
+                    <i class="la la-plus-square"></i> Add New Product
+                </a>
+            </div>
+        </div>
+    </div>
+    <br/>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -17,11 +29,11 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Product Name</th>
                                     <th>Image</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Total Stock Qty</th>
-                                    <th>Selling Price</th>
+                                    <!-- <th>Description</th> -->
+                                    <th>Total Inventory Qty</th>
+                                    <!-- <th>Selling Price</th> -->
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -29,27 +41,25 @@
                                 @foreach($products as $product)
                                     <tr>
                                         <td> {{ $loop->iteration }}</td>
+                                        <td> {{ $product->title }}</td>
                                         <td>
                                             <img src="{{ asset($product->product_images()->first()->originalImagePath) }}" height="100px" width="100px">
                                         </td>
-                                        <td> {{ $product->title }}</td>
-                                        <td>
+                                        <!-- <td>
                                             {!! Str::limit($product->description, 40, ' ...') !!}
-                                        </td>
+                                        </td> -->
                                         <td>
-                                            {{ $product->stockQuantity }}
-
                                             @if($product->stockStatus == 'in_stock')
-                                                <span class="badge badge-success">In Stock</span>
+                                                <span class="badge badge-success">
                                             @else
-                                                <span class="badge badge-danger">Out of Stock</span>
+                                                <span class="badge badge-danger">
                                             @endif
+
+                                            {{ $product->stockQuantity }} </span>
                                         </td>
 
-                                        <!-- <td> ${{ $product->sellingPrice }} (<del> ${{ $product->regularPrice }} </del>)</td> -->
-                                        <td> ${{ $product->sellingPrice }} </td>
+                                        <!-- <td> ${{ $product->sellingPrice }} </td> -->
                                         <td>
-
                                             <a href="{{ route('admin_product_edit', $product->unqId ) }}" class="btn btn-icon btn-info btn-sm">
                                                 <i class="la la-eye"></i>
                                             </a>

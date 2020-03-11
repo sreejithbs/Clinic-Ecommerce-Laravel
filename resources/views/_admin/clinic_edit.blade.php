@@ -112,7 +112,7 @@
                                 </div>
 
                                 <h4 class="form-section">
-                                    <i class="ft-credit-card"></i> Clinic Commission Settings
+                                    <i class="ft-credit-card"></i> Clinic Commission Details
                                 </h4>
                                  <div class="form-group row last">
                                     <label class="col-md-3 label-control" for="commission_percentage">Commission Percentage *</label>

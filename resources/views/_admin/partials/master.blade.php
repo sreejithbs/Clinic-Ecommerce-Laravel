@@ -32,13 +32,13 @@
 						<strong> @yield('page_heading') </strong>
 					</h3>
 				</div>
-				<div class="content-header-right col-md-6 col-12">
+				<!-- <div class="content-header-right col-md-6 col-12">
 					<div class="float-md-right">
 						<a href="{{ route('admin_dashboard') }}" class="btn btn-info round btn-glow px-2">
 						    <i class="la la-home"></i> Home
 						</a>
 					</div>
-				</div>
+				</div> -->
 			</div>
 
 			<!-- Sidebar-->

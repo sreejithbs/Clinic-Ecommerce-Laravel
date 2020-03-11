@@ -11,22 +11,22 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 use Illuminate\Http\Request;
-use App\Models\Clinic;
+use App\Models\Admin;
 
-class ClinicWasCreatedEvent
+class SuperAdminWasCreatedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $clinic, $request;
+    public $admin, $request;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Clinic $clinic, Request $request)
+    public function __construct(Admin $clinic, Request $request)
     {
-        $this->clinic = $clinic;
+        $this->admin = $admin;
         $this->request = $request;
     }
 

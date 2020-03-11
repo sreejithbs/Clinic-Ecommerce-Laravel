@@ -82,4 +82,8 @@
 	.no-data{
 		background-color: #ffb1b19e;
 	}
+
+	table tr, td{
+		text-align: center !important;
+	}
 </style>

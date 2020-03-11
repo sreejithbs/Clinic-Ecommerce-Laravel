@@ -17,9 +17,15 @@ Route::get('/clear', function(){
 	Artisan::call('config:cache');
 });
 
-Route::get('/', 'Auth\LoginController@showAdminLoginForm')->name('home');
+Route::get('/', function(){
+	return redirect()->route('common_login_form');
+})->name('home');
 
-Auth::routes();
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('common_login_form');
+Route::post('/login', 'Auth\LoginController@handleLogin')->name('common_login_handle');
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+// Auth::routes();
 
 // ************************* Start of USER ROUTES ******************************
 Route::prefix('user')->group(function () {
@@ -29,10 +35,15 @@ Route::prefix('user')->group(function () {
 
 // ************************* Start of ADMIN ROUTES ******************************
 Route::prefix('admin')->group(function () {
-	Route::get('/login', 'Auth\LoginController@showAdminLoginForm')->name('admin_login');
-	Route::post('/login', 'Auth\LoginController@adminLogin');
-	Route::get('/register', 'Auth\RegisterController@showAdminRegisterForm')->name('admin_register');
-	Route::post('/register', 'Auth\RegisterController@createAdmin');
+	// Route::get('/login', 'Auth\LoginController@showAdminLoginForm')->name('admin_login');
+	// Route::post('/login', 'Auth\LoginController@adminLogin');
+	// Route::get('/register', 'Auth\RegisterController@showAdminRegisterForm')->name('admin_register');
+	// Route::post('/register', 'Auth\RegisterController@createAdmin');
+
+	Route::group(['as' => 'admin_'], function(){
+	    Route::get('/create', 'Admin\ProductController@create')->name('create');
+	    Route::post('/store', 'Admin\ProductController@store')->name('store');
+	});
 
 	Route::get('/dashboard', 'Admin\DashboardController@index')->name('admin_dashboard');
 
@@ -67,10 +78,10 @@ Route::prefix('admin')->group(function () {
 
 // ************************* Start of CLINIC ROUTES ******************************
 Route::prefix('clinic')->group(function () {
-	Route::get('/login', 'Auth\LoginController@showClinicAdminLoginForm')->name('clinic_login');
-	Route::post('/login', 'Auth\LoginController@clinicAdminLogin');
-	Route::get('/register', 'Auth\RegisterController@showClinicAdminRegisterForm')->name('clinic_register');
-	Route::post('/register', 'Auth\RegisterController@createClinicAdmin');
+	// Route::get('/login', 'Auth\LoginController@showClinicAdminLoginForm')->name('clinic_login');
+	// Route::post('/login', 'Auth\LoginController@clinicAdminLogin');
+	// Route::get('/register', 'Auth\RegisterController@showClinicAdminRegisterForm')->name('clinic_register');
+	// Route::post('/register', 'Auth\RegisterController@createClinicAdmin');
 
 	Route::get('/dashboard', 'Clinic\DashboardController@index')->name('clinic_dashboard');
 });

@@ -2,13 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\ClinicWasCreatedEvent;
+use App\Events\SuperAdminWasCreatedEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Mail;
 
-class SendClinicCreatedNotification
+class SendSuperAdminCreatedNotification
 {
     /**
      * Create the event listener.
@@ -23,22 +23,21 @@ class SendClinicCreatedNotification
     /**
      * Handle the event.
      *
-     * @param  ClinicWasCreatedEvent  $event
+     * @param  SuperAdminWasCreatedEvent  $event
      * @return void
      */
-    public function handle(ClinicWasCreatedEvent $event)
+    public function handle(SuperAdminWasCreatedEvent $event)
     {
-        $clinic = $event->clinic;
+        $admin = $event->admin;
 
         $info = array(
-            'to' => $clinic->email,
+            'to' => $admin->email,
             'from' => 'no-reply@innerbeauty.com',
-            'subject' => 'Clinic Registration Successful | Inner Beauty',
-            'template' => 'emails.clinic_create',
+            'subject' => 'Super-Admin Registration Successful | Inner Beauty',
+            'template' => 'emails.admin_create',
             'data' => [
-                'name' =>  $clinic->name,
-                'clinic_name' =>  $clinic->clinic_profile->clinicName,
-                'email' => $clinic->email,
+                'name' =>  $admin->name,
+                'email' => $admin->email,
                 'password' => $event->request->input('password'),
                 'login_url' => url('/')
             ]

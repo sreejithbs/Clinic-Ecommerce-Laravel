@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2020 at 03:55 PM
+-- Generation Time: Mar 11, 2020 at 07:15 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -45,7 +45,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `unqId`, `name`, `email`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '26c6cad0', 'Admin Demo', 'admin@demo.com', '$2y$10$rBdXVDifCtb848Fn0gKjL.wioZxymwProBJZOzM4sd5WJ6u96EDQa', NULL, NULL, '2020-02-27 09:24:53', '2020-02-27 09:24:53');
+(1, '40cb2706', 'Admin Demo', 'admin@demo.com', '$2y$10$ZsY.J3eExZtIU8YGDBE0jeNiBMtM5Rev7sW4Z7YET./HF6lpj8eCy', NULL, NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23');
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,7 @@ CREATE TABLE `clinic_admins` (
 --
 
 INSERT INTO `clinic_admins` (`id`, `unqId`, `name`, `email`, `password`, `status`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '2da0d0a0', 'Clinic Demo', 'clinic@demo.com', '$2y$10$XVA0GVQQO7gxKtLLYHMqDOUapbQPQK8.sqeqGm.US1fO1eXdDP6Qq', 'active', NULL, NULL, '2020-02-27 09:24:53', '2020-02-27 09:24:53');
+(1, 'f3a6be64', 'Clinic Demo', 'clinic@demo.com', '$2y$10$p35urmIUbCThVkPQaaA.A.Ovo0UWXherqIQvO1AgIatQpCYhzcLBG', 'active', NULL, NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23');
 
 -- --------------------------------------------------------
 
@@ -93,7 +93,7 @@ CREATE TABLE `clinic_profiles` (
   `bankName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bankCode` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bankAddress` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `commissionPercentage` decimal(8,2) NOT NULL DEFAULT '10.00',
+  `commissionPercentage` decimal(6,2) NOT NULL DEFAULT '10.00',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -104,7 +104,7 @@ CREATE TABLE `clinic_profiles` (
 --
 
 INSERT INTO `clinic_profiles` (`id`, `createdByAdminId`, `clinicAdminId`, `clinicReferenceId`, `clinicName`, `clinicAddress`, `phoneNumber`, `secondaryEmail`, `bankAcNumber`, `bankAcHolderName`, `bankName`, `bankCode`, `bankAddress`, `commissionPercentage`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'ref_67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-02-27 09:24:53', '2020-02-27 09:24:53');
+(1, 1, 1, 'ref_67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23');
 
 -- --------------------------------------------------------
 
@@ -117,15 +117,79 @@ CREATE TABLE `inventory_purchases` (
   `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdByAdminId` bigint(20) UNSIGNED DEFAULT NULL,
   `supplierId` bigint(20) UNSIGNED DEFAULT NULL,
-  `productId` bigint(20) UNSIGNED NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `totalPrice` decimal(10,2) NOT NULL,
   `dateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `note` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attachment` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `paymentMode` enum('cash','credit') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `paymentStatus` enum('ordered','pending','received') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `totalPrice` decimal(10,2) NOT NULL,
+  `notes` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attachment` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paymentMode` enum('cash','credit','others') COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `inventory_purchases`
+--
+
+INSERT INTO `inventory_purchases` (`id`, `unqId`, `createdByAdminId`, `supplierId`, `dateTime`, `totalPrice`, `notes`, `attachment`, `paymentMode`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'd11d41a1', 1, 3, '2020-03-11 02:30:00', '2248.00', 'This is for reference purposes', '/uploads/inventory/1583949779-pdf-pdf-invoice3-1.png', 'cash', NULL, '2020-03-11 12:32:59', '2020-03-11 12:32:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_purchase_product`
+--
+
+CREATE TABLE `inventory_purchase_product` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `productId` bigint(20) UNSIGNED NOT NULL,
+  `inventoryPurchaseId` bigint(20) UNSIGNED NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `subTotalPrice` decimal(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `inventory_purchase_product`
+--
+
+INSERT INTO `inventory_purchase_product` (`id`, `productId`, `inventoryPurchaseId`, `quantity`, `subTotalPrice`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, 5, '450.00', '2020-03-11 12:32:59', '2020-03-11 12:32:59'),
+(2, 1, 1, 2, '1798.00', '2020-03-11 12:32:59', '2020-03-11 12:32:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_transfers`
+--
+
+CREATE TABLE `inventory_transfers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdByAdminId` bigint(20) UNSIGNED DEFAULT NULL,
+  `clinicId` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'which clinic product is to be transferred',
+  `dateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `totalPrice` decimal(10,2) NOT NULL,
+  `notes` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attachment` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_transfer_product`
+--
+
+CREATE TABLE `inventory_transfer_product` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `productId` bigint(20) UNSIGNED NOT NULL,
+  `inventoryTransferId` bigint(20) UNSIGNED NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `subTotalPrice` decimal(10,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -155,7 +219,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2020_02_18_162807_create_products_table', 1),
 (7, '2020_02_18_163241_create_product_images_table', 1),
 (8, '2020_02_27_135502_create_suppliers_table', 1),
-(9, '2020_02_27_135538_create_inventory_purchases_table', 1);
+(9, '2020_02_27_135538_create_inventory_purchases_table', 1),
+(10, '2020_03_04_143219_create_inventory_purchase_product_table', 1),
+(11, '2020_03_04_143516_create_inventory_transfers_table', 1),
+(12, '2020_03_04_144129_create_inventory_transfer_product_table', 1);
 
 -- --------------------------------------------------------
 
@@ -193,6 +260,14 @@ CREATE TABLE `products` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `unqId`, `createdByAdminId`, `title`, `slug`, `description`, `remarks`, `initialStockQuantity`, `stockQuantity`, `stockStatus`, `regularPrice`, `sellingPrice`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'd33afd53', 1, 'Demo Item', 'demo-item', 'This is a demo item', 'no comments', 99, 101, 'in_stock', '1000.00', '899.00', NULL, '2020-03-11 12:20:32', '2020-03-11 12:32:59'),
+(2, 'ef126dcc', 1, 'Stem Cell Cosmetic', 'stem-cell-cosmetic', 'This is a description for Stem Cell Cosmetic', 'no comments', 50, 55, 'in_stock', '99.00', '90.00', NULL, '2020-03-11 12:22:28', '2020-03-11 12:32:59');
+
 -- --------------------------------------------------------
 
 --
@@ -211,6 +286,15 @@ CREATE TABLE `product_images` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`id`, `productId`, `originalImagePath`, `smallImagePath`, `mediumImagePath`, `largeImagePath`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, '/uploads/products/1583949032-image.jpg', NULL, NULL, NULL, NULL, '2020-03-11 12:20:32', '2020-03-11 12:20:32'),
+(2, 2, '/uploads/products/1583949148-ageless-derma-stem-cell-and-peptide-anti-wrinkle-cream-1-280x300.png', NULL, NULL, NULL, NULL, '2020-03-11 12:22:28', '2020-03-11 12:22:28'),
+(3, 2, '/uploads/products/1583949148-orig.jpg', NULL, NULL, NULL, NULL, '2020-03-11 12:22:28', '2020-03-11 12:22:28');
+
 -- --------------------------------------------------------
 
 --
@@ -220,15 +304,25 @@ CREATE TABLE `product_images` (
 CREATE TABLE `suppliers` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdByAdminId` bigint(20) UNSIGNED DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phoneNumber` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `companyName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `companyAddress` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `companyName` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `companyAddress` longtext COLLATE utf8mb4_unicode_ci,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `unqId`, `createdByAdminId`, `name`, `email`, `phoneNumber`, `companyName`, `companyAddress`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, '5411c9e9', NULL, 'Supplier Tom Demo', 'supplier_tom@demo.com', '9219592195', 'Tom\'s Manufacturing Company', 'Test street, Test Avenue', NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23'),
+(2, 'e37acacd', NULL, 'Supplier John Demo', 'supplier_john@demo.com', '9219592195', 'John\'s & Co Company', 'Test street, Test Square', NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23'),
+(3, '4aeae290', 1, 'Adam Roger', 'roger@demo.com', '9219599999', 'ABC', 'Something', NULL, '2020-03-11 12:32:07', '2020-03-11 12:32:07');
 
 -- --------------------------------------------------------
 
@@ -254,7 +348,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `unqId`, `name`, `email`, `email_verified_at`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '00ee3f00', 'User Demo', 'user@demo.com', NULL, '$2y$10$GEYsgzFzMJmgzJEaEpsAlOdjk4JPp8.gF7PLg9FQI6TPpAhWsJByq', NULL, NULL, '2020-02-27 09:24:53', '2020-02-27 09:24:53');
+(1, 'b3361673', 'User Demo', 'user@demo.com', NULL, '$2y$10$teuF1RzE3nQ7PDjMLhX/..7u1m9iTxYkGiQ1UXLCp1NrQNgzwFYwO', NULL, NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23');
 
 --
 -- Indexes for dumped tables
@@ -292,8 +386,32 @@ ALTER TABLE `inventory_purchases`
   ADD PRIMARY KEY (`id`),
   ADD KEY `inventory_purchases_unqid_index` (`unqId`),
   ADD KEY `inventory_purchases_createdbyadminid_foreign` (`createdByAdminId`),
-  ADD KEY `inventory_purchases_supplierid_foreign` (`supplierId`),
-  ADD KEY `inventory_purchases_productid_foreign` (`productId`);
+  ADD KEY `inventory_purchases_supplierid_foreign` (`supplierId`);
+
+--
+-- Indexes for table `inventory_purchase_product`
+--
+ALTER TABLE `inventory_purchase_product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inventory_purchase_product_productid_foreign` (`productId`),
+  ADD KEY `inventory_purchase_product_inventorypurchaseid_foreign` (`inventoryPurchaseId`);
+
+--
+-- Indexes for table `inventory_transfers`
+--
+ALTER TABLE `inventory_transfers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inventory_transfers_unqid_index` (`unqId`),
+  ADD KEY `inventory_transfers_createdbyadminid_foreign` (`createdByAdminId`),
+  ADD KEY `inventory_transfers_clinicid_foreign` (`clinicId`);
+
+--
+-- Indexes for table `inventory_transfer_product`
+--
+ALTER TABLE `inventory_transfer_product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inventory_transfer_product_productid_foreign` (`productId`),
+  ADD KEY `inventory_transfer_product_inventorytransferid_foreign` (`inventoryTransferId`);
 
 --
 -- Indexes for table `migrations`
@@ -329,7 +447,8 @@ ALTER TABLE `product_images`
 ALTER TABLE `suppliers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `suppliers_email_unique` (`email`),
-  ADD KEY `suppliers_unqid_index` (`unqId`);
+  ADD KEY `suppliers_unqid_index` (`unqId`),
+  ADD KEY `suppliers_createdbyadminid_foreign` (`createdByAdminId`);
 
 --
 -- Indexes for table `users`
@@ -365,31 +484,49 @@ ALTER TABLE `clinic_profiles`
 -- AUTO_INCREMENT for table `inventory_purchases`
 --
 ALTER TABLE `inventory_purchases`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `inventory_purchase_product`
+--
+ALTER TABLE `inventory_purchase_product`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `inventory_transfers`
+--
+ALTER TABLE `inventory_transfers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `inventory_transfer_product`
+--
+ALTER TABLE `inventory_transfer_product`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -413,8 +550,28 @@ ALTER TABLE `clinic_profiles`
 --
 ALTER TABLE `inventory_purchases`
   ADD CONSTRAINT `inventory_purchases_createdbyadminid_foreign` FOREIGN KEY (`createdByAdminId`) REFERENCES `admins` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `inventory_purchases_productid_foreign` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `inventory_purchases_supplierid_foreign` FOREIGN KEY (`supplierId`) REFERENCES `suppliers` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `inventory_purchase_product`
+--
+ALTER TABLE `inventory_purchase_product`
+  ADD CONSTRAINT `inventory_purchase_product_inventorypurchaseid_foreign` FOREIGN KEY (`inventoryPurchaseId`) REFERENCES `inventory_purchases` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `inventory_purchase_product_productid_foreign` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `inventory_transfers`
+--
+ALTER TABLE `inventory_transfers`
+  ADD CONSTRAINT `inventory_transfers_clinicid_foreign` FOREIGN KEY (`clinicId`) REFERENCES `clinic_admins` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `inventory_transfers_createdbyadminid_foreign` FOREIGN KEY (`createdByAdminId`) REFERENCES `admins` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `inventory_transfer_product`
+--
+ALTER TABLE `inventory_transfer_product`
+  ADD CONSTRAINT `inventory_transfer_product_inventorytransferid_foreign` FOREIGN KEY (`inventoryTransferId`) REFERENCES `inventory_transfers` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `inventory_transfer_product_productid_foreign` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `products`
@@ -427,6 +584,12 @@ ALTER TABLE `products`
 --
 ALTER TABLE `product_images`
   ADD CONSTRAINT `product_images_productid_foreign` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  ADD CONSTRAINT `suppliers_createdbyadminid_foreign` FOREIGN KEY (`createdByAdminId`) REFERENCES `admins` (`id`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

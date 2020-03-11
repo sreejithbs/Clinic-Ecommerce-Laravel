@@ -13,10 +13,6 @@
                     <span class="menu-title">Products Management</span>
                 </a>
                 <ul class="menu-content">
-                    <li class="{{ \StringHelper::setActive('admin_product_create') }}">
-                        <a class="menu-item" href="{{ route('admin_product_create') }}">Add new Product</a>
-                    </li>
-
                     <li class="{{ \StringHelper::setActive('admin_product_list') }}">
                         <a class="menu-item" href="{{ route('admin_product_list') }}">List all Products</a>
                     </li>
@@ -28,10 +24,6 @@
                     <span class="menu-title">Clinics Management</span>
                 </a>
                 <ul class="menu-content">
-                    <li class="{{ \StringHelper::setActive('admin_clinic_create') }}">
-                        <a class="menu-item" href="{{ route('admin_clinic_create') }}">Add new Clinic</a>
-                    </li>
-
                     <li class="{{ \StringHelper::setActive('admin_clinic_list') }}">
                         <a class="menu-item" href="{{ route('admin_clinic_list') }}">List all Clinics</a>
                     </li>
@@ -43,10 +35,6 @@
                     <span class="menu-title">Inventory Management</span>
                 </a>
                 <ul class="menu-content">
-                    <li class="{{ \StringHelper::setActive('admin_inventory_purchase_create') }}">
-                        <a class="menu-item" href="{{ route('admin_inventory_purchase_create') }}">Add new Inventory Purchase</a>
-                    </li>
-
                     <li class="{{ \StringHelper::setActive('admin_inventory_purchase_list') }}">
                         <a class="menu-item" href="{{ route('admin_inventory_purchase_list') }}">List all Inventory Purchases</a>
                     </li>

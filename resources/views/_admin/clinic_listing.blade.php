@@ -5,6 +5,18 @@
 @section('content')
 
 <section id="basic-form-layouts">
+
+    <div class="row">
+        <div class="col-md-3 ml-auto">
+            <div class="float-md-right">
+                <a href="{{ route('admin_clinic_create') }}" class="btn btn-info btn-sm">
+                    <i class="la la-plus-square"></i> Add New Clinic
+                </a>
+            </div>
+        </div>
+    </div>
+    <br/>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -35,15 +47,10 @@
                                         <td>
                                             {!! Str::limit($clinic->clinic_profile->clinicAddress, 40, ' ...') !!}
                                         </td>
-                                        <td>
-                                            <strong> {{ $clinic->email }} </strong> (primary),
-                                            <br/>
-                                            <strong> {{ $clinic->clinic_profile->secondaryEmail }} </strong> (secondary)
-
-                                        </td>
+                                        <td> {{ $clinic->email }} </td>
                                         <td> {{ $clinic->clinic_profile->commissionPercentage }} %</td>
                                         <td>
-
+                                            
                                             <a href="{{ route('admin_clinic_edit', $clinic->unqId ) }}" class="btn btn-icon btn-info btn-sm">
                                                 <i class="la la-eye"></i>
                                             </a>
