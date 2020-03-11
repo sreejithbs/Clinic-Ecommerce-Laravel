@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Clinic;
+
 class DashboardController extends Controller
 {
     /**
@@ -24,7 +26,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('_admin.dashboard');
+        $clinics_count = Clinic::count();
+        return view('_admin.dashboard', compact('clinics_count'));
     }
 
     /**
