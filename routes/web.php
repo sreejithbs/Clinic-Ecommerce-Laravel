@@ -34,6 +34,9 @@ Route::prefix('user')->group(function () {
 // ************************* Start of ADMIN ROUTES ******************************
 Route::prefix('admin')->group(function () {
 	Route::get('/dashboard', 'Admin\DashboardController@index')->name('admin_dashboard');
+	Route::get('/my-profile', 'Admin\DashboardController@editProfile')->name('admin_profile_edit');
+	Route::post('/my-profile', 'Admin\DashboardController@updateProfile')->name('admin_profile_update');
+
 	Route::group(['as' => 'admin_user_'], function(){
 		Route::get('/all', 'Admin\AdminController@index')->name('list');
 	    Route::get('/create', 'Admin\AdminController@create')->name('create');

@@ -14,7 +14,7 @@ class Admin extends Authenticatable
 
     use SoftDeletes;  // enable Soft Delete
     use UuidTrait;  // to assign Uuid value as default
-    
+
     protected $guard = 'admin';
 
     protected $table = 'admins';
@@ -37,13 +37,4 @@ class Admin extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /**
-     * Check if super admin
-     *
-     * @return boolean
-     */
-    public function isSuper($admin)
-    {
-        return $admin->isSuper;
-    }
 }

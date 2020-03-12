@@ -52,6 +52,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        abort_unless(Gate::allows('isSuper'), 403);
         return view('_admin.product_create');
     }
 
