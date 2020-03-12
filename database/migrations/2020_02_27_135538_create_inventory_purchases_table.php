@@ -18,10 +18,10 @@ class CreateInventoryPurchasesTable extends Migration
             $table->uuid('unqId')->index();
             $table->unsignedBigInteger('createdByAdminId')->nullable();
             $table->unsignedBigInteger('supplierId')->nullable();
+            $table->string('orderNumber')->nullable();
             $table->timestamp('dateTime');
             $table->decimal('totalPrice', 10, 2);
-            $table->longText('notes');
-            $table->string('attachment')->nullable();
+            $table->longText('notes')->nullable();
             $table->enum('paymentMode', ['cash', 'credit', 'others']);
             $table->softDeletes();
             $table->timestamps();

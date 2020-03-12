@@ -91,23 +91,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-md-3 label-control" for="purchase_order_number">Purchase Order Number</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="purchase_order_number" class="form-control" placeholder="Purchase Order Number" name="purchase_order_number">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                 	<label class="col-md-3 label-control" for="purchase_date_time">Purchase Date & Time *</label>
                                 	<div class="col-md-9">
                                         <input type="text" id="datetimepicker" class="form-control" placeholder="Purchase Date Time" name="purchase_date_time" required data-parsley-required-message="Please choose Purchase Date Time">
                                 	</div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="notes">Purchase Note *</label>
+                                    <label class="col-md-3 label-control" for="notes">Purchase Note</label>
                                     <div class="col-md-9">
-                                        <textarea id="notes" rows="5" class="form-control" name="notes" placeholder="Purchase Note" required data-parsley-required-message="Please enter Purchase Note"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 label-control">Purchase Attachment </label>
-                                    <div class="col-md-9">
-                                        <div class="controls">
-                                            <input type="file" name="attachment" class="form-control">
-                                        </div>
+                                        <textarea id="notes" rows="5" class="form-control" name="notes" placeholder="Purchase Note"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row last">
@@ -344,7 +342,7 @@
                 var prod_unq_id = $(this).attr('data-prod_unq_id');
                 $(this).parents('tr').fadeOut(300, function(){
                     $(this).remove();
-                    
+
                     if($(".appendDiv tr").length == 0){
                         $(".appendDiv").append('<tr class="no-data text-center"><td colspan="6">-- No Products data added --</td></tr>');
                     }

@@ -23,7 +23,7 @@ class InventoryPurchase extends Model
 	}
 
 	public function getDateTimeAttribute()
-	{ 
+	{
 	   return Carbon::parse($this->attributes['created_at'])->format('d/m/Y');
 	}
 

@@ -70,7 +70,6 @@ class InventoryPurchaseController extends Controller
             'quantity' => 'required',
             'supplier' => 'required',
             'purchase_date_time' => 'required',
-            'notes' => 'required',
             'payment_mode' => 'required',
         ]);
 
@@ -93,27 +92,10 @@ class InventoryPurchaseController extends Controller
             $inventory_purchase = new InventoryPurchase();
             $inventory_purchase->createdByAdminId = Auth::guard('admin')->user()->id;
             $inventory_purchase->supplierId = Supplier::fetchModelByUnqId($request->supplier)->id;
+            $inventory_purchase->orderNumber = $request->purchase_order_number;
             $inventory_purchase->dateTime = InventoryPurchase::createTimestampFromDateTime($request->purchase_date_time);
             $inventory_purchase->totalPrice = $mainTotal;
             $inventory_purchase->notes = $request->notes;
-
-            if($request->hasFile('attachment')){
-                if (!is_dir($this->abs_upload_path)) {
-                    File::makeDirectory($this->abs_upload_path, 0777, true);
-                }
-
-                $realName = $request->attachment->getClientOriginalName();
-                $fileName = pathinfo($realName, PATHINFO_FILENAME);
-                $fileName = StringHelper::uniqueSlugString($fileName);
-                $extension = pathinfo($realName, PATHINFO_EXTENSION);
-
-                $originalImagePath = $fileName.'.'. $extension;
-
-                if($request->attachment->move($this->abs_upload_path, $originalImagePath)){
-                    $inventory_purchase->attachment = $this->rel_upload_path . $originalImagePath;
-                }
-            }
-
             $inventory_purchase->paymentMode = $request->payment_mode;
             $inventory_purchase->save();
 

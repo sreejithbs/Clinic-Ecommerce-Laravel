@@ -18,10 +18,10 @@ class CreateInventoryTransfersTable extends Migration
             $table->uuid('unqId')->index();
             $table->unsignedBigInteger('createdByAdminId')->nullable();
             $table->unsignedBigInteger('clinicId')->nullable()->comment('which clinic product is to be transferred');
+            $table->string('orderNumber')->nullable();
             $table->timestamp('dateTime');
             $table->decimal('totalPrice', 10, 2);
-            $table->longText('notes');
-            $table->string('attachment')->nullable();
+            $table->longText('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
