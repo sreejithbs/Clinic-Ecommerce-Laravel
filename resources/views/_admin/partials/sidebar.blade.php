@@ -8,6 +8,17 @@
                 </a>
             </li>
 
+            <!-- <li class="nav-item {{ \StringHelper::setActive('admin_user_*', 'open') }}">
+                <a href="javascript:void(0);"><i class="la la-users"></i>
+                    <span class="menu-title">Admins Management</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="{{ \StringHelper::setActive('admin_user_list') }}">
+                        <a class="menu-item" href="{{ route('admin_user_list') }}">List all Admins</a>
+                    </li>
+                </ul>
+            </li> -->
+
             <li class="nav-item {{ \StringHelper::setActive('admin_product_*', 'open') }}">
                 <a href="javascript:void(0);"><i class="la la-list"></i>
                     <span class="menu-title">Products Management</span>

@@ -1,6 +1,6 @@
 @extends('_admin.partials.master')
-@section('page_title', 'List all Clinics | Inner Beauty')
-@section('page_heading', 'List all Clinics')
+@section('page_title', 'List all Admins | Inner Beauty')
+@section('page_heading', 'List all Admins')
 
 @section('content')
 
@@ -9,8 +9,8 @@
     <div class="row">
         <div class="col-md-3 ml-auto">
             <div class="float-md-right">
-                <a href="{{ route('admin_clinic_create') }}" class="btn btn-info btn-sm">
-                    <i class="la la-plus-square"></i> Add New Clinic
+                <a href="{{ route('admin_user_create') }}" class="btn btn-info btn-sm">
+                    <i class="la la-plus-square"></i> Add New Admin
                 </a>
             </div>
         </div>
@@ -29,34 +29,26 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <!-- <th>Reference ID</th> -->
                                     <th>Name</th>
-                                    <th>Address</th>
                                     <th>Email ID</th>
-                                    <th>Commission</th>
-                                    <!-- <th>Account Status</th> -->
+                                    <th>Created Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($clinics as $clinic)
+                                @foreach($admins as $admin)
                                     <tr>
                                         <td> {{ $loop->iteration }}</td>
-                                        <!-- <td> {{ $clinic->clinic_profile->clinicReferenceId }}</td> -->
-                                        <td> {{ $clinic->clinic_profile->clinicName }}</td>
+                                        <td> {{ $admin->name }}</td>
+                                        <td> {{ $admin->email }} </td>
+                                        <td> {{ $admin->created_at->format('d/m/Y') }} </td>
                                         <td>
-                                            {!! Str::limit($clinic->clinic_profile->clinicAddress, 40, ' ...') !!}
-                                        </td>
-                                        <td> {{ $clinic->email }} </td>
-                                        <td> {{ $clinic->clinic_profile->commissionPercentage }} %</td>
-                                        <td>
-                                            
-                                            <a href="{{ route('admin_clinic_edit', $clinic->unqId ) }}" class="btn btn-icon btn-info btn-sm">
+                                            <a href="{{ route('admin_user_edit', $admin->unqId ) }}" class="btn btn-icon btn-info btn-sm">
                                                 <i class="la la-eye"></i>
                                             </a>
 
                                             {!! Form::open(array(
-                                                    'route' => array('admin_clinic_delete', $clinic->unqId),
+                                                    'route' => array('admin_user_delete', $admin->unqId),
                                                     'method' => 'delete',
                                                     'class'=>'delSwalForm',
                                                     'style'=>'display:inline'

@@ -38,13 +38,14 @@ class SendClinicCreatedNotification
             'data' => [
                 'name' =>  $clinic->name,
                 'clinic_name' =>  $clinic->clinic_profile->clinicName,
+                'clinic_reference_id' =>  $clinic->clinic_profile->clinicReferenceId,
                 'email' => $clinic->email,
                 'password' => $event->request->input('password'),
                 'login_url' => url('/')
             ]
         );
 
-        Mail::send($info['template'], ["data"=> $info['data'], function ($message) use ($info) {
+        Mail::send($info['template'], ["data"=> $info['data']], function ($message) use ($info) {
             $message->to($info['to']);
             $message->from($info['from']);
             $message->subject($info['subject']);

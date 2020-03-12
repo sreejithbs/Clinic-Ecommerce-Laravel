@@ -64,7 +64,7 @@ class ClinicController extends Controller
             'phone_number' => 'required',
             'secondary_email' => 'required|email',
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:clinic_admins',
             'password' => 'required',
             'ac_number' => 'required',
             'ac_holder_name' => 'required',
@@ -98,7 +98,7 @@ class ClinicController extends Controller
         }
 
         // Trigger Mail
-        event(new ClinicWasCreatedEvent($clinic, $request->only('password')));
+        // event( new ClinicWasCreatedEvent($clinic, $request) );
 
         return redirect()->route('admin_clinic_list')->with('success', static::CLINIC_CREATE);
     }

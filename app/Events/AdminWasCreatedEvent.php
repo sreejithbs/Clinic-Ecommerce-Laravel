@@ -13,7 +13,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 
-class SuperAdminWasCreatedEvent
+class AdminWasCreatedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -24,7 +24,7 @@ class SuperAdminWasCreatedEvent
      *
      * @return void
      */
-    public function __construct(Admin $clinic, Request $request)
+    public function __construct(Admin $admin, Request $request)
     {
         $this->admin = $admin;
         $this->request = $request;

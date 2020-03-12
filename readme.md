@@ -33,5 +33,12 @@ Use these credentials to login :
   Clinic Admin : clinic@demo.com  | clinic@123
 ```
 
+MailTrap credentials :
+```
+  URL : https://mailtrap.io/signin
+  Email : innerbeauty@emailnube.com
+  Password : 123456
+```
+
 ## Author
 sreejith.bs@quinoid.in

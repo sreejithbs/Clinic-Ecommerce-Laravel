@@ -1,6 +1,6 @@
 @extends('_admin.partials.master')
-@section('page_title', 'Add new Admin | Inner Beauty')
-@section('page_heading', 'Add new Admin')
+@section('page_title', 'Edit Admin | Inner Beauty')
+@section('page_heading', 'Edit Admin')
 
 @section('content')
 
@@ -16,36 +16,30 @@
                         <!-- <div class="card-text">
                             <p>Info</p>
                         </div> -->
-                        <form method="post" action="{{ route('admin_user_store') }}" enctype="multipart/form-data" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
+                        <form method="post" action="{{ route('admin_user_update', $admin->unqId) }}" enctype="multipart/form-data" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
                         	{{ csrf_field() }}
 
                             <div class="form-body">
 
                                 <h4 class="form-section">
-                                    <i class="ft-user-plus"></i> Admin Login Details
+                                	<i class="ft-user-plus"></i> Admin Login Details
                                 </h4>
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="name"> Name *</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="name" class="form-control" placeholder="Name" name="name" required data-parsley-required-message="Please enter Name">
+                                        <input type="text" id="name" value="{{ $admin->name }}" class="form-control" placeholder="Name" name="name" required data-parsley-required-message="Please enter Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="email">Email *</label>
+                                    <label class="col-md-3 label-control" for="email">Email</label>
                                     <div class="col-md-9">
-                                        <input type="email" id="email" class="form-control" placeholder="Email" name="email" required data-parsley-required-message="Please enter Email">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="password">Password *</label>
-                                    <div class="col-md-9">
-                                        <input type="password" id="password" class="form-control" placeholder="Password" name="password" required data-parsley-required-message="Please enter Password">
+                                        <input type="email" id="email" value="{{ $admin->email }}" class="form-control" placeholder="Email" name="email" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group row last">
-                                    <label class="col-md-3 label-control" for="password_confirmation">Confirm Password *</label>
+                                    <label class="col-md-3 label-control" for="email">Password</label>
                                     <div class="col-md-9">
-                                        <input type="password" id="password_confirmation" class="form-control" placeholder="Confirm Password" name="password_confirmation" required data-parsley-required-message="Please re-enter Password">
+                                        <input type="password" id="password" class="form-control" value="*******************" placeholder="Password" name="password" disabled="">
                                     </div>
                                 </div>
 
@@ -55,7 +49,7 @@
                                     <i class="la la-close"></i> Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="la la-check-square-o"></i> Save
+                                    <i class="la la-check-square-o"></i> Update
                                 </button>
                             </div>
                         </form>

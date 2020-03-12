@@ -9,8 +9,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 use App\Events\ClinicWasCreatedEvent;
 use App\Listeners\SendClinicCreatedNotification;
-use App\Events\SuperAdminWasCreatedEvent;
-use App\Listeners\SendSuperAdminCreatedNotification;
+use App\Events\AdminWasCreatedEvent;
+use App\Listeners\SendAdminCreatedNotification;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -26,8 +26,8 @@ class EventServiceProvider extends ServiceProvider
         ClinicWasCreatedEvent::class => [
             SendClinicCreatedNotification::class,
         ],
-        SuperAdminWasCreatedEvent::class => [
-            SendSuperAdminCreatedNotification::class,
+        AdminWasCreatedEvent::class => [
+            SendAdminCreatedNotification::class,
         ],
     ];
 

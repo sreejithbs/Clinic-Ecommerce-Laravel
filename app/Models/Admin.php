@@ -36,4 +36,14 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Check if super admin
+     *
+     * @return boolean
+     */
+    public function isSuper($admin)
+    {
+        return $admin->isSuper;
+    }
 }

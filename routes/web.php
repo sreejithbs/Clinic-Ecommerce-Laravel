@@ -11,42 +11,37 @@
 |
 */
 
-Route::get('/clear', function(){
-	Artisan::call('view:clear');
-	Artisan::call('cache:clear');
-	Artisan::call('config:cache');
-});
+// Route::get('/clear', function(){
+// 	Artisan::call('view:clear');
+// 	Artisan::call('cache:clear');
+// 	Artisan::call('config:cache');
+// });
 
-Route::get('/', function(){
-	return redirect()->route('common_login_form');
-})->name('home');
-
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('common_login_form');
 Route::post('/login', 'Auth\LoginController@handleLogin')->name('common_login_handle');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
-// Auth::routes();
 
 // ************************* Start of USER ROUTES ******************************
 Route::prefix('user')->group(function () {
-	Route::get('/dashboard', 'User\DashboardController@index')->name('user_dashboard');
+	Route::group(['as' => 'user_'], function(){
+		Route::get('/dashboard', 'User\DashboardController@index')->name('dashboard');
+	});
 });
 
 
 // ************************* Start of ADMIN ROUTES ******************************
 Route::prefix('admin')->group(function () {
-	// Route::get('/login', 'Auth\LoginController@showAdminLoginForm')->name('admin_login');
-	// Route::post('/login', 'Auth\LoginController@adminLogin');
-	// Route::get('/register', 'Auth\RegisterController@showAdminRegisterForm')->name('admin_register');
-	// Route::post('/register', 'Auth\RegisterController@createAdmin');
-
-	Route::group(['as' => 'admin_'], function(){
-	    Route::get('/create', 'Admin\ProductController@create')->name('create');
-	    Route::post('/store', 'Admin\ProductController@store')->name('store');
-	});
-
 	Route::get('/dashboard', 'Admin\DashboardController@index')->name('admin_dashboard');
-
+	Route::group(['as' => 'admin_user_'], function(){
+		Route::get('/all', 'Admin\AdminController@index')->name('list');
+	    Route::get('/create', 'Admin\AdminController@create')->name('create');
+	    Route::post('/store', 'Admin\AdminController@store')->name('store');
+	    Route::get('/edit/{uuid}', 'Admin\AdminController@edit')->name('edit');
+	    Route::post('/update/{uuid}', 'Admin\AdminController@update')->name('update');
+	    Route::delete('/delete/{uuid}', 'Admin\AdminController@destroy')->name('delete');
+	});
 	Route::group(['prefix' => 'product', 'as' => 'admin_product_'], function(){
 	    Route::get('/all', 'Admin\ProductController@index')->name('list');
 	    Route::get('/create', 'Admin\ProductController@create')->name('create');
@@ -55,7 +50,6 @@ Route::prefix('admin')->group(function () {
 	    Route::post('/update/{uuid}', 'Admin\ProductController@update')->name('update');
 	    Route::delete('/delete/{uuid}', 'Admin\ProductController@destroy')->name('delete');
 	});
-
 	Route::group(['prefix' => 'clinic', 'as' => 'admin_clinic_'], function(){
 	    Route::get('/all', 'Admin\ClinicController@index')->name('list');
 	    Route::get('/create', 'Admin\ClinicController@create')->name('create');
@@ -64,7 +58,6 @@ Route::prefix('admin')->group(function () {
 	    Route::post('/update/{uuid}', 'Admin\ClinicController@update')->name('update');
 	    Route::delete('/delete/{uuid}', 'Admin\ClinicController@destroy')->name('delete');
 	});
-
 	Route::group(['prefix' => 'inventory/purchase', 'as' => 'admin_inventory_purchase_'], function(){
 	    Route::get('/all', 'Admin\InventoryPurchaseController@index')->name('list');
 	    Route::get('/create', 'Admin\InventoryPurchaseController@create')->name('create');
@@ -72,16 +65,12 @@ Route::prefix('admin')->group(function () {
 	    Route::post('/storeSupplier', 'Admin\InventoryPurchaseController@storeSupplier')->name('store_supplier');
 	    Route::post('/appendProduct', 'Admin\InventoryPurchaseController@appendProduct')->name('append_product');
 	});
-
 });
 
 
 // ************************* Start of CLINIC ROUTES ******************************
 Route::prefix('clinic')->group(function () {
-	// Route::get('/login', 'Auth\LoginController@showClinicAdminLoginForm')->name('clinic_login');
-	// Route::post('/login', 'Auth\LoginController@clinicAdminLogin');
-	// Route::get('/register', 'Auth\RegisterController@showClinicAdminRegisterForm')->name('clinic_register');
-	// Route::post('/register', 'Auth\RegisterController@createClinicAdmin');
-
-	Route::get('/dashboard', 'Clinic\DashboardController@index')->name('clinic_dashboard');
+	Route::group(['as' => 'clinic_'], function(){
+		Route::get('/dashboard', 'Clinic\DashboardController@index')->name('dashboard');
+	});
 });

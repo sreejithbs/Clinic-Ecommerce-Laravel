@@ -2,13 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\SuperAdminWasCreatedEvent;
+use App\Events\AdminWasCreatedEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Mail;
 
-class SendSuperAdminCreatedNotification
+class SendAdminCreatedNotification
 {
     /**
      * Create the event listener.
@@ -23,17 +23,17 @@ class SendSuperAdminCreatedNotification
     /**
      * Handle the event.
      *
-     * @param  SuperAdminWasCreatedEvent  $event
+     * @param  AdminWasCreatedEvent  $event
      * @return void
      */
-    public function handle(SuperAdminWasCreatedEvent $event)
+    public function handle(AdminWasCreatedEvent $event)
     {
         $admin = $event->admin;
 
         $info = array(
             'to' => $admin->email,
             'from' => 'no-reply@innerbeauty.com',
-            'subject' => 'Super-Admin Registration Successful | Inner Beauty',
+            'subject' => 'Admin Registration Successful | Inner Beauty',
             'template' => 'emails.admin_create',
             'data' => [
                 'name' =>  $admin->name,
@@ -43,7 +43,7 @@ class SendSuperAdminCreatedNotification
             ]
         );
 
-        Mail::send($info['template'], ["data"=> $info['data'], function ($message) use ($info) {
+        Mail::send($info['template'], ["data"=> $info['data']], function ($message) use ($info) {
             $message->to($info['to']);
             $message->from($info['from']);
             $message->subject($info['subject']);

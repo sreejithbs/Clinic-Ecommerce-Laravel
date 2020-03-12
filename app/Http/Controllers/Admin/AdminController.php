@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Admin;
+use App\Events\AdminWasCreatedEvent;
 
 class AdminController extends Controller
 {
@@ -19,6 +20,12 @@ class AdminController extends Controller
         $this->middleware('auth:admin');
     }
 
+    // Define Constants
+    const ADMIN_CREATE = 'Admin User has been created successfully';
+    const ADMIN_UPDATE = 'Admin User has been updated successfully';
+    const ADMIN_DELETE = 'Admin User has been deleted successfully';
+    const ADMIN_DELETE_FAIL = 'Something went wrong. Admin User deletion failure.';
+
     /**
      * Show the application dashboard.
      *
@@ -26,7 +33,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $admins = Admin::latest()->get();
+        return view('_admin.admin_listing', compact('admins'));
     }
 
     /**
@@ -50,7 +58,7 @@ class AdminController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:admins',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         $admin = Admin::create([
@@ -60,9 +68,9 @@ class AdminController extends Controller
         ]);
 
         // Trigger Mail
-        event(new SuperAdminWasCreatedEvent($admin, $request->only('password')));
+        event( new AdminWasCreatedEvent($admin, $request) );
 
-        return redirect()->route('admin_list')->with('success', static::ADMIN_CREATE);
+        return redirect()->route('admin_user_list')->with('success', static::ADMIN_CREATE);
     }
 
     /**
@@ -82,9 +90,10 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($uuid)
     {
-        //
+        $admin = Admin::fetchModelByUnqId($uuid);
+        return view('_admin.admin_edit', compact('admin'));
     }
 
     /**
@@ -94,9 +103,15 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+        ]);
+
+        Admin::fetchModelByUnqId($uuid)->update(['name'=> $request->name]);
+
+        return redirect()->route('admin_user_list')->with('success', static::ADMIN_UPDATE);
     }
 
     /**
@@ -105,8 +120,17 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($uuid)
     {
-        //
+        try{
+            $admin = Admin::fetchModelByUnqId($uuid);
+            $admin->delete();
+
+        } catch (\Exception $e) {
+            // return $e->getMessage();
+            return back()->withErrors(['error' => static::ADMIN_DELETE_FAIL]);
+        }
+
+        return back()->with('success', static::ADMIN_DELETE);
     }
 }
