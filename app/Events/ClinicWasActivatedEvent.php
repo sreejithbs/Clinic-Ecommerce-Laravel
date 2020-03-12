@@ -10,24 +10,23 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-use Illuminate\Http\Request;
 use App\Models\Clinic;
 
-class ClinicWasCreatedEvent
+class ClinicWasActivatedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $clinic, $request;
+    public $clinic, $password;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Clinic $clinic, Request $request)
+    public function __construct(Clinic $clinic, $password)
     {
         $this->clinic = $clinic;
-        $this->request = $request;
+        $this->password = $password;
     }
 
     /**

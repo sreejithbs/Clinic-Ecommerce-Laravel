@@ -85,7 +85,7 @@
                                         </tr>
                                         <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                             <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
-                                                Welcome to Inner Beauty. Here are your Clinic login credentials :
+                                                Welcome to Inner Beauty. Your Clinic account has been created and activated. Here are your Clinic login credentials :
                                             </td>
                                         </tr>
                                         <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">

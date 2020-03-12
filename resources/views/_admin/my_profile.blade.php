@@ -53,7 +53,7 @@
                                 </div>
 
                             </div>
-                            <div class="form-actions">
+                            <div class="form-actions text-right">
                                 <a href="{{ route('admin_dashboard') }}" class="btn btn-warning mr-1">
                                     <i class="la la-close"></i> Cancel
                                 </a>

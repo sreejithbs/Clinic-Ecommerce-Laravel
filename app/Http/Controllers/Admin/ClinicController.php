@@ -8,7 +8,8 @@ use Auth;
 
 use App\Models\Clinic;
 use App\Models\Admin\ClinicProfile;
-use App\Events\ClinicWasCreatedEvent;
+use App\Events\ClinicWasActivatedEvent;
+use StringHelper;
 
 class ClinicController extends Controller
 {
@@ -27,6 +28,7 @@ class ClinicController extends Controller
     const CLINIC_UPDATE = 'Clinic has been updated successfully';
     const CLINIC_DELETE = 'Clinic has been deleted successfully';
     const CLINIC_DELETE_FAIL = 'Something went wrong. Clinic deletion failure.';
+    const CLINIC_STATUS = 'Clinic Status has been changed successfully';
 
     /**
      * Show the application dashboard.
@@ -65,7 +67,6 @@ class ClinicController extends Controller
             'secondary_email' => 'required|email',
             'name' => 'required',
             'email' => 'required|email|unique:clinic_admins',
-            'password' => 'required',
             'ac_number' => 'required',
             'ac_holder_name' => 'required',
             'bank_name' => 'required',
@@ -77,7 +78,9 @@ class ClinicController extends Controller
         $clinic = Clinic::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => bcrypt('temporary_random_password'), // will change after clinic status is enabled
+            'status' => 'suspend', // default
+            'hasFirstTimeActivated' => 0 // default
         ]);
 
         if($clinic){
@@ -96,9 +99,6 @@ class ClinicController extends Controller
             $clinic_profile->commissionPercentage = $request->commission_percentage;
             $clinic->clinic_profile()->save($clinic_profile);
         }
-
-        // Trigger Mail
-        // event( new ClinicWasCreatedEvent($clinic, $request) );
 
         return redirect()->route('admin_clinic_list')->with('success', static::CLINIC_CREATE);
     }
@@ -187,5 +187,24 @@ class ClinicController extends Controller
         }
 
         return back()->with('success', static::CLINIC_DELETE);
+    }
+
+    // Activate or Suspend Clinics
+    public function toggleClinicStatus(Request $request)
+    {
+        if($request->ajax()){
+            $newStatus = $request->status;
+            $clinic = Clinic::fetchModelByUnqId($request->clinic_unqid);
+            $clinic->status = $newStatus;
+
+            if($newStatus == 'active' && $clinic->hasFirstTimeActivated == 0){ // means first time activation, Trigger Mail
+                $password = StringHelper::randString(8);
+                event( new ClinicWasActivatedEvent($clinic, $password) );
+                $clinic->hasFirstTimeActivated = 1;
+            }
+            $clinic->save();
+
+            return response()->json(['status' => TRUE, 'message' => static::CLINIC_STATUS]);
+        }
     }
 }

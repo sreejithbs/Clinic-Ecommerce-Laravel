@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\ClinicWasCreatedEvent;
+use App\Events\ClinicWasActivatedEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -23,10 +23,10 @@ class SendClinicCreatedNotification
     /**
      * Handle the event.
      *
-     * @param  ClinicWasCreatedEvent  $event
+     * @param  ClinicWasActivatedEvent  $event
      * @return void
      */
-    public function handle(ClinicWasCreatedEvent $event)
+    public function handle(ClinicWasActivatedEvent $event)
     {
         $clinic = $event->clinic;
 
@@ -40,7 +40,7 @@ class SendClinicCreatedNotification
                 'clinic_name' =>  $clinic->clinic_profile->clinicName,
                 'clinic_reference_id' =>  $clinic->clinic_profile->clinicReferenceId,
                 'email' => $clinic->email,
-                'password' => $event->request->input('password'),
+                'password' => $event->password,
                 'login_url' => url('/')
             ]
         );

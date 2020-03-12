@@ -64,16 +64,10 @@
                                         <input type="text" id="name" class="form-control" placeholder="Name" name="name" required data-parsley-required-message="Please enter Name">
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row last">
                                     <label class="col-md-3 label-control" for="email">Email *</label>
                                     <div class="col-md-9">
                                         <input type="email" id="email" class="form-control" placeholder="Email" name="email" required data-parsley-required-message="Please enter Email">
-                                    </div>
-                                </div>
-                                <div class="form-group row last">
-                                    <label class="col-md-3 label-control" for="password">Password *</label>
-                                    <div class="col-md-9">
-                                        <input type="password" id="password" class="form-control" placeholder="Password" name="password" required data-parsley-required-message="Please enter Password">
                                     </div>
                                 </div>
 

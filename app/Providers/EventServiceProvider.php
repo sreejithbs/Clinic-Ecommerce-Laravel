@@ -7,7 +7,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
-use App\Events\ClinicWasCreatedEvent;
+use App\Events\ClinicWasActivatedEvent;
 use App\Listeners\SendClinicCreatedNotification;
 use App\Events\AdminWasCreatedEvent;
 use App\Listeners\SendAdminCreatedNotification;
@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        ClinicWasCreatedEvent::class => [
+        ClinicWasActivatedEvent::class => [
             SendClinicCreatedNotification::class,
         ],
         AdminWasCreatedEvent::class => [

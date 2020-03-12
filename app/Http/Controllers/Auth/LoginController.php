@@ -68,11 +68,17 @@ class LoginController extends Controller
             return redirect()->intended('/admin/dashboard');
 
         } elseif (Auth::guard('clinic')->attempt($request->only('email', 'password'), $request->get('remember'))) {
+            if (Auth::guard('clinic')->status == 'suspend') {
+                Auth::logout($request);
+                return redirect()->back()->withInput($request->only('email', 'remember'))
+                        ->withErrors(['error' => 'Your Clinic account has been suspended. Please contact Site Administrator.']);
+            }
             return redirect()->intended('/clinic/dashboard');
+        }
 
         // } elseif (Auth::attempt($request->only('email', 'password'), $request->get('remember'))) {
         //     return redirect()->intended('/user/dashboard');
-        }
+        // }
 
         return back()->withInput($request->only('email', 'remember'));
     }
