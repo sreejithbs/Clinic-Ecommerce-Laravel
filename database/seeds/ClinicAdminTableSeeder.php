@@ -16,7 +16,9 @@ class ClinicAdminTableSeeder extends Seeder
     	$clinic = Clinic::create([
             'name' => 'Clinic Demo',
             'email' => 'clinic@demo.com',
-            'password' => bcrypt('clinic@123')
+            'password' => bcrypt('clinic@123'),
+            'status' => 'active',
+            'hasFirstTimeActivated' => 1
         ]);
 
         if($clinic){
