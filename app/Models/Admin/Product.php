@@ -11,6 +11,7 @@ use App\Traits\UuidTrait;
 use App\Models\Admin\ProductImage;
 use App\Models\Admin\InventoryPurchase;
 use App\Models\Admin\InventoryTransfer;
+use App\Models\Admin\InventoryLog;
 
 class Product extends Model
 {
@@ -65,5 +66,12 @@ class Product extends Model
     {
         return $this->belongsToMany(InventoryTransfer::class, 'inventory_transfer_product', 'productId', 'inventoryTransferId')
         ->withTimestamps();
+    }
+
+    /**
+     * The inventory_logs that belong to the products.
+     */
+    public function inventory_logs(){
+        return $this->hasMany(InventoryLog::class, 'productId');
     }
 }

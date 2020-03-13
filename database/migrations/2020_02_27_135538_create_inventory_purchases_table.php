@@ -18,6 +18,7 @@ class CreateInventoryPurchasesTable extends Migration
             $table->uuid('unqId')->index();
             $table->unsignedBigInteger('createdByAdminId')->nullable();
             $table->unsignedBigInteger('supplierId')->nullable();
+            $table->string('orderRefNum', 50)->unique();
             $table->string('orderNumber')->nullable();
             $table->timestamp('dateTime');
             $table->decimal('totalPrice', 10, 2);

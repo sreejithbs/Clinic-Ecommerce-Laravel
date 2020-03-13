@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin\Product;
 use App\Models\Admin\Supplier;
 use App\Models\Admin\InventoryPurchase;
+use App\Models\Admin\InventoryLog;
 
 use Illuminate\Support\Facades\Validator;
 use File;
@@ -67,6 +68,7 @@ class InventoryPurchaseController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'purchase_reference_num' => 'required',
             'quantity' => 'required',
             'supplier' => 'required',
             'purchase_date_time' => 'required',
@@ -92,6 +94,7 @@ class InventoryPurchaseController extends Controller
             $inventory_purchase = new InventoryPurchase();
             $inventory_purchase->createdByAdminId = Auth::guard('admin')->user()->id;
             $inventory_purchase->supplierId = Supplier::fetchModelByUnqId($request->supplier)->id;
+            $inventory_purchase->orderRefNum = $request->purchase_reference_num;
             $inventory_purchase->orderNumber = $request->purchase_order_number;
             $inventory_purchase->dateTime = InventoryPurchase::createTimestampFromDateTime($request->purchase_date_time);
             $inventory_purchase->totalPrice = $mainTotal;
@@ -100,6 +103,20 @@ class InventoryPurchaseController extends Controller
             $inventory_purchase->save();
 
             $inventory_purchase->products()->sync($sync_data);
+
+            // // ********************** NEEDS CHANGE **********************
+            // $product =  Product::fetchModelByUnqId(**********);
+            // $inventory_log = new InventoryLog();
+            // $inventory_log->refNum = $inventory_purchase->orderRefNum;
+            // $inventory_log->logEvent = static::LOG_INVENTORY_PURCHASE;
+            // $inventory_log->eventCode = static::CODE_INVENTORY_PURCHASE;
+            // $inventory_log->dateTime = $inventory_purchase->dateTime;
+            // $inventory_log->openingQty = **********;
+            // $inventory_log->quantity = **********;
+            // $inventory_log->closingQty = **********;
+            // $inventory_log->relatedEntryModel = 'App\Models\Admin\InventoryPurchase';
+            // $inventory_log->relatedEntryModelId = $inventory_purchase->id;
+            // $product->inventory_logs()->save($inventory_log);
 
             DB::commit();
 

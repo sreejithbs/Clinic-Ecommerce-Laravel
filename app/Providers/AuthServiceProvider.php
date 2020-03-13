@@ -29,9 +29,6 @@ class AuthServiceProvider extends ServiceProvider
 
         /* define a super-admin user role */
         Gate::define('isSuper', function($admin) {
-            // if (Auth::guard('admin')->check()) {
-            //     return Auth::guard('admin')->user()->isSuper == 1;
-            // }
             return $admin->isSuper == 1;
         });
     }

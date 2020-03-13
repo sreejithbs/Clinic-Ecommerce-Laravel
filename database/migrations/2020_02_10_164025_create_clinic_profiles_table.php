@@ -17,7 +17,7 @@ class CreateClinicProfilestable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('createdByAdminId')->nullable();
             $table->unsignedBigInteger('clinicAdminId')->nullable();
-            $table->string('clinicReferenceId', 20)->unique();
+            $table->string('clinicRefNum', 50)->unique();
             $table->text('clinicName');
             $table->longText('clinicAddress');
             $table->string('phoneNumber', 20);

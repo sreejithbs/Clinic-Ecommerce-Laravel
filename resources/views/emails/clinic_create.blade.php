@@ -91,7 +91,7 @@
                                         <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                             <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
                                                 <strong>Clinic Name</strong> : {{ $data['clinic_name'] }} <br>
-                                                <strong>Clinic Reference ID</strong> : {{ $data['clinic_reference_id'] }} <br>
+                                                <strong>Clinic Reference Number</strong> : {{ $data['clinic_reference_num'] }} <br>
                                                 <strong>Username</strong> : {{ $data['email'] }} <br>
                                                 <strong>Password</strong> : {{ $data['password'] }}
                                             </td>

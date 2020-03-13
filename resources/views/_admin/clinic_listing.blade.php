@@ -44,7 +44,7 @@
 								@foreach($clinics as $clinic)
 									<tr>
 										<td> {{ $loop->iteration }}</td>
-										<!-- <td> {{ $clinic->clinic_profile->clinicReferenceId }}</td> -->
+										<!-- <td> {{ $clinic->clinic_profile->clinicRefNum }}</td> -->
 										<td> {{ $clinic->clinic_profile->clinicName }}</td>
 
 										<td> {{ $clinic->email }} </td>

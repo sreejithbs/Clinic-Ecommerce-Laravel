@@ -11,6 +11,7 @@ use Auth;
 
 use App\Models\Admin\Product;
 use App\Models\Admin\ProductImage;
+use App\Models\Admin\InventoryLog;
 use StringHelper;
 
 class ProductController extends Controller
@@ -106,6 +107,16 @@ class ProductController extends Controller
                 }
             }
         }
+
+        $inventory_log = new InventoryLog();
+        $inventory_log->logEvent = static::LOG_INITIAL_INVENTORY_STOCK;
+        $inventory_log->eventCode = static::CODE_INITIAL_INVENTORY_STOCK;
+        $inventory_log->dateTime = $product->created_at;
+        $inventory_log->openingQty = 0;
+        $inventory_log->quantity = $inventory_log->closingQty = $product->stockQuantity;
+        $inventory_log->relatedEntryModel = 'App\Models\Admin\Product';
+        $inventory_log->relatedEntryModelId = $product->id;
+        $product->inventory_logs()->save($inventory_log);
 
         return redirect()->route('admin_product_list')->with('success', static::PRODUCT_CREATE);
     }

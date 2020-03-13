@@ -60,7 +60,7 @@ class ClinicController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'clinic_reference_id' => 'required',
+            'clinic_reference_num' => 'required',
             'clinic_name' => 'required',
             'clinic_address' => 'required',
             'phone_number' => 'required',
@@ -86,7 +86,7 @@ class ClinicController extends Controller
         if($clinic){
             $clinic_profile = new ClinicProfile();
             $clinic_profile->createdByAdminId = Auth::guard('admin')->user()->id;
-            $clinic_profile->clinicReferenceId = $request->clinic_reference_id;
+            $clinic_profile->clinicRefNum = $request->clinic_reference_num;
             $clinic_profile->clinicName = $request->clinic_name;
             $clinic_profile->clinicAddress = $request->clinic_address;
             $clinic_profile->phoneNumber = $request->phone_number;

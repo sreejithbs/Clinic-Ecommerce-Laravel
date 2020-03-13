@@ -22,6 +22,12 @@
                                 <h4 class="form-section">
                                 	<i class="ft-clipboard"></i> Purchase Product Info
                                 </h4>
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control" for="purchase_reference_num">Purchase Reference Number *</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="purchase_reference_num" class="form-control" value="purchase_{{ StringHelper::randString(8) }}" placeholder="Purchase Reference Number" name="purchase_reference_num" required data-parsley-required-message="Please enter Purchase Reference Number" readonly>
+                                    </div>
+                                </div>
                                 <div class="form-group row last">
                                     <label class="col-md-3 label-control" for="product">Select Product *</label>
                                     <div class="col-md-5">

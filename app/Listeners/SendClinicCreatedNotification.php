@@ -38,7 +38,7 @@ class SendClinicCreatedNotification
             'data' => [
                 'name' =>  $clinic->name,
                 'clinic_name' =>  $clinic->clinic_profile->clinicName,
-                'clinic_reference_id' =>  $clinic->clinic_profile->clinicReferenceId,
+                'clinic_reference_num' =>  $clinic->clinic_profile->clinicRefNum,
                 'email' => $clinic->email,
                 'password' => $event->password,
                 'login_url' => url('/')

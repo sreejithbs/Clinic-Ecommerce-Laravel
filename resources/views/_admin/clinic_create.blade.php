@@ -25,9 +25,9 @@
                                 	<i class="ft-clipboard"></i> Clinic Info
                                 </h4>
                                 <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="clinic_reference_id">Clinic Reference ID *</label>
+                                    <label class="col-md-3 label-control" for="clinic_reference_num">Clinic Reference Number *</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="clinic_reference_id" class="form-control" value="ref_{{ StringHelper::randString(8) }}" placeholder="Clinic Reference ID" name="clinic_reference_id" required data-parsley-required-message="Please enter Clinic Reference ID" readonly>
+                                        <input type="text" id="clinic_reference_num" class="form-control" value="clinic_{{ StringHelper::randString(8) }}" placeholder="Clinic Reference Number" name="clinic_reference_num" required data-parsley-required-message="Please enter Clinic Reference Number" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row">
