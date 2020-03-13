@@ -47,9 +47,7 @@
                                         <td>
                                             <img src="{{ asset($product->product_images()->first()->originalImagePath) }}" height="100px" width="100px">
                                         </td>
-                                        <!-- <td>
-                                            {!! Str::limit($product->description, 40, ' ...') !!}
-                                        </td> -->
+                                        <!-- <td> {!! Str::limit($product->description, 40, ' ...') !!} </td> -->
                                         <td>
                                             @if($product->stockStatus == 'in_stock')
                                                 <span class="badge badge-success">
@@ -59,12 +57,15 @@
 
                                             {{ $product->stockQuantity }} </span>
                                         </td>
-
                                         <!-- <td> ${{ $product->sellingPrice }} </td> -->
                                         <td>
                                             <a href="{{ route('admin_product_edit', $product->unqId ) }}" class="btn btn-icon btn-info btn-sm">
                                                 <i class="la la-eye"></i>
                                             </a>
+
+                                            <!-- <a href="#" class="btn btn-icon btn-info btn-sm">
+                                                <i class="la la-history"></i>
+                                            </a> -->
 
                                             {!! Form::open(array(
                                                     'route' => array('admin_product_delete', $product->unqId),
