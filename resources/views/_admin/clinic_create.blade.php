@@ -92,34 +92,36 @@
                                         <input type="text" id="bank_name" class="form-control" placeholder="Bank Name" name="bank_name" required data-parsley-required-message="Please enter Bank Name">
                                     </div>
                                 </div>
-                                <div class="form-group row last">
+                                <div class="form-group row">
                                     <label class="col-md-3 label-control" for="bank_code">IFSC / SWIFT Code *</label>
                                     <div class="col-md-9">
                                         <input type="text" id="bank_code" class="form-control" placeholder="Bank IFSC / SWIFT Code" name="bank_code" required data-parsley-required-message="Please enter Bank IFSC/SWIFT Code">
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row last">
                                     <label class="col-md-3 label-control" for="bank_address">Bank Address *</label>
                                     <div class="col-md-9">
                                         <textarea id="bank_address" rows="5" class="form-control" name="bank_address" placeholder="Bank Address" required data-parsley-required-message="Please enter Bank Address"></textarea>
                                     </div>
                                 </div>
 
-                                <h4 class="form-section">
-                                    <i class="ft-credit-card"></i> Clinic Commission Details
-                                </h4>
-                                 <div class="form-group row last">
-                                    <label class="col-md-3 label-control" for="commission_percentage">Commission Percentage *</label>
-                                    <div class="col-md-9">
-                                        <div class="input-group">
-                                            <input type="number" id="commission_percentage" class="form-control" placeholder="Commission Percentage" name="commission_percentage" min="0" step="0.01" value="10.00" required data-parsley-required-message="Please enter Commission Percentage" data-parsley-errors-container="#com_div">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">%</span>
+                                @can('isSuper')
+                                    <h4 class="form-section">
+                                        <i class="ft-credit-card"></i> Clinic Commission Details
+                                    </h4>
+                                     <div class="form-group row last">
+                                        <label class="col-md-3 label-control" for="commission_percentage">Commission Percentage *</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <input type="number" id="commission_percentage" class="form-control" placeholder="Commission Percentage" name="commission_percentage" min="0" step="0.01" value="10.00" required data-parsley-required-message="Please enter Commission Percentage" data-parsley-errors-container="#com_div">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
                                             </div>
+                                            <div id="com_div"></div>
                                         </div>
-                                        <div id="com_div"></div>
                                     </div>
-                                </div>
+                                @endcan
 
                             </div>
                             <div class="form-actions">

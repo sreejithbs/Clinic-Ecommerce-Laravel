@@ -72,7 +72,7 @@ class ClinicController extends Controller
             'bank_name' => 'required',
             'bank_code' => 'required',
             'bank_address' => 'required',
-            'commission_percentage' => 'required',
+            // 'commission_percentage' => 'required',
         ]);
 
         $clinic = Clinic::create([
@@ -96,7 +96,9 @@ class ClinicController extends Controller
             $clinic_profile->bankName = $request->bank_name;
             $clinic_profile->bankCode = $request->bank_code;
             $clinic_profile->bankAddress = $request->bank_address;
-            $clinic_profile->commissionPercentage = $request->commission_percentage;
+            if($request->has('commission_percentage')){
+                $clinic_profile->commissionPercentage = $request->commission_percentage;
+            }
             $clinic->clinic_profile()->save($clinic_profile);
         }
 
@@ -146,7 +148,7 @@ class ClinicController extends Controller
             'bank_name' => 'required',
             'bank_code' => 'required',
             'bank_address' => 'required',
-            'commission_percentage' => 'required',
+            // 'commission_percentage' => 'required',
         ]);
 
         $clinic = Clinic::fetchModelByUnqId($uuid);
@@ -161,7 +163,9 @@ class ClinicController extends Controller
             $clinic->clinic_profile->bankName = $request->bank_name;
             $clinic->clinic_profile->bankCode = $request->bank_code;
             $clinic->clinic_profile->bankAddress = $request->bank_address;
-            $clinic->clinic_profile->commissionPercentage = $request->commission_percentage;
+            if($request->has('commission_percentage')){
+                $clinic->clinic_profile->commissionPercentage = $request->commission_percentage;
+            }
             $clinic->clinic_profile->save();
         }
 
@@ -200,6 +204,7 @@ class ClinicController extends Controller
             if($newStatus == 'active' && $clinic->hasFirstTimeActivated == 0){ // means first time activation, Trigger Mail
                 $password = StringHelper::randString(8);
                 event( new ClinicWasActivatedEvent($clinic, $password) );
+                $clinic->password = bcrypt($password);
                 $clinic->hasFirstTimeActivated = 1;
             }
             $clinic->save();

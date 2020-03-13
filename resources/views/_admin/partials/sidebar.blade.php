@@ -4,7 +4,7 @@
             <li class="nav-item {{ \StringHelper::setActive('admin_dashboard') }}" >
                 <a href="{{ route('admin_dashboard') }}">
                     <i class="la la-home"></i>
-                    <span class="menu-title">Dashboard</span>
+                    <span class="menu-title">Home Dashboard</span>
                 </a>
             </li>
             <li class="nav-item {{ \StringHelper::setActive('admin_profile_edit') }}" >
@@ -25,19 +25,16 @@
                 </ul>
             </li>
 
-            {{-- @can('isSuper', auth()->user()) --}}
-            @can('isSuper')
-                <li class="nav-item {{ \StringHelper::setActive('admin_product_*', 'open') }}">
-                    <a href="javascript:void(0);"><i class="la la-list"></i>
-                        <span class="menu-title">Products Management</span>
-                    </a>
-                    <ul class="menu-content">
-                        <li class="{{ \StringHelper::setActive('admin_product_list') }}">
-                            <a class="menu-item" href="{{ route('admin_product_list') }}">List all Products</a>
-                        </li>
-                    </ul>
-                </li>
-            @endcan
+            <li class="nav-item {{ \StringHelper::setActive('admin_product_*', 'open') }}">
+                <a href="javascript:void(0);"><i class="la la-list"></i>
+                    <span class="menu-title">Products Management</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="{{ \StringHelper::setActive('admin_product_list') }}">
+                        <a class="menu-item" href="{{ route('admin_product_list') }}">List all Products</a>
+                    </li>
+                </ul>
+            </li>
 
             <li class="nav-item {{ \StringHelper::setActive('admin_clinic_*', 'open') }}">
                 <a href="javascript:void(0);"><i class="la la-institution"></i>

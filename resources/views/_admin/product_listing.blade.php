@@ -5,17 +5,19 @@
 @section('content')
 
 <section id="basic-form-layouts">
-    
-    <div class="row">
-        <div class="col-md-3 ml-auto">
-            <div class="float-md-right">
-                <a href="{{ route('admin_product_create') }}" class="btn btn-info btn-sm">
-                    <i class="la la-plus-square"></i> Add New Product
-                </a>
+
+    @can('isSuper')
+        <div class="row">
+            <div class="col-md-3 ml-auto">
+                <div class="float-md-right">
+                    <a href="{{ route('admin_product_create') }}" class="btn btn-info btn-sm">
+                        <i class="la la-plus-square"></i> Add New Product
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    <br/>
+        <br/>
+    @endcan
 
     <div class="row">
         <div class="col-12">

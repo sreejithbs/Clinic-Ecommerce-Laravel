@@ -1,6 +1,11 @@
 @extends('_admin.partials.master')
-@section('page_title', 'Admin Dashboard | Inner Beauty')
-@section('page_heading', 'Admin Dashboard')
+@can('isSuper')
+	@section('page_title', 'Super-Admin Dashboard | Inner Beauty')
+	@section('page_heading', 'Super-Admin Dashboard')
+@else
+	@section('page_title', 'Admin Dashboard | Inner Beauty')
+	@section('page_heading', 'Admin Dashboard')
+@endcan
 
 @section('content')
 
@@ -39,7 +44,7 @@
 								<i class="la la-users info font-large-2 float-left"></i>
 							</div>
 							<div class="media-body text-right">
-								<h3>10</h3>
+								<h3>0</h3>
 								<span>Total Online Users</span>
 							</div>
 						</div>

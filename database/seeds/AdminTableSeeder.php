@@ -13,10 +13,16 @@ class AdminTableSeeder extends Seeder
     public function run()
     {
         Admin::create([
+            'name' => 'Quinoid Super-Admin',
+            'email' => 'superadmin@demo.com',
+            'password' => bcrypt('superadmin@123'),
+            'isSuper' => 1
+        ]);
+
+        Admin::create([
             'name' => 'Admin Demo',
             'email' => 'admin@demo.com',
-            'password' => bcrypt('admin@123'),
-            'isSuper' => 1
+            'password' => bcrypt('admin@123')
         ]);
     }
 }

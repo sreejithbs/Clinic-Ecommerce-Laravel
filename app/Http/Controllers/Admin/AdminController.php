@@ -33,7 +33,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::latest()->get();
+        $admins = Admin::where('isSuper', 0)->latest()->get();
         return view('_admin.admin_listing', compact('admins'));
     }
 

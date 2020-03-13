@@ -28,9 +28,10 @@ Laravel eCommerce Platform for Inner Beauty by Fourseas
 
 Use these credentials to login :
 ```
-  User : user@demo.com  | user@123
-  Super Admin : admin@demo.com  | admin@123
+  Super Admin : superadmin@demo.com  | superadmin@123
+  Admin : admin@demo.com  | admin@123
   Clinic Admin : clinic@demo.com  | clinic@123
+  User : user@demo.com  | user@123
 ```
 
 MailTrap credentials :

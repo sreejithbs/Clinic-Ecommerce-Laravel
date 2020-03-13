@@ -68,8 +68,8 @@ class LoginController extends Controller
             return redirect()->intended('/admin/dashboard');
 
         } elseif (Auth::guard('clinic')->attempt($request->only('email', 'password'), $request->get('remember'))) {
-            if (Auth::guard('clinic')->status == 'suspend') {
-                Auth::logout($request);
+            if (Auth::guard('clinic')->user()->status == 'suspend') {
+                Auth::guard('clinic')->logout($request);
                 return redirect()->back()->withInput($request->only('email', 'remember'))
                         ->withErrors(['error' => 'Your Clinic account has been suspended. Please contact Site Administrator.']);
             }
@@ -80,7 +80,9 @@ class LoginController extends Controller
         //     return redirect()->intended('/user/dashboard');
         // }
 
-        return back()->withInput($request->only('email', 'remember'));
+        return redirect()->back()
+            ->withInput($request->only('email', 'remember'))
+            ->withErrors(['error' => 'These credentials do not match our records.']);
     }
 
     /**

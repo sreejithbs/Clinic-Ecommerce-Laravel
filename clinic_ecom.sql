@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2020 at 07:15 PM
+-- Generation Time: Mar 13, 2020 at 04:45 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -34,6 +34,7 @@ CREATE TABLE `admins` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isSuper` tinyint(4) NOT NULL DEFAULT '0',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -44,8 +45,9 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `unqId`, `name`, `email`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '40cb2706', 'Admin Demo', 'admin@demo.com', '$2y$10$ZsY.J3eExZtIU8YGDBE0jeNiBMtM5Rev7sW4Z7YET./HF6lpj8eCy', NULL, NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23');
+INSERT INTO `admins` (`id`, `unqId`, `name`, `email`, `password`, `isSuper`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'a66ecff4', 'Quinoid Super-Admin', 'superadmin@demo.com', '$2y$10$xlgzfU2hsdfZ.iRsOQbeS.J28ya3Xi4R6D0G2RJVE5/hPOCo16NZW', 1, NULL, NULL, '2020-03-12 22:15:08', '2020-03-12 22:15:08'),
+(2, '159f1278', 'Admin Demo', 'admin@demo.com', '$2y$10$nZEfrjWpeIYYJ1xTRltlL.o2GTTZ0MvqGQxHdwH9fCJv1z/f75Ay.', 0, NULL, NULL, '2020-03-12 22:15:08', '2020-03-12 22:15:08');
 
 -- --------------------------------------------------------
 
@@ -59,7 +61,8 @@ CREATE TABLE `clinic_admins` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('active','suspend') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` enum('active','suspend') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'suspend',
+  `hasFirstTimeActivated` tinyint(4) NOT NULL DEFAULT '0',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -70,8 +73,8 @@ CREATE TABLE `clinic_admins` (
 -- Dumping data for table `clinic_admins`
 --
 
-INSERT INTO `clinic_admins` (`id`, `unqId`, `name`, `email`, `password`, `status`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'f3a6be64', 'Clinic Demo', 'clinic@demo.com', '$2y$10$p35urmIUbCThVkPQaaA.A.Ovo0UWXherqIQvO1AgIatQpCYhzcLBG', 'active', NULL, NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23');
+INSERT INTO `clinic_admins` (`id`, `unqId`, `name`, `email`, `password`, `status`, `hasFirstTimeActivated`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, '333a5847', 'Clinic Demo', 'clinic@demo.com', '$2y$10$F4pPyw.53Te2EeSsHIQOEeSmfFuxGkvjFilV1DXRaLkB4qpiIy8Ju', 'active', 1, NULL, NULL, '2020-03-12 22:15:08', '2020-03-12 22:15:08');
 
 -- --------------------------------------------------------
 
@@ -104,7 +107,7 @@ CREATE TABLE `clinic_profiles` (
 --
 
 INSERT INTO `clinic_profiles` (`id`, `createdByAdminId`, `clinicAdminId`, `clinicReferenceId`, `clinicName`, `clinicAddress`, `phoneNumber`, `secondaryEmail`, `bankAcNumber`, `bankAcHolderName`, `bankName`, `bankCode`, `bankAddress`, `commissionPercentage`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'ref_67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23');
+(1, 1, 1, 'ref_67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-03-12 22:15:08', '2020-03-12 22:15:08');
 
 -- --------------------------------------------------------
 
@@ -117,22 +120,15 @@ CREATE TABLE `inventory_purchases` (
   `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdByAdminId` bigint(20) UNSIGNED DEFAULT NULL,
   `supplierId` bigint(20) UNSIGNED DEFAULT NULL,
+  `orderNumber` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `totalPrice` decimal(10,2) NOT NULL,
-  `notes` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attachment` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notes` longtext COLLATE utf8mb4_unicode_ci,
   `paymentMode` enum('cash','credit','others') COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `inventory_purchases`
---
-
-INSERT INTO `inventory_purchases` (`id`, `unqId`, `createdByAdminId`, `supplierId`, `dateTime`, `totalPrice`, `notes`, `attachment`, `paymentMode`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'd11d41a1', 1, 3, '2020-03-11 02:30:00', '2248.00', 'This is for reference purposes', '/uploads/inventory/1583949779-pdf-pdf-invoice3-1.png', 'cash', NULL, '2020-03-11 12:32:59', '2020-03-11 12:32:59');
 
 -- --------------------------------------------------------
 
@@ -150,14 +146,6 @@ CREATE TABLE `inventory_purchase_product` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `inventory_purchase_product`
---
-
-INSERT INTO `inventory_purchase_product` (`id`, `productId`, `inventoryPurchaseId`, `quantity`, `subTotalPrice`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, 5, '450.00', '2020-03-11 12:32:59', '2020-03-11 12:32:59'),
-(2, 1, 1, 2, '1798.00', '2020-03-11 12:32:59', '2020-03-11 12:32:59');
-
 -- --------------------------------------------------------
 
 --
@@ -169,10 +157,10 @@ CREATE TABLE `inventory_transfers` (
   `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdByAdminId` bigint(20) UNSIGNED DEFAULT NULL,
   `clinicId` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'which clinic product is to be transferred',
+  `orderNumber` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `totalPrice` decimal(10,2) NOT NULL,
-  `notes` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attachment` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notes` longtext COLLATE utf8mb4_unicode_ci,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -260,14 +248,6 @@ CREATE TABLE `products` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `unqId`, `createdByAdminId`, `title`, `slug`, `description`, `remarks`, `initialStockQuantity`, `stockQuantity`, `stockStatus`, `regularPrice`, `sellingPrice`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'd33afd53', 1, 'Demo Item', 'demo-item', 'This is a demo item', 'no comments', 99, 101, 'in_stock', '1000.00', '899.00', NULL, '2020-03-11 12:20:32', '2020-03-11 12:32:59'),
-(2, 'ef126dcc', 1, 'Stem Cell Cosmetic', 'stem-cell-cosmetic', 'This is a description for Stem Cell Cosmetic', 'no comments', 50, 55, 'in_stock', '99.00', '90.00', NULL, '2020-03-11 12:22:28', '2020-03-11 12:32:59');
-
 -- --------------------------------------------------------
 
 --
@@ -285,15 +265,6 @@ CREATE TABLE `product_images` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `product_images`
---
-
-INSERT INTO `product_images` (`id`, `productId`, `originalImagePath`, `smallImagePath`, `mediumImagePath`, `largeImagePath`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, '/uploads/products/1583949032-image.jpg', NULL, NULL, NULL, NULL, '2020-03-11 12:20:32', '2020-03-11 12:20:32'),
-(2, 2, '/uploads/products/1583949148-ageless-derma-stem-cell-and-peptide-anti-wrinkle-cream-1-280x300.png', NULL, NULL, NULL, NULL, '2020-03-11 12:22:28', '2020-03-11 12:22:28'),
-(3, 2, '/uploads/products/1583949148-orig.jpg', NULL, NULL, NULL, NULL, '2020-03-11 12:22:28', '2020-03-11 12:22:28');
 
 -- --------------------------------------------------------
 
@@ -320,9 +291,8 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`id`, `unqId`, `createdByAdminId`, `name`, `email`, `phoneNumber`, `companyName`, `companyAddress`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, '5411c9e9', NULL, 'Supplier Tom Demo', 'supplier_tom@demo.com', '9219592195', 'Tom\'s Manufacturing Company', 'Test street, Test Avenue', NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23'),
-(2, 'e37acacd', NULL, 'Supplier John Demo', 'supplier_john@demo.com', '9219592195', 'John\'s & Co Company', 'Test street, Test Square', NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23'),
-(3, '4aeae290', 1, 'Adam Roger', 'roger@demo.com', '9219599999', 'ABC', 'Something', NULL, '2020-03-11 12:32:07', '2020-03-11 12:32:07');
+(1, 'f4151ccc', NULL, 'Supplier Tom Demo', 'supplier_tom@demo.com', '9219592195', 'Tom\'s Manufacturing Company', 'Test street, Test Avenue', NULL, '2020-03-12 22:15:08', '2020-03-12 22:15:08'),
+(2, '2dba3b65', NULL, 'Supplier John Demo', 'supplier_john@demo.com', '9219592195', 'John\'s & Co Company', 'Test street, Test Square', NULL, '2020-03-12 22:15:08', '2020-03-12 22:15:08');
 
 -- --------------------------------------------------------
 
@@ -348,7 +318,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `unqId`, `name`, `email`, `email_verified_at`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'b3361673', 'User Demo', 'user@demo.com', NULL, '$2y$10$teuF1RzE3nQ7PDjMLhX/..7u1m9iTxYkGiQ1UXLCp1NrQNgzwFYwO', NULL, NULL, '2020-03-11 12:15:23', '2020-03-11 12:15:23');
+(1, 'ae81f222', 'User Demo', 'user@demo.com', NULL, '$2y$10$qA1PluPKkmgr7rSSGekSiOP6DcVZeyh87YLqwtMnhplZz3sCfTALO', NULL, NULL, '2020-03-12 22:15:08', '2020-03-12 22:15:08');
 
 --
 -- Indexes for dumped tables
@@ -466,7 +436,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `clinic_admins`
@@ -484,13 +454,13 @@ ALTER TABLE `clinic_profiles`
 -- AUTO_INCREMENT for table `inventory_purchases`
 --
 ALTER TABLE `inventory_purchases`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_purchase_product`
 --
 ALTER TABLE `inventory_purchase_product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_transfers`
@@ -514,19 +484,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

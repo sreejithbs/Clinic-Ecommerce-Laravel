@@ -3,9 +3,7 @@
 @section('page_heading', 'List all Clinics')
 
 @section('page_styles')
-	<link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/forms/toggle/bootstrap-switch.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/css/plugins/forms/switch.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/css/core/colors/palette-switch.min.css') }}">
 @stop
 
 @section('content')
@@ -37,9 +35,7 @@
 									<th>#</th>
 									<!-- <th>Reference ID</th> -->
 									<th>Name</th>
-									<th>Address</th>
 									<th>Email ID</th>
-									<th>Account Status</th>
 									<th>Toggle Account Status</th>
 									<th>Actions</th>
 								</tr>
@@ -50,20 +46,12 @@
 										<td> {{ $loop->iteration }}</td>
 										<!-- <td> {{ $clinic->clinic_profile->clinicReferenceId }}</td> -->
 										<td> {{ $clinic->clinic_profile->clinicName }}</td>
-										<td>
-											{!! Str::limit($clinic->clinic_profile->clinicAddress, 40, ' ...') !!}
-										</td>
+
 										<td> {{ $clinic->email }} </td>
-										<td>
-											@if($clinic->status == 'active')
-												<span class="badge badge-success"> Active </span>
-											@else
-												<span class="badge badge-danger"> Suspended </span>
-											@endif
-										</td>
 										<td data-unq_id="{{ $clinic->unqId }}">
-											**** Small Switch **** (class: toggleStatus)
+											<input type="checkbox" class="switch toggleStatus" data-reverse data-group-cls="btn-group-sm" name="toggleStatus" {{ ($clinic->status == 'active') ? 'checked' : '' }}>
 										</td>
+
 										<td>
 											<a href="{{ route('admin_clinic_edit', $clinic->unqId ) }}" class="btn btn-icon btn-info btn-sm">
 												<i class="la la-eye"></i>
@@ -96,22 +84,34 @@
 @endsection
 
 @push('page_scripts')
-	<script src="{{ asset('modern_admin_assets/vendors/js/forms/toggle/bootstrap-switch.min.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('modern_admin_assets/js/scripts/forms/switch.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('modern_admin_assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js') }}" type="text/javascript"></script>
 
 	<script type="text/javascript">
 		$(function(){
 
+			$('.switch:checkbox').checkboxpicker({
+				offLabel: 'Suspend',
+				onLabel: 'Active'
+			});
+
 			$('body').on('change', '.toggleStatus', function(){
 
 				var $elm = $(this);
+				var status;
+
+				if($elm.prop("checked") == true){
+					status = 'active';
+	            } else if($elm.prop("checked") == false){
+	            	status = 'suspend';
+	            }
+
 				$.ajax({
 					url: "{{ URL::route('admin_clinic_toggle_status') }}",
 					dataType: 'json',
 					type: 'POST',
 					data: {
-						'status' : $elm.val(),
-						'clinic_unqid' : $elm.parent('td').attr('data-unq_id')
+						'clinic_unqid' : $elm.parent('td').attr('data-unq_id'),
+						status
 					},
 					success:function(response){
 						if(response.status){
@@ -119,13 +119,8 @@
 							    type: 'success',
 							    title: response.message,
 							    showConfirmButton: true,
-							    timer: 1500
+							    timer: 2000
 							});
-
-						    setTimeout(function(){
-						        window.location.reload();
-						    }, 2000);
-
 						} else{
 							swal.close();
 							toastr.error(response.message, 'Error !', {timeOut: 2000});

@@ -61,7 +61,7 @@ class DashboardController extends Controller
 
         $admin = Auth::guard('admin')->user();
         $admin->name = $request->name;
-        if(request->has('password')){
+        if(! empty($request->password) ){
            $admin->password = bcrypt($request->password);
         }
         $admin->save();

@@ -34,7 +34,9 @@
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="javascript:void(0);" data-toggle="dropdown">
                             <span class="mr-1">Hello,
-                                <span class="user-name text-bold-700">Admin</span>
+                                <span class="user-name text-bold-700">
+                                    {{ Auth::guard('admin')->user()->name }}
+                                </span>
                             </span>
                             <span class="avatar">
                                 <img src="{{ asset('modern_admin_assets/images/portrait/small/avatar-s-19.png')}}" alt="avatar"><i></i>
