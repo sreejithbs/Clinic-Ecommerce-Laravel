@@ -16,7 +16,7 @@
                         <!-- <div class="card-text">
                             <p>Info</p>
                         </div> -->
-                        <form method="post" action="{{ route('admin_clinic_store') }}" enctype="multipart/form-data" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
+                        <form method="post" action="{{ route('admin_clinic_store') }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
                         	{{ csrf_field() }}
 
                             <div class="form-body">

@@ -44,7 +44,7 @@
                                         <td> {{ $admin->created_at->format('d/m/Y') }} </td>
                                         <td>
                                             <a href="{{ route('admin_user_edit', $admin->unqId ) }}" class="btn btn-icon btn-info btn-sm">
-                                                <i class="la la-eye"></i>
+                                                <i class="la la-edit"></i>
                                             </a>
 
                                             {!! Form::open(array(

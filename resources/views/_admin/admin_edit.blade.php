@@ -16,7 +16,7 @@
                         <!-- <div class="card-text">
                             <p>Info</p>
                         </div> -->
-                        <form method="post" action="{{ route('admin_user_update', $admin->unqId) }}" enctype="multipart/form-data" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
+                        <form method="post" action="{{ route('admin_user_update', $admin->unqId) }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
                         	{{ csrf_field() }}
 
                             <div class="form-body">

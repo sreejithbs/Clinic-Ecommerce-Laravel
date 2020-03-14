@@ -60,7 +60,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="supplier">Supplier</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="supplier" class="form-control" placeholder="Supplier" name="supplier" required data-parsley-required-message="Please enter Supplier">
+                                        <input type="text" id="supplier" class="form-control" placeholder="Supplier" name="supplier">
                                     </div>
                                 </div>
                                 <div class="form-group row last">
@@ -95,7 +95,7 @@
         $(function(){
 
             // Product Quantity Change
-            $('body').on('keyup', '.quantity', function(){
+            $('body').on('change', '.quantity', function(){
 
                 var total = 0;
                 if($(this).val() == '' || isNaN( $(this).val() )){

@@ -25,7 +25,7 @@
                 </ul>
             </li>
 
-            <li class="nav-item {{ \StringHelper::setActive(['admin_product_*', 'admin_inventory_purchase_*'], 'open') }}">
+            <li class="nav-item {{ \StringHelper::setActive(['admin_product_*', 'admin_inventory_*'], 'open') }}">
                 <a href="javascript:void(0);"><i class="la la-list"></i>
                     <span class="menu-title">Products Management</span>
                 </a>

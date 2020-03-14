@@ -60,10 +60,10 @@
                                         <!-- <td> ${{ $product->sellingPrice }} </td> -->
                                         <td>
                                             <a href="{{ route('admin_product_edit', $product->unqId ) }}" class="btn btn-icon btn-info btn-sm">
-                                                <i class="la la-eye"></i>
+                                                <i class="la la-edit"></i>
                                             </a>
 
-                                            <a href="{{ route('admin_inventory_logs_list', $product->unqId ) }}" class="btn btn-icon btn-info btn-sm">
+                                            <a href="{{ route('admin_inventory_logs_list', $product->unqId ) }}" class="btn btn-icon btn-primary btn-sm">
                                                 <i class="la la-history"></i>
                                             </a>
 

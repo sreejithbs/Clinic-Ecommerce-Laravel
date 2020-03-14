@@ -12,7 +12,7 @@
                 <a href="{{ route('admin_inventory_purchase_create', $product->unqId) }}" class="btn btn-info btn-sm">
                     <i class="la la-plus-square"></i> Add Inventory
                 </a>
-                <a href="" class="btn btn-info btn-sm">
+                <a href="" class="btn btn-warning btn-sm">
                     <i class="la la-minus-square"></i> Deduct Inventory
                 </a>
             </div>
@@ -33,7 +33,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
-                                    <th>Particular</th>
+                                    <th>Particulars</th>
                                     <th>Order ID</th>
                                     <th>Opening Inventory</th>
                                     <th>Quantity</th>
@@ -50,9 +50,9 @@
                                         <td> {{ $inventory_log->openingQty }} </td>
                                         <td>
                                             @if( in_array($inventory_log->eventCode, [0, 1]) )
-                                                <strong> + </strong> <span class="badge badge-success">
+                                                <span class="badge badge-pill badge-success">
                                             @else
-                                                <strong> - </strong> <span class="badge badge-danger">
+                                                <span class="badge badge-pill badge-danger">
                                             @endif
 
                                             {{ $inventory_log->quantity }} </span>

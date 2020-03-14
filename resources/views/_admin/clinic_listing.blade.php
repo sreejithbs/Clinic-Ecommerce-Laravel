@@ -54,7 +54,7 @@
 
 										<td>
 											<a href="{{ route('admin_clinic_edit', $clinic->unqId ) }}" class="btn btn-icon btn-info btn-sm">
-												<i class="la la-eye"></i>
+												<i class="la la-edit"></i>
 											</a>
 
 											{!! Form::open(array(

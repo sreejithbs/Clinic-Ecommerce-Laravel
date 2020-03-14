@@ -50,7 +50,7 @@ class Product extends Model
     }
 
     /**
-     * The inventory_logs that belong to the products.
+     * The inventory_purchases that belong to the products.
      */
     public function inventory_purchases(){
         return $this->hasMany(InventoryPurchase::class, 'productId');
