@@ -5,7 +5,7 @@
 		</span>
 		<span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">
 			Hand-crafted & Made with <i class="ft-heart pink"></i>
-			<a href="{{ url('/') }}" target="_blank">Quinoid</a>
+			<a href="https://www.quinoid.com" target="_blank">Quinoid</a>
 		</span>
 	</p>
 </footer>
