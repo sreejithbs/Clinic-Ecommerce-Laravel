@@ -17,13 +17,14 @@ class CreateInventoryPurchasesTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('unqId')->index();
             $table->unsignedBigInteger('createdByAdminId')->nullable();
-            $table->unsignedBigInteger('supplierId')->nullable();
-            $table->string('orderRefNum', 50)->unique();
-            $table->string('orderNumber')->nullable();
+            $table->unsignedBigInteger('productId');
+            $table->string('purchaseRefNum', 50)->unique();
+            $table->string('purchaseNumber')->nullable();
+            $table->integer('quantity');
             $table->timestamp('dateTime');
+            $table->string('supplier')->nullable();
             $table->decimal('totalPrice', 10, 2);
             $table->longText('notes')->nullable();
-            $table->enum('paymentMode', ['cash', 'credit', 'others']);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -33,7 +34,7 @@ class CreateInventoryPurchasesTable extends Migration
          */
         Schema::table('inventory_purchases', function (Blueprint $table) {
             $table->foreign('createdByAdminId')->references('id')->on('admins')->onDelete('set null');
-            $table->foreign('supplierId')->references('id')->on('suppliers')->onDelete('set null');
+            $table->foreign('productId')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

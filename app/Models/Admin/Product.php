@@ -9,9 +9,8 @@ use Spatie\Sluggable\SlugOptions;
 use App\Traits\UuidTrait;
 
 use App\Models\Admin\ProductImage;
-use App\Models\Admin\InventoryPurchase;
-use App\Models\Admin\InventoryTransfer;
 use App\Models\Admin\InventoryLog;
+use App\Models\Admin\InventoryPurchase;
 
 class Product extends Model
 {
@@ -51,21 +50,10 @@ class Product extends Model
     }
 
     /**
-     * The inventory_purchases that belong to the products.
+     * The inventory_logs that belong to the products.
      */
-    public function inventory_purchases()
-    {
-        return $this->belongsToMany(InventoryPurchase::class, 'inventory_purchase_product', 'productId', 'inventoryPurchaseId')
-        ->withTimestamps();
-    }
-
-    /**
-     * The inventory_transfers that belong to the products.
-     */
-    public function inventory_transfers()
-    {
-        return $this->belongsToMany(InventoryTransfer::class, 'inventory_transfer_product', 'productId', 'inventoryTransferId')
-        ->withTimestamps();
+    public function inventory_purchases(){
+        return $this->hasMany(InventoryPurchase::class, 'productId');
     }
 
     /**

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\UuidTrait;
 
-use App\Models\Admin\Product;
+use Carbon\Carbon;
 
 class InventoryLog extends Model
 {
@@ -15,13 +15,8 @@ class InventoryLog extends Model
 
 	protected $table = 'inventory_logs';
 
-	/**
-	 * The products that belong to the inventory_logs.
-	 */
-	public function products()
+	public function getDateTimeAttribute()
 	{
-	    return $this->belongsToMany(Product::class, 'inventory_purchase_product', 'inventoryPurchaseId', 'productId')
-	    ->withPivot('quantity', 'subTotalPrice')
-	    ->withTimestamps();
+	   return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y');
 	}
 }

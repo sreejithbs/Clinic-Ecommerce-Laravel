@@ -44,11 +44,17 @@ class StringHelper {
     /**
      * Set css class if the specific URI is current URI
      *
-     * @param string $path
+     * @param array $path
      * @return string
      */
-    public static function setActive(string $route, string $className = "active")
+    public static function setActive(array $routes, string $className = "active")
     {
-        return str_is($route, Route::currentRouteName()) ? $className :  '';
+        foreach ($routes as $route) {
+            if( str_is($route, Route::currentRouteName()) ){
+                return $className;
+                break;
+            }
+        }
+        return '';
     }
 }

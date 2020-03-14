@@ -20,6 +20,5 @@ class DatabaseSeeder extends Seeder
     	$this->call(AdminTableSeeder::class);
         $this->call(ClinicAdminTableSeeder::class);
     	$this->call(UserTableSeeder::class);
-        $this->call(SupplierTableSeeder::class);
     }
 }

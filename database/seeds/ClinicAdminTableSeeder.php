@@ -24,7 +24,7 @@ class ClinicAdminTableSeeder extends Seeder
         if($clinic){
             $clinic_profile = new ClinicProfile();
             $clinic_profile->createdByAdminId = 1;
-            $clinic_profile->clinicReferenceId = 'clinic_67b432c3';
+            $clinic_profile->clinicRefNum = 'clinic_67b432c3';
             $clinic_profile->clinicName = 'Demo Clinic';
             $clinic_profile->clinicAddress = 'Test address, Test Street, CA';
             $clinic_profile->phoneNumber = '9219592195';

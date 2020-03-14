@@ -63,9 +63,9 @@
                                                 <i class="la la-eye"></i>
                                             </a>
 
-                                            <!-- <a href="#" class="btn btn-icon btn-info btn-sm">
+                                            <a href="{{ route('admin_inventory_logs_list', $product->unqId ) }}" class="btn btn-icon btn-info btn-sm">
                                                 <i class="la la-history"></i>
-                                            </a> -->
+                                            </a>
 
                                             {!! Form::open(array(
                                                     'route' => array('admin_product_delete', $product->unqId),
