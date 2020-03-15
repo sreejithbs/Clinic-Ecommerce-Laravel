@@ -79,7 +79,11 @@ Route::prefix('admin')->group(function () {
 
 // ************************* Start of CLINIC ROUTES ******************************
 Route::prefix('clinic')->group(function () {
-	Route::group(['as' => 'clinic_'], function(){
-		Route::get('/dashboard', 'Clinic\DashboardController@index')->name('dashboard');
+	Route::get('/dashboard', 'Clinic\DashboardController@index')->name('clinic_dashboard');
+	Route::get('/my-profile', 'Clinic\DashboardController@editProfile')->name('clinic_profile_edit');
+	Route::post('/my-profile', 'Clinic\DashboardController@updateProfile')->name('clinic_profile_update');
+
+	Route::group(['prefix' => 'inventory', 'as' => 'clinic_inventory_'], function(){
+	    Route::get('/all', 'Clinic\InventoryController@index')->name('list');
 	});
 });

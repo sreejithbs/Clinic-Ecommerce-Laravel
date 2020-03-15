@@ -34,7 +34,7 @@
                                     <th>Product Name</th>
                                     <th>Image</th>
                                     <!-- <th>Description</th> -->
-                                    <th>Total Inventory Qty</th>
+                                    <th>Inventory Quantity</th>
                                     <!-- <th>Selling Price</th> -->
                                     <th>Actions</th>
                                 </tr>

@@ -26,13 +26,13 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/css/plugins/loaders/loaders.min.css') }}">
 
 <!-- SELECT2 -->
-<link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/forms/selects/select2.min.css') }}">
+<!-- <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/forms/selects/select2.min.css') }}"> -->
 
 <!-- iCheck -->
-<link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/forms/icheck/icheck.css') }}">
+<!-- <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/forms/icheck/icheck.css') }}"> -->
 
 <!-- jQuery DateTimePicker -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" /> -->
 
 <!-- Jquery UI -->
 <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/ui/jquery-ui.min.css') }}">
@@ -74,15 +74,7 @@
 	.parsley-errors-list.filled {
 		opacity: 1;
 	}
-
-	/*.appendDiv tr:not(.no-data){
-		background-color: #d7e7ff;
-	}
-
-	.no-data{
-		background-color: #ffb1b19e;
-	}*/
-
+	
 	table tr, td{
 		text-align: center !important;
 	}
