@@ -92,7 +92,7 @@
                                             <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
                                                 <strong>Transfer Reference Number</strong> : {{ $data['transfer_reference_num'] }} <br>
                                                 <strong>Product Name</strong> : {{ $data['product_name'] }} <br>
-                                                <strong>Added Quantity</strong> : {{ $data['new_qty'] }} <br>
+                                                <strong>Transfer Quantity</strong> : {{ $data['new_qty'] }} <br>
                                                 <strong>Total Available Quantity</strong> : {{ $data['total_qty'] }}
                                             </td>
                                         </tr>

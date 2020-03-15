@@ -13,7 +13,7 @@
                     <i class="la la-plus-square"></i> Add Inventory
                 </a>
                 <a href="{{ route('admin_inventory_transfer_create', $product->unqId) }}" class="btn btn-warning btn-sm">
-                    <i class="la la-minus-square"></i> Deduct Inventory
+                    <i class="la la-minus-square"></i> Transfer Inventory
                 </a>
             </div>
         </div>
