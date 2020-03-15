@@ -11,6 +11,7 @@ use App\Traits\UuidTrait;
 use App\Models\Admin\ProductImage;
 use App\Models\Admin\InventoryLog;
 use App\Models\Admin\InventoryPurchase;
+use App\Models\Admin\InventoryTransfer;
 
 class Product extends Model
 {
@@ -53,6 +54,13 @@ class Product extends Model
      * The inventory_purchases that belong to the products.
      */
     public function inventory_purchases(){
+        return $this->hasMany(InventoryPurchase::class, 'productId');
+    }
+
+    /**
+     * The inventory_transfers that belong to the products.
+     */
+    public function inventory_transfers(){
         return $this->hasMany(InventoryPurchase::class, 'productId');
     }
 

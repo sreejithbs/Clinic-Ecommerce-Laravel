@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2020 at 07:41 PM
+-- Generation Time: Mar 15, 2020 at 07:00 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -46,8 +46,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `unqId`, `name`, `email`, `password`, `isSuper`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '93ef9426', 'Quinoid Super-Admin', 'superadmin@demo.com', '$2y$10$VUIRuUVGALHNJhZZc7tkzunsVBZ1L34w5X7PR99wTgStRWX7zoHt.', 1, NULL, NULL, '2020-03-14 13:10:48', '2020-03-14 13:10:48'),
-(2, 'adcc98c1', 'Admin Demo', 'admin@demo.com', '$2y$10$Cwh2fN3En16UtDE7HB9DTuzW4NX2A13cJoFY1J/z0F4edeid4lywe', 0, NULL, NULL, '2020-03-14 13:10:48', '2020-03-14 13:10:48');
+(1, '5330fd41', 'Quinoid Super-Admin', 'superadmin@demo.com', '$2y$10$7bK.a2zpI5CViYMzACmAvOwpX7JiHqWrqiv3E45Xki8gBlg/NFbhm', 1, NULL, NULL, '2020-03-15 00:29:49', '2020-03-15 00:29:49'),
+(2, 'ac1556c6', 'Admin Demo', 'admin@demo.com', '$2y$10$CrZ14dIjUw6QzHwVwzRv8u7Dx7UVt3b.e1.dqcrMetXsoFKcxcdg.', 0, NULL, NULL, '2020-03-15 00:29:49', '2020-03-15 00:29:49');
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,24 @@ CREATE TABLE `clinic_admins` (
 --
 
 INSERT INTO `clinic_admins` (`id`, `unqId`, `name`, `email`, `password`, `status`, `hasFirstTimeActivated`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'd2cc20fd', 'Clinic Demo', 'clinic@demo.com', '$2y$10$ZcTkCHXMh6ME9MQufPYdLeUhrBaCH0nW6GwoqWFxWTTBwYkCf2bYG', 'active', 1, NULL, NULL, '2020-03-14 13:10:48', '2020-03-14 13:10:48');
+(1, '17203aa1', 'Clinic Demo', 'clinic@demo.com', '$2y$10$fAQ5mDTnJRWT5d2b.4DbRuiAsIhMkLBt5.MVdy9SXGDE63ASvgCBW', 'active', 1, NULL, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clinic_inventories`
+--
+
+CREATE TABLE `clinic_inventories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `clinicId` bigint(20) UNSIGNED DEFAULT NULL,
+  `productId` bigint(20) UNSIGNED NOT NULL,
+  `stockQuantity` int(11) NOT NULL DEFAULT '0',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -107,7 +124,7 @@ CREATE TABLE `clinic_profiles` (
 --
 
 INSERT INTO `clinic_profiles` (`id`, `createdByAdminId`, `clinicAdminId`, `clinicRefNum`, `clinicName`, `clinicAddress`, `phoneNumber`, `secondaryEmail`, `bankAcNumber`, `bankAcHolderName`, `bankName`, `bankCode`, `bankAddress`, `commissionPercentage`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'clinic_67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-03-14 13:10:48', '2020-03-14 13:10:48');
+(1, 1, 1, 'clinic_67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
 
 -- --------------------------------------------------------
 
@@ -138,7 +155,7 @@ CREATE TABLE `inventory_logs` (
 --
 
 INSERT INTO `inventory_logs` (`id`, `unqId`, `productId`, `refNum`, `logEvent`, `eventCode`, `dateTime`, `openingQty`, `quantity`, `closingQty`, `relatedEntryModel`, `relatedEntryModelId`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, '9dcd666d', 1, '-', 'Initial Inventory Added', 0, '2020-03-14 12:47:14', 0, 101, 101, 'App\\Models\\Admin\\Product', 1, NULL, '2020-03-14 13:10:48', '2020-03-14 13:10:48');
+(1, 'd37114f8', 1, '-', 'Initial Inventory Added', 0, '2020-03-14 12:47:14', 0, 110, 110, 'App\\Models\\Admin\\Product', 1, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
 
 -- --------------------------------------------------------
 
@@ -156,6 +173,29 @@ CREATE TABLE `inventory_purchases` (
   `quantity` int(11) NOT NULL,
   `dateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `supplier` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `totalPrice` decimal(10,2) NOT NULL,
+  `notes` longtext COLLATE utf8mb4_unicode_ci,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_transfers`
+--
+
+CREATE TABLE `inventory_transfers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `unqId` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdByAdminId` bigint(20) UNSIGNED DEFAULT NULL,
+  `productId` bigint(20) UNSIGNED NOT NULL,
+  `clinicId` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'clinic, where product to be transferred',
+  `transferRefNum` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `transferNumber` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `dateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `totalPrice` decimal(10,2) NOT NULL,
   `notes` longtext COLLATE utf8mb4_unicode_ci,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -189,7 +229,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2020_02_18_163241_create_product_images_table', 1),
 (8, '2020_02_27_135538_create_inventory_purchases_table', 1),
 (9, '2020_03_04_143516_create_inventory_transfers_table', 1),
-(10, '2020_03_13_055451_create_inventory_logs_table', 1);
+(10, '2020_03_04_143815_create_clinic_inventories_table', 1),
+(11, '2020_03_13_055451_create_inventory_logs_table', 1);
 
 -- --------------------------------------------------------
 
@@ -220,7 +261,6 @@ CREATE TABLE `products` (
   `initialStockQuantity` int(11) NOT NULL DEFAULT '0',
   `stockQuantity` int(11) NOT NULL,
   `stockStatus` enum('in_stock','out_of_stock') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'in_stock',
-  `regularPrice` decimal(6,2) NOT NULL,
   `sellingPrice` decimal(6,2) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -231,8 +271,8 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `unqId`, `createdByAdminId`, `title`, `slug`, `description`, `remarks`, `initialStockQuantity`, `stockQuantity`, `stockStatus`, `regularPrice`, `sellingPrice`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, '97b1d1a0', 1, 'Demo Face Gel', 'demo-face-gel', 'This is a test description for Face Gel', 'No remarks to add', 101, 101, 'in_stock', '599.00', '499.00', NULL, '2020-03-14 13:10:48', '2020-03-14 13:10:48');
+INSERT INTO `products` (`id`, `unqId`, `createdByAdminId`, `title`, `slug`, `description`, `remarks`, `initialStockQuantity`, `stockQuantity`, `stockStatus`, `sellingPrice`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, '5a75c9b3', 1, 'Demo Face Gel', 'demo-face-gel', 'This is a test description for Face Gel', 'No remarks to add', 110, 110, 'in_stock', '499.00', NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
 
 -- --------------------------------------------------------
 
@@ -255,8 +295,8 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `productId`, `originalImagePath`, `thumbImagePath`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, '/uploads/products/1584209834-ageless-derma-stem-cell-and-peptide-anti-wrinkle-cream-1-280x300.png', NULL, NULL, '2020-03-14 13:10:48', '2020-03-14 13:10:48'),
-(2, 1, '/uploads/products/1584209834-orig.jpg', NULL, NULL, '2020-03-14 13:10:48', '2020-03-14 13:10:48');
+(1, 1, '/uploads/products/1584200000-ageless.png', NULL, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50'),
+(2, 1, '/uploads/products/1584200000-anti-wrinkle-cream.jpg', NULL, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
 
 -- --------------------------------------------------------
 
@@ -282,7 +322,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `unqId`, `name`, `email`, `email_verified_at`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '7a3ab4bd', 'User Demo', 'user@demo.com', NULL, '$2y$10$Oyn9a.CJweFpy6SmAO2RJO5SPf6CoCLeML1rGIUQnXTMcI4OJAwV2', NULL, NULL, '2020-03-14 13:10:48', '2020-03-14 13:10:48');
+(1, '0ba660c7', 'User Demo', 'user@demo.com', NULL, '$2y$10$nyNVn7R2jDkaOKqgRpaYC.r5tpzDBt.YsjHulRE4/mjP8itUJCCMC', NULL, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
 
 --
 -- Indexes for dumped tables
@@ -303,6 +343,15 @@ ALTER TABLE `clinic_admins`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `clinic_admins_email_unique` (`email`),
   ADD KEY `clinic_admins_unqid_index` (`unqId`);
+
+--
+-- Indexes for table `clinic_inventories`
+--
+ALTER TABLE `clinic_inventories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `clinic_inventories_unqid_index` (`unqId`),
+  ADD KEY `clinic_inventories_clinicid_foreign` (`clinicId`),
+  ADD KEY `clinic_inventories_productid_foreign` (`productId`);
 
 --
 -- Indexes for table `clinic_profiles`
@@ -330,6 +379,17 @@ ALTER TABLE `inventory_purchases`
   ADD KEY `inventory_purchases_unqid_index` (`unqId`),
   ADD KEY `inventory_purchases_createdbyadminid_foreign` (`createdByAdminId`),
   ADD KEY `inventory_purchases_productid_foreign` (`productId`);
+
+--
+-- Indexes for table `inventory_transfers`
+--
+ALTER TABLE `inventory_transfers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `inventory_transfers_transferrefnum_unique` (`transferRefNum`),
+  ADD KEY `inventory_transfers_unqid_index` (`unqId`),
+  ADD KEY `inventory_transfers_createdbyadminid_foreign` (`createdByAdminId`),
+  ADD KEY `inventory_transfers_productid_foreign` (`productId`),
+  ADD KEY `inventory_transfers_clinicid_foreign` (`clinicId`);
 
 --
 -- Indexes for table `migrations`
@@ -384,6 +444,12 @@ ALTER TABLE `clinic_admins`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `clinic_inventories`
+--
+ALTER TABLE `clinic_inventories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `clinic_profiles`
 --
 ALTER TABLE `clinic_profiles`
@@ -402,10 +468,16 @@ ALTER TABLE `inventory_purchases`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `inventory_transfers`
+--
+ALTER TABLE `inventory_transfers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -430,6 +502,13 @@ ALTER TABLE `users`
 --
 
 --
+-- Constraints for table `clinic_inventories`
+--
+ALTER TABLE `clinic_inventories`
+  ADD CONSTRAINT `clinic_inventories_clinicid_foreign` FOREIGN KEY (`clinicId`) REFERENCES `clinic_admins` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `clinic_inventories_productid_foreign` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `clinic_profiles`
 --
 ALTER TABLE `clinic_profiles`
@@ -448,6 +527,14 @@ ALTER TABLE `inventory_logs`
 ALTER TABLE `inventory_purchases`
   ADD CONSTRAINT `inventory_purchases_createdbyadminid_foreign` FOREIGN KEY (`createdByAdminId`) REFERENCES `admins` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `inventory_purchases_productid_foreign` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `inventory_transfers`
+--
+ALTER TABLE `inventory_transfers`
+  ADD CONSTRAINT `inventory_transfers_clinicid_foreign` FOREIGN KEY (`clinicId`) REFERENCES `clinic_admins` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `inventory_transfers_createdbyadminid_foreign` FOREIGN KEY (`createdByAdminId`) REFERENCES `admins` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `inventory_transfers_productid_foreign` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `products`

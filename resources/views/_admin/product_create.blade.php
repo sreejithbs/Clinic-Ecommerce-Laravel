@@ -66,18 +66,6 @@
                                         <input type="number" id="stock_qty" class="form-control" placeholder="Initial Stock Quantity" name="stock_qty" min="0" required data-parsley-required-message="Please enter Initial Stock Quantity">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="regular_price">Regular Price *</label>
-                                    <div class="col-md-9">
-                                    	<div class="input-group">
-                                    		<div class="input-group-prepend">
-                                    			<span class="input-group-text">$</span>
-                                    		</div>
-                                    		<input type="number" id="regular_price" class="form-control" placeholder="Regular Price" name="regular_price" min="0" step="0.01" required data-parsley-required-message="Please enter Regular Price" data-parsley-errors-container="#reg_div">
-                                    	</div>
-                                        <div id="reg_div"></div>
-                                    </div>
-                                </div>
                                 <div class="form-group row last">
                                     <label class="col-md-3 label-control" for="selling_price">Selling Price *</label>
                                     <div class="col-md-9">

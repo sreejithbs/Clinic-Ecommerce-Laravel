@@ -1,6 +1,6 @@
 @extends('_admin.partials.master')
-@section('page_title', 'Add New Inventory Purchase | Inner Beauty')
-@section('page_heading', 'Add New Inventory Purchase for Product : ' . $product->title)
+@section('page_title', 'Add New Inventory Transfer | Inner Beauty')
+@section('page_heading', 'Add New Inventory Transfer for Product : ' . $product->title)
 
 @section('content')
 
@@ -16,28 +16,46 @@
                         <!-- <div class="card-text">
                             <p>Info</p>
                         </div> -->
-                        <form method="post" action="{{ route('admin_inventory_purchase_store', $product->unqId) }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
+                        <form method="post" action="{{ route('admin_inventory_transfer_store', $product->unqId) }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
                         	{{ csrf_field() }}
                             <div class="form-body">
                                 <h4 class="form-section">
-                                	<i class="ft-clipboard"></i> Purchase Info
+                                	<i class="ft-rotate-cw"></i> Transfer Info
                                 </h4>
                                 <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="purchase_reference_num">Purchase Reference Number *</label>
+                                    <label class="col-md-3 label-control" for="transfer_reference_num">Transfer Reference Number *</label>
                                     <div class="col-md-5">
-                                        <input type="text" id="purchase_reference_num" class="form-control" value="purchase_{{ StringHelper::randString(8) }}" placeholder="Purchase Reference Number" name="purchase_reference_num" required data-parsley-required-message="Please enter Purchase Reference Number" readonly>
+                                        <input type="text" id="transfer_reference_num" class="form-control" value="transfer_{{ StringHelper::randString(8) }}" placeholder="Transfer Reference Number" name="transfer_reference_num" required data-parsley-required-message="Please enter Transfer Reference Number" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="purchase_order_number">Purchase Order Number</label>
+                                    <label class="col-md-3 label-control" for="transfer_order_number">Transfer Order Number</label>
                                     <div class="col-md-5">
-                                        <input type="text" id="purchase_order_number" class="form-control" placeholder="Purchase Order Number" name="purchase_order_number">
+                                        <input type="text" id="transfer_order_number" class="form-control" placeholder="Transfer Order Number" name="transfer_order_number">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control" for="clinic">Select Clinic *</label>
+                                    <div class="col-md-5">
+                                        <select id="clinic" class="form-control select2" name="clinic" required data-parsley-required-message="Please select a Clinic" data-parsley-errors-container="#clinic_errorDiv">
+                                            <option value="">-- Select an option --</option>
+                                            @foreach($clinics as $clinic)
+                                                <option value="{{ $clinic->unqId }}">
+                                                    {{ $clinic->clinic_profile->clinicName }} - {{ $clinic->email }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div id="clinic_errorDiv"></div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="quantity">Quantity *</label>
                                     <div class="col-md-5">
-                                        <input type="number" class="form-control quantity" placeholder="Quantity" name="quantity" min="1" required data-parsley-required-message="Please enter Quantity" data-prod_price="{{ $product->sellingPrice }}">
+                                        <input type="number" class="form-control quantity" placeholder="Quantity" name="quantity" min="1" max="{{ $product->stockQuantity }}" required data-parsley-required-message="Please enter Quantity" data-prod_price="{{ $product->sellingPrice }}">
+                                        <div class="help-block">
+                                            <small> Available Stock Quantity : {{ $product->stockQuantity }}</small>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -50,26 +68,20 @@
                                             <input type="text" id="total_price" class="form-control" value="0" disabled>
                                         </div>
                                         <div class="help-block">
-                                            <small> 1 unit costs ${{ $product->sellingPrice }}</small>
+                                            <small> Unit Price: ${{ $product->sellingPrice }}</small>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="purchase_date_time">Purchase Date & Time *</label>
+                                    <label class="col-md-3 label-control" for="transfer_date_time">Transfer Date & Time *</label>
                                     <div class="col-md-5">
-                                        <input type="text" id="datetimepicker" class="form-control" placeholder="Purchase Date Time" name="purchase_date_time" required data-parsley-required-message="Please choose Purchase Date Time">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="supplier">Supplier</label>
-                                    <div class="col-md-9">
-                                        <input type="text" id="supplier" class="form-control" placeholder="Supplier" name="supplier">
+                                        <input type="text" id="datetimepicker" class="form-control" placeholder="Transfer Date Time" name="transfer_date_time" required data-parsley-required-message="Please choose Transfer Date Time">
                                     </div>
                                 </div>
                                 <div class="form-group row last">
-                                    <label class="col-md-3 label-control" for="notes">Purchase Note</label>
+                                    <label class="col-md-3 label-control" for="notes">Transfer Note</label>
                                     <div class="col-md-9">
-                                        <textarea id="notes" rows="5" class="form-control" name="notes" placeholder="Purchase Note"></textarea>
+                                        <textarea id="notes" rows="5" class="form-control" name="notes" placeholder="Transfer Note"></textarea>
                                     </div>
                                 </div>
 

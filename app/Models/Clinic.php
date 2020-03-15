@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\UuidTrait;
 
 use App\Models\Admin\ClinicProfile;
+use App\Models\Admin\ClinicInventory;
 
 class Clinic extends Authenticatable
 {
@@ -44,5 +45,12 @@ class Clinic extends Authenticatable
      */
     public function clinic_profile(){
         return $this->hasOne(ClinicProfile::class, 'clinicAdminId');
+    }
+
+    /**
+     * The inventories that belong to the clinics.
+     */
+    public function inventories(){
+        return $this->hasMany(ClinicInventory::class, 'clinicId');
     }
 }

@@ -64,11 +64,11 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
         // if ($request->is('admin') || $request->is('admin/*')) {
-        //     return redirect()->guest('/login');
+        //     return redirect()->guest('/common_login_form');
         // }
         // if ($request->is('clinic') || $request->is('clinic/*')) {
-        //     return redirect()->guest('/login');
+        //     return redirect()->guest('/common_login_form');
         // }
-        return redirect()->guest(route('login'));
+        return redirect()->guest(route('common_login_form'));
     }
 }

@@ -24,7 +24,6 @@ class CreateProductsTable extends Migration
             $table->integer('initialStockQuantity')->default(0);
             $table->integer('stockQuantity');
             $table->enum('stockStatus', ['in_stock', 'out_of_stock'])->default('in_stock');
-            $table->decimal('regularPrice', 6, 2);
             $table->decimal('sellingPrice', 6, 2);
             $table->softDeletes();
             $table->timestamps();
