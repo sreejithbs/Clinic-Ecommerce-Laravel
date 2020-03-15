@@ -10,6 +10,7 @@ use App\Models\Admin\Product;
 use App\Models\Admin\InventoryTransfer;
 use App\Models\Admin\ClinicInventory;
 use App\Models\Admin\InventoryLog;
+use App\Events\InventoryWasTransferredEvent;
 
 use DB;
 use Auth;
@@ -108,9 +109,12 @@ class InventoryTransferController extends Controller
             $inventory_log->relatedEntryModelId = $inventory_transfer->id;
             $product->inventory_logs()->save($inventory_log);
 
+            event( new InventoryWasTransferredEvent($clinic, $inventory_transfer, $clinic_inventory) );
+
             DB::commit();
 
         } catch (\Exception $e) {
+            dd($e->getMessage());
             DB::rollback();
             // return $e->getMessage();
             return back()->withErrors(['error' => static::INVENTORY_TRANSFER_CREATE_FAIL]);

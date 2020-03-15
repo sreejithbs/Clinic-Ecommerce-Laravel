@@ -11,6 +11,8 @@ use App\Events\ClinicWasActivatedEvent;
 use App\Listeners\SendClinicCreatedNotification;
 use App\Events\AdminWasCreatedEvent;
 use App\Listeners\SendAdminCreatedNotification;
+use App\Events\InventoryWasTransferredEvent;
+use App\Listeners\SendInventoryTransferredNotification;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         AdminWasCreatedEvent::class => [
             SendAdminCreatedNotification::class,
+        ],
+        InventoryWasTransferredEvent::class => [
+            SendInventoryTransferredNotification::class,
         ],
     ];
 
