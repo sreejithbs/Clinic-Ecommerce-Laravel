@@ -35,7 +35,7 @@ class InventoryPurchaseController extends Controller
      */
     public function index()
     {
-        // 
+        //
     }
 
     /**
@@ -79,7 +79,7 @@ class InventoryPurchaseController extends Controller
             $inventory_purchase->purchaseNumber = $request->purchase_order_number;
             $inventory_purchase->quantity = $addQty;
             $inventory_purchase->dateTime = InventoryPurchase::createTimestampFromDateTime($request->purchase_date_time);
-            $inventory_purchase->supplier = $product->supplier;
+            $inventory_purchase->supplier = $request->supplier;
             $inventory_purchase->totalPrice = (float)$product->sellingPrice * $addQty;
             $inventory_purchase->notes = $request->notes;
             $product->inventory_purchases()->save($inventory_purchase);

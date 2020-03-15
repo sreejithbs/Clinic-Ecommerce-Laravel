@@ -39,7 +39,7 @@ class InventoryLogController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -50,7 +50,7 @@ class InventoryLogController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        //
     }
 
     /**
@@ -59,9 +59,23 @@ class InventoryLogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function view($uuid)
     {
-        //
+        $inventory_log = InventoryLog::fetchModelByUnqId($uuid);
+        $statusCode = $inventory_log->eventCode;
+        if($statusCode == 0){ // Initial Stock
+            //
+        } else if($statusCode == 1){ // Purchase
+            $inventory_purchase = $inventory_log->relatedEntryModel::find($inventory_log->relatedEntryModelId);
+            $extra_view = 'inventory_purchase';
+        } else if($statusCode == 2){ // Transfer
+            $inventory_transfer = $inventory_log->relatedEntryModel::find($inventory_log->relatedEntryModelId);
+            $extra_view = 'inventory_transfer';
+        } else{
+            return;
+        }
+
+        return view('_admin.inventory_log_view', compact('inventory_log', 'statusCode', $extra_view));
     }
 
     /**

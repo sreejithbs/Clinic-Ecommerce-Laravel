@@ -28,7 +28,7 @@
                 <!-- </div> -->
                 <div class="card-content collpase show">
                     <div class="card-body card-dashboard">
-                        <table class="table table-striped table-bordered dtTable">
+                        <table class="table table-striped table-bordered table-responsive dtTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -38,6 +38,7 @@
                                     <th>Opening Inventory</th>
                                     <th>Quantity</th>
                                     <th>Closing Inventory</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,6 +59,11 @@
                                             {{ $inventory_log->quantity }} </span>
                                         </td>
                                         <td> {{ $inventory_log->closingQty }} </td>
+                                        <td>
+                                            <a href="{{ route('admin_inventory_log_view', $inventory_log->unqId ) }}" class="btn btn-icon btn-info btn-sm">
+                                                <i class="la la-eye"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

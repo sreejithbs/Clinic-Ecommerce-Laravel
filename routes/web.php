@@ -57,10 +57,11 @@ Route::prefix('admin')->group(function () {
 
 	Route::group(['prefix' => 'inventory', 'as' => 'admin_inventory_'], function(){
 	    Route::get('/logs/{uuid}', 'Admin\InventoryLogController@index')->name('logs_list');
+	    Route::get('/view/{uuid}', 'Admin\InventoryLogController@view')->name('log_view');
 
 	    Route::get('/purchase/create/{uuid}', 'Admin\InventoryPurchaseController@create')->name('purchase_create');
 	    Route::post('/purchase/store/{uuid}', 'Admin\InventoryPurchaseController@store')->name('purchase_store');
-	    
+
 	    Route::get('/transfer/create/{uuid}', 'Admin\InventoryTransferController@create')->name('transfer_create');
 	    Route::post('/transfer/store/{uuid}', 'Admin\InventoryTransferController@store')->name('transfer_store');
 	});
