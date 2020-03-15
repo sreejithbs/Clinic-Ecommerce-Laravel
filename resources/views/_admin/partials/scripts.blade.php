@@ -78,8 +78,10 @@
 		$('#datetimepicker').datetimepicker({
 			format: 'd/m/Y h:i A',
 			formatTime: 'h:i A',
+			maxDate: 0,
 			defaultTime : true,
-			validateOnBlur: false
+			validateOnBlur: false,
+			closeOnDateSelect:true,
 		});
 
 		// SweetAlert in all DELETE BUTTONS
