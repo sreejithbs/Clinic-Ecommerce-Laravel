@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2020 at 07:00 AM
+-- Generation Time: Mar 16, 2020 at 04:30 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -46,8 +46,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `unqId`, `name`, `email`, `password`, `isSuper`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '5330fd41', 'Quinoid Super-Admin', 'superadmin@demo.com', '$2y$10$7bK.a2zpI5CViYMzACmAvOwpX7JiHqWrqiv3E45Xki8gBlg/NFbhm', 1, NULL, NULL, '2020-03-15 00:29:49', '2020-03-15 00:29:49'),
-(2, 'ac1556c6', 'Admin Demo', 'admin@demo.com', '$2y$10$CrZ14dIjUw6QzHwVwzRv8u7Dx7UVt3b.e1.dqcrMetXsoFKcxcdg.', 0, NULL, NULL, '2020-03-15 00:29:49', '2020-03-15 00:29:49');
+(1, 'b6c82078', 'Quinoid Super-Admin', 'superadmin@demo.com', '$2y$10$Fw5KiXhOEE7N/jDxziD/Vu.byn7/qC.s4HbxbpK1KZv1NEXsNEGoq', 1, NULL, NULL, '2020-03-15 22:00:15', '2020-03-15 22:00:15'),
+(2, '34fd734c', 'Admin Demo', 'admin@demo.com', '$2y$10$kDB1LuGnokECjD9E4QHTfeOr2KFDEKv2/QoZ/VLgWwneHl0H0gu6G', 0, NULL, NULL, '2020-03-15 22:00:15', '2020-03-15 22:00:15');
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,7 @@ CREATE TABLE `clinic_admins` (
 --
 
 INSERT INTO `clinic_admins` (`id`, `unqId`, `name`, `email`, `password`, `status`, `hasFirstTimeActivated`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '17203aa1', 'Clinic Demo', 'clinic@demo.com', '$2y$10$fAQ5mDTnJRWT5d2b.4DbRuiAsIhMkLBt5.MVdy9SXGDE63ASvgCBW', 'active', 1, NULL, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
+(1, 'dfc24f35', 'Clinic Demo', 'clinic@demo.com', '$2y$10$NMGnwFk2Zr3mDgv2iBBkF.oc1JH2XluEd25bZ.7AHWdvZu7Mhs/Hi', 'active', 1, NULL, NULL, '2020-03-15 22:00:15', '2020-03-15 22:00:15');
 
 -- --------------------------------------------------------
 
@@ -124,7 +124,7 @@ CREATE TABLE `clinic_profiles` (
 --
 
 INSERT INTO `clinic_profiles` (`id`, `createdByAdminId`, `clinicAdminId`, `clinicRefNum`, `clinicName`, `clinicAddress`, `phoneNumber`, `secondaryEmail`, `bankAcNumber`, `bankAcHolderName`, `bankName`, `bankCode`, `bankAddress`, `commissionPercentage`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'clinic_67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
+(1, 1, 1, 'clinic_67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-03-15 22:00:15', '2020-03-15 22:00:15');
 
 -- --------------------------------------------------------
 
@@ -155,7 +155,7 @@ CREATE TABLE `inventory_logs` (
 --
 
 INSERT INTO `inventory_logs` (`id`, `unqId`, `productId`, `refNum`, `logEvent`, `eventCode`, `dateTime`, `openingQty`, `quantity`, `closingQty`, `relatedEntryModel`, `relatedEntryModelId`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'd37114f8', 1, '-', 'Initial Inventory Added', 0, '2020-03-14 12:47:14', 0, 110, 110, 'App\\Models\\Admin\\Product', 1, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
+(1, '0283938f', 1, '-', 'Initial Inventory Added', 0, '2020-01-31 18:30:00', 0, 110, 110, 'App\\Models\\Admin\\Product', 1, NULL, '2020-03-15 22:00:16', '2020-03-15 22:00:16');
 
 -- --------------------------------------------------------
 
@@ -195,7 +195,7 @@ CREATE TABLE `inventory_transfers` (
   `transferRefNum` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `transferNumber` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `quantity` int(11) NOT NULL,
-  `dateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `totalPrice` decimal(10,2) NOT NULL,
   `notes` longtext COLLATE utf8mb4_unicode_ci,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -258,6 +258,7 @@ CREATE TABLE `products` (
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `remarks` text COLLATE utf8mb4_unicode_ci,
+  `dateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `initialStockQuantity` int(11) NOT NULL DEFAULT '0',
   `stockQuantity` int(11) NOT NULL,
   `stockStatus` enum('in_stock','out_of_stock') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'in_stock',
@@ -271,8 +272,8 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `unqId`, `createdByAdminId`, `title`, `slug`, `description`, `remarks`, `initialStockQuantity`, `stockQuantity`, `stockStatus`, `sellingPrice`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, '5a75c9b3', 1, 'Demo Face Gel', 'demo-face-gel', 'This is a test description for Face Gel', 'No remarks to add', 110, 110, 'in_stock', '499.00', NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
+INSERT INTO `products` (`id`, `unqId`, `createdByAdminId`, `title`, `slug`, `description`, `remarks`, `dateTime`, `initialStockQuantity`, `stockQuantity`, `stockStatus`, `sellingPrice`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, '6f26e76f', 1, 'Demo Face Gel', 'demo-face-gel', 'This is a test description for Face Gel. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.', 'This is a test remark', '2020-01-31 18:30:00', 110, 110, 'in_stock', '499.00', NULL, '2020-03-15 22:00:16', '2020-03-15 22:00:16');
 
 -- --------------------------------------------------------
 
@@ -295,8 +296,8 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `productId`, `originalImagePath`, `thumbImagePath`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, '/uploads/products/1584200000-ageless.png', NULL, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50'),
-(2, 1, '/uploads/products/1584200000-anti-wrinkle-cream.jpg', NULL, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
+(1, 1, '/uploads/products/1584200000-ageless.png', NULL, NULL, '2020-03-15 22:00:16', '2020-03-15 22:00:16'),
+(2, 1, '/uploads/products/1584200000-anti-wrinkle-cream.jpg', NULL, NULL, '2020-03-15 22:00:16', '2020-03-15 22:00:16');
 
 -- --------------------------------------------------------
 
@@ -322,7 +323,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `unqId`, `name`, `email`, `email_verified_at`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '0ba660c7', 'User Demo', 'user@demo.com', NULL, '$2y$10$nyNVn7R2jDkaOKqgRpaYC.r5tpzDBt.YsjHulRE4/mjP8itUJCCMC', NULL, NULL, '2020-03-15 00:29:50', '2020-03-15 00:29:50');
+(1, '4f4128d6', 'User Demo', 'user@demo.com', NULL, '$2y$10$sqLpyO4bOWvY8RZa/M09Y.9NHQHr98OKs9akFSU7Gxvrs3Cwmc2jG', NULL, NULL, '2020-03-15 22:00:16', '2020-03-15 22:00:16');
 
 --
 -- Indexes for dumped tables
