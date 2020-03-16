@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique();
             $table->longText('description');
             $table->text('remarks')->nullable();
+            $table->timestamp('dateTime');
             $table->integer('initialStockQuantity')->default(0);
             $table->integer('stockQuantity');
             $table->enum('stockStatus', ['in_stock', 'out_of_stock'])->default('in_stock');

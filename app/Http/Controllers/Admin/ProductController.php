@@ -75,11 +75,14 @@ class ProductController extends Controller
             'selling_price' => 'required',
         ]);
 
+        $created_date = date('Y-m-d H:i:s');
+
         $product = new Product();
         $product->createdByAdminId = Auth::guard('admin')->user()->id;
         $product->title = $request->product_title;
         $product->description = $request->product_desc;
         $product->remarks = $request->remarks;
+        $product->dateTime = $created_date;
         $product->initialStockQuantity = $product->stockQuantity = $request->stock_qty;
         $product->sellingPrice = $request->selling_price;
         if($request->stock_qty == 0){
@@ -109,7 +112,7 @@ class ProductController extends Controller
         $inventory_log = new InventoryLog();
         $inventory_log->logEvent = static::LOG_INITIAL_INVENTORY_STOCK;
         $inventory_log->eventCode = static::STATUS_INITIAL_INVENTORY_STOCK;
-        $inventory_log->dateTime = $product->created_at;
+        $inventory_log->dateTime = $created_date;
         $inventory_log->openingQty = 0;
         $inventory_log->quantity = $inventory_log->closingQty = $product->stockQuantity;
         $inventory_log->relatedEntryModel = 'App\Models\Admin\Product';

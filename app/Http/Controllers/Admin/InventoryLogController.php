@@ -64,7 +64,8 @@ class InventoryLogController extends Controller
         $inventory_log = InventoryLog::fetchModelByUnqId($uuid);
         $statusCode = $inventory_log->eventCode;
         if($statusCode == 0){ // Initial Stock
-            //
+            $product = $inventory_log->relatedEntryModel::find($inventory_log->relatedEntryModelId);
+            $extra_view = 'product';
         } else if($statusCode == 1){ // Purchase
             $inventory_purchase = $inventory_log->relatedEntryModel::find($inventory_log->relatedEntryModelId);
             $extra_view = 'inventory_purchase';

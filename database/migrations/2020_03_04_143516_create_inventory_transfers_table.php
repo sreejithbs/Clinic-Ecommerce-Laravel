@@ -22,7 +22,7 @@ class CreateInventoryTransfersTable extends Migration
             $table->string('transferRefNum', 50)->unique();
             $table->string('transferNumber')->nullable();
             $table->integer('quantity');
-            $table->timestamp('dateTime');
+            $table->timestamp('dateTime')->useCurrent();
             $table->decimal('totalPrice', 10, 2);
             $table->longText('notes')->nullable();
             $table->softDeletes();

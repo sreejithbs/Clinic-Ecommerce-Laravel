@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\UuidTrait;
+use Carbon\Carbon;
 
+use App\Models\Admin;
 use App\Models\Admin\ProductImage;
 use App\Models\Admin\InventoryLog;
 use App\Models\Admin\InventoryPurchase;
@@ -43,11 +45,23 @@ class Product extends Model
         return 'slug';
     }
 
+    public function getDateTimeAttribute()
+    {
+       return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y');
+    }
+
     /**
      * The product_images that belong to the products.
      */
     public function product_images(){
         return $this->hasMany(ProductImage::class, 'productId');
+    }
+
+    /**
+     * The products that belong to the admin.
+     */
+    public function created_admin(){
+        return $this->belongsTo(Admin::class, 'createdByAdminId');
     }
 
     /**
