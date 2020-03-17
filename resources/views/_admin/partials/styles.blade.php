@@ -83,7 +83,8 @@
 		background-color: #ffb1b19e;
 	}*/
 
-	table tr, td{
+	table:not(.txt-left) tr{
 		text-align: center !important;
 	}
+
 </style>

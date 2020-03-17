@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Gate;
 use File;
 use Auth;
 
@@ -54,7 +53,6 @@ class ProductController extends Controller
      */
     public function create()
     {
-        abort_unless(Gate::allows('isSuper'), 403);
         return view('_admin.product_create');
     }
 
@@ -66,7 +64,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        abort_unless(Gate::allows('isSuper'), 403);
         $this->validate($request, [
             'product_title' => 'required',
             'product_desc' => 'required',

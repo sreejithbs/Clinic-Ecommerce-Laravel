@@ -7,7 +7,7 @@
                     <span class="menu-title">Home Dashboard</span>
                 </a>
             </li>
-            
+
             <li class="nav-item {{ \StringHelper::setActive(['admin_profile_edit']) }}" >
                 <a href="{{ route('admin_profile_edit') }}">
                     <i class="la la-user"></i>
@@ -15,16 +15,18 @@
                 </a>
             </li>
 
-            <li class="nav-item {{ \StringHelper::setActive(['admin_user_*'], 'open') }}">
-                <a href="javascript:void(0);"><i class="la la-users"></i>
-                    <span class="menu-title">Admins Management</span>
-                </a>
-                <ul class="menu-content">
-                    <li class="{{ \StringHelper::setActive(['admin_user_list']) }}">
-                        <a class="menu-item" href="{{ route('admin_user_list') }}">List all Admins</a>
-                    </li>
-                </ul>
-            </li>
+            @can('isSuper')
+                <li class="nav-item {{ \StringHelper::setActive(['admin_user_*'], 'open') }}">
+                    <a href="javascript:void(0);"><i class="la la-users"></i>
+                        <span class="menu-title">Admins Management</span>
+                    </a>
+                    <ul class="menu-content">
+                        <li class="{{ \StringHelper::setActive(['admin_user_list']) }}">
+                            <a class="menu-item" href="{{ route('admin_user_list') }}">List all Admins</a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
 
             <li class="nav-item {{ \StringHelper::setActive(['admin_clinic_*'], 'open') }}">
                 <a href="javascript:void(0);"><i class="la la-institution"></i>
@@ -39,11 +41,11 @@
 
             <li class="nav-item {{ \StringHelper::setActive(['admin_product_*', 'admin_inventory_*'], 'open') }}">
                 <a href="javascript:void(0);"><i class="la la-list"></i>
-                    <span class="menu-title">Products Management</span>
+                    <span class="menu-title">Inventory Management</span>
                 </a>
                 <ul class="menu-content">
                     <li class="{{ \StringHelper::setActive(['admin_product_list']) }}">
-                        <a class="menu-item" href="{{ route('admin_product_list') }}">List all Products</a>
+                        <a class="menu-item" href="{{ route('admin_product_list') }}">List all Inventories</a>
                     </li>
                 </ul>
             </li>

@@ -22,10 +22,22 @@ class InventoryPurchase extends Model
 		return Carbon::createFromFormat('d/m/Y H:i A', $dateTime)->toDateTimeString();
 	}
 
-	public function getDateTimeAttribute()
-	{
-	   return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y');
-	}
+	/**
+     * List the fields that would automatically be appended
+     *
+     * @var array
+     */
+    protected $appends = ['date'];
+
+    public function getDateAttribute($event_date)
+    {
+        return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y');
+    }
+
+    public function getDateTimeAttribute()
+    {
+       return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y H:i A');
+    }
 
 	/**
 	 * The inventory_purchases that belong to the products.

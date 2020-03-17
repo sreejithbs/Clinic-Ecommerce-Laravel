@@ -2,45 +2,52 @@
     <div class="row">
         <div class="col-md-8">
             <div class="card">
-                <!-- <div class="card-header">
-                    <h4 class="card-title" id="bordered-layout-basic-form">Info</h4>
-                </div> -->
-                <div class="card-content collpase show">
-                    <div class="card-body">
-                        <!-- <div class="card-text">
-                            <p>Info</p>
-                        </div> -->
-                        <table class="table table-bordered table-striped ">
-                            <thead>
-                                <tr>
-                                    <th><code>Inventory Event</code></th>
-                                    <th> {{ $inventory_log->logEvent }} </th>
-                                </tr>
-                            </thead>
+                <div class="card-header">
+                    <h4 class="card-title">Log details</h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <span class="badge">
+                            <a href="{{ route('admin_inventory_logs_list', $product->unqId ) }}" class="btn btn-sm btn-info">
+                                Back to Listing Page
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped mb-0 txt-left">
                             <tbody>
                                 <tr>
-                                    <th><code>Product Created Date</code></th>
-                                    <th> {{ $product->dateTime }} </th>
+                                    <th>Inventory Log Event</th>
+                                    <td> {{ $inventory_log->logEvent }} </td>
                                 </tr>
                                 <tr>
-                                    <th><code>Product Created By</code></th>
-                                    <th> {{ $product->created_admin->name }} </th>
+                                    <th>Product Name</th>
+                                    <td> {{ $product->title }} </td>
                                 </tr>
                                 <tr>
-                                    <th><code>Opening Inventory</code></th>
-                                    <th> {{ $inventory_log->openingQty }} </th>
+                                    <th>Product Creation Date & Time</th>
+                                    <td> {{ $inventory_log->dateTime }} </td>
                                 </tr>
                                 <tr>
-                                    <th><code>Quantity</code></th>
-                                    <th> <span class="badge badge-success"> {{ $inventory_log->quantity }} </span> </th>
+                                    <th>Created By</th>
+                                    <td> {{ $product->created_admin->name }} </td>
                                 </tr>
                                 <tr>
-                                    <th><code>Closing Inventory</code></th>
-                                    <th> {{ $inventory_log->closingQty }} </th>
+                                    <th>Opening Inventory</th>
+                                    <td> {{ $inventory_log->openingQty }} </td>
                                 </tr>
                                 <tr>
-                                    <th><code>Remarks</code></th>
-                                    <th> {{ $product->remarks }} </th>
+                                    <th>Quantity</th>
+                                    <td> <span class="badge badge-success"> {{ $inventory_log->quantity }} </span> </td>
+                                </tr>
+                                <tr>
+                                    <th>Closing Inventory</th>
+                                    <td> {{ $inventory_log->closingQty }} </td>
+                                </tr>
+                                <tr>
+                                    <th>Remarks</th>
+                                    <td> {{ $product->remarks }} </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -53,14 +60,11 @@
             <div class="card text-center">
                 <div class="card-content">
                     <div class="card-body">
-                        <h4 class="card-title">Product Details</h4>
+                        <h4 class="card-title">Product Image</h4>
                         <hr/>
                         <div class="text-center">
                             <img class="card-img-top mb-1 img-fluid" src="{{ asset($product->product_images()->first()->originalImagePath) }}" alt="Image">
                         </div>
-                        <h4 class="card-title"> {{ $product->title }} </h4>
-                        <p class="card-text"> {{ $product->description }} </p>
-                        <p class="card-text"> ${{ $product->sellingPrice }} </p>
                     </div>
                 </div>
             </div>

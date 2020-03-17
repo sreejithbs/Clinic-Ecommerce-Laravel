@@ -38,18 +38,18 @@ Route::prefix('admin')->group(function () {
 	Route::post('/my-profile', 'Admin\DashboardController@updateProfile')->name('admin_profile_update');
 
 	Route::group(['as' => 'admin_user_'], function(){
-		Route::get('/all', 'Admin\AdminController@index')->name('list');
-	    Route::get('/create', 'Admin\AdminController@create')->name('create');
-	    Route::post('/store', 'Admin\AdminController@store')->name('store');
-	    Route::get('/edit/{uuid}', 'Admin\AdminController@edit')->name('edit');
-	    Route::post('/update/{uuid}', 'Admin\AdminController@update')->name('update');
-	    Route::delete('/delete/{uuid}', 'Admin\AdminController@destroy')->name('delete');
+		Route::get('/all', 'Admin\AdminController@index')->name('list')->middleware('can:isSuper');
+	    Route::get('/create', 'Admin\AdminController@create')->name('create')->middleware('can:isSuper');
+	    Route::post('/store', 'Admin\AdminController@store')->name('store')->middleware('can:isSuper');
+	    Route::get('/edit/{uuid}', 'Admin\AdminController@edit')->name('edit')->middleware('can:isSuper');
+	    Route::post('/update/{uuid}', 'Admin\AdminController@update')->name('update')->middleware('can:isSuper');
+	    Route::delete('/delete/{uuid}', 'Admin\AdminController@destroy')->name('delete')->middleware('can:isSuper');
 	});
 
 	Route::group(['prefix' => 'product', 'as' => 'admin_product_'], function(){
 	    Route::get('/all', 'Admin\ProductController@index')->name('list');
-	    Route::get('/create', 'Admin\ProductController@create')->name('create');
-	    Route::post('/store', 'Admin\ProductController@store')->name('store');
+	    Route::get('/create', 'Admin\ProductController@create')->name('create')->middleware('can:isSuper');
+	    Route::post('/store', 'Admin\ProductController@store')->name('store')->middleware('can:isSuper');
 	    Route::get('/edit/{uuid}', 'Admin\ProductController@edit')->name('edit');
 	    Route::post('/update/{uuid}', 'Admin\ProductController@update')->name('update');
 	    Route::delete('/delete/{uuid}', 'Admin\ProductController@destroy')->name('delete');

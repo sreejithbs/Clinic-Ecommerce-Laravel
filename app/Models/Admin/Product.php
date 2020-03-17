@@ -45,9 +45,21 @@ class Product extends Model
         return 'slug';
     }
 
+    /**
+     * List the fields that would automatically be appended
+     *
+     * @var array
+     */
+    protected $appends = ['date'];
+
+    public function getDateAttribute($event_date)
+    {
+        return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y');
+    }
+
     public function getDateTimeAttribute()
     {
-       return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y');
+       return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y H:i A');
     }
 
     /**

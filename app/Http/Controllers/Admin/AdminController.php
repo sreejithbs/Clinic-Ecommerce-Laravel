@@ -33,6 +33,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+        // $this->authorize('isSuper');
         $admins = Admin::where('isSuper', 0)->latest()->get();
         return view('_admin.admin_listing', compact('admins'));
     }
