@@ -82,13 +82,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group row last">
-                                    <label class="col-md-3 label-control" for="selling_price">Selling Price *</label>
+                                    <label class="col-md-3 label-control" for="selling_price">Unit Price *</label>
                                     <div class="col-md-9">
                                     	<div class="input-group">
                                     		<div class="input-group-prepend">
                                     			<span class="input-group-text">$</span>
                                     		</div>
-                                    		<input type="number" id="selling_price" class="form-control" value="{{ $product->sellingPrice }}" placeholder="Selling Price" name="selling_price" min="0" step="0.01" required data-parsley-required-message="Please enter Selling Price" data-parsley-errors-container="#sel_div">
+                                    		<input type="number" id="selling_price" class="form-control" value="{{ $product->sellingPrice }}" placeholder="Unit Price" name="selling_price" min="0" step="0.01" required data-parsley-required-message="Please enter Unit Price" data-parsley-errors-container="#sel_div">
                                     	</div>
                                         <div id="sel_div"></div>
                                     </div>
@@ -138,7 +138,7 @@
             validateString : function(value, requirement) {
               if (! jQuery(requirement).length){
                  return !!value;
-              } 
+              }
 
               return true;
            },

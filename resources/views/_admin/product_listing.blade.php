@@ -35,7 +35,7 @@
                                     <th>Image</th>
                                     <!-- <th>Description</th> -->
                                     <th>Inventory Quantity</th>
-                                    <!-- <th>Selling Price</th> -->
+                                    <!-- <th>Unit Price</th> -->
                                     <th>Actions</th>
                                 </tr>
                             </thead>

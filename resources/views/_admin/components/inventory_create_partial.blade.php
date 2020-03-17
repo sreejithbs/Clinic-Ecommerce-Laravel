@@ -7,8 +7,8 @@
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
                         <span class="badge">
-                            <a href="{{ route('admin_inventory_logs_list', $product->unqId ) }}" class="btn btn-sm btn-info">
-                                Back to Listing Page
+                            <a href="{{ route('admin_inventory_logs_list', $product->unqId ) }}" class="btn btn-sm btn-secondary">
+                                <i class="ft-arrow-left"></i> Back to Listing Page
                             </a>
                         </span>
                     </div>
