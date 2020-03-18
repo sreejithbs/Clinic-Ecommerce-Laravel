@@ -86,5 +86,12 @@ Route::prefix('clinic')->group(function () {
 
 	Route::group(['prefix' => 'inventory', 'as' => 'clinic_inventory_'], function(){
 	    Route::get('/all', 'Clinic\InventoryController@index')->name('list');
+	    Route::post('/appendProduct', 'Clinic\InventoryController@appendProduct')->name('append_product');
+	});
+
+	Route::group(['prefix' => 'sales', 'as' => 'clinic_sales_'], function(){
+	    Route::get('/all', 'Clinic\SalesController@index')->name('list');
+	    Route::get('/create', 'Clinic\SalesController@create')->name('create');
+	    Route::post('/store', 'Clinic\SalesController@store')->name('store');
 	});
 });

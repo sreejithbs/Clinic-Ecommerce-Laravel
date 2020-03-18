@@ -33,7 +33,7 @@
                 <ul class="nav navbar-nav float-right">
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="javascript:void(0);" data-toggle="dropdown">
-                            <span class="mr-1">Hello,
+                            <span class="mr-1">Hello
                                 <span class="user-name text-bold-700">
                                     {{ Auth::guard('clinic')->user()->name }}
                                 </span>

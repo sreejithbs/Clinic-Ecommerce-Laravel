@@ -8,26 +8,20 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <!-- <div class="card-header">
-                    <h4 class="card-title" id="bordered-layout-basic-form">Info</h4>
-                </div> -->
                 <div class="card-content collpase show">
                     <div class="card-body">
-                        <!-- <div class="card-text">
-                            <p>Info</p>
-                        </div> -->
-                        <form method="post" action="{{ route('admin_clinic_store') }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
+
+                        <form method="post" action="{{ route('admin_clinic_store') }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="" autocomplete="off">
                         	{{ csrf_field() }}
 
                             <div class="form-body">
-
                                 <h4 class="form-section">
                                 	<i class="ft-clipboard"></i> Clinic Info
                                 </h4>
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="clinic_reference_num">Clinic Reference Number *</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="clinic_reference_num" class="form-control" value="clinic_{{ StringHelper::randString(8) }}" placeholder="Clinic Reference Number" name="clinic_reference_num" required data-parsley-required-message="Please enter Clinic Reference Number" readonly>
+                                        <input type="text" id="clinic_reference_num" class="form-control" value="clinic#{{ StringHelper::randString(8) }}" placeholder="Clinic Reference Number" name="clinic_reference_num" required data-parsley-required-message="Please enter Clinic Reference Number" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -122,10 +116,9 @@
                                         </div>
                                     </div>
                                 @endcan
-
                             </div>
                             <div class="form-actions">
-                                <a href="{{ route('admin_clinic_list' ) }}" class="btn btn-warning mr-1">
+                                <a href="{{ route('admin_clinic_list') }}" class="btn btn-warning mr-1">
                                     <i class="la la-close"></i> Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary">

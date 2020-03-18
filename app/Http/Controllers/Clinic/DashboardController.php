@@ -53,7 +53,17 @@ class DashboardController extends Controller
     public function updateProfile(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'clinic_name' => 'required',
+            'clinic_address' => 'required',
+            'phone_number' => 'required',
+            'secondary_email' => 'required|email',
+            'name' => 'required',
+            'password' => 'nullable|min:6',
+            'ac_number' => 'required',
+            'ac_holder_name' => 'required',
+            'bank_name' => 'required',
+            'bank_code' => 'required',
+            'bank_address' => 'required',
         ]);
 
         $clinic = Auth::guard('clinic')->user();
@@ -62,6 +72,17 @@ class DashboardController extends Controller
            $clinic->password = bcrypt($request->password);
         }
         $clinic->save();
+
+        $clinic->clinic_profile->clinicName = $request->clinic_name;
+        $clinic->clinic_profile->clinicAddress = $request->clinic_address;
+        $clinic->clinic_profile->phoneNumber = $request->phone_number;
+        $clinic->clinic_profile->secondaryEmail = $request->secondary_email;
+        $clinic->clinic_profile->bankAcNumber = $request->ac_number;
+        $clinic->clinic_profile->bankAcHolderName = $request->ac_holder_name;
+        $clinic->clinic_profile->bankName = $request->bank_name;
+        $clinic->clinic_profile->bankCode = $request->bank_code;
+        $clinic->clinic_profile->bankAddress = $request->bank_address;
+        $clinic->clinic_profile->save();
 
         return back()->with('success', static::MY_PROFILE_UPDATE);
     }

@@ -5,7 +5,6 @@
 @section('content')
 
 <section id="basic-form-layouts">
-
     @can('isSuper')
         <div class="row">
             <div class="col-md-3 ml-auto">
@@ -22,9 +21,6 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <!-- <div class="card-header"> -->
-                    <!-- <h4 class="card-title" id="bordered-layout-basic-form"></h4> -->
-                <!-- </div> -->
                 <div class="card-content collpase show">
                     <div class="card-body card-dashboard">
                         <table class="table table-striped table-bordered dtTable">
@@ -33,9 +29,7 @@
                                     <th>#</th>
                                     <th>Product Name</th>
                                     <th>Image</th>
-                                    <!-- <th>Description</th> -->
                                     <th>Inventory Quantity</th>
-                                    <!-- <th>Unit Price</th> -->
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -47,7 +41,6 @@
                                         <td>
                                             <img src="{{ asset($product->product_images()->first()->originalImagePath) }}" height="100px" width="100px">
                                         </td>
-                                        <!-- <td> {!! Str::limit($product->description, 40, ' ...') !!} </td> -->
                                         <td>
                                             @if($product->stockStatus == 'in_stock')
                                                 <span class="badge badge-success">
@@ -57,7 +50,6 @@
 
                                             {{ $product->stockQuantity }} </span>
                                         </td>
-                                        <!-- <td> ${{ $product->sellingPrice }} </td> -->
                                         <td>
                                             <a href="{{ route('admin_product_edit', $product->unqId ) }}" class="btn btn-icon btn-info btn-sm">
                                                 <i class="la la-edit"></i>

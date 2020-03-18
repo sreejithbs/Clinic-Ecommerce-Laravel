@@ -8,15 +8,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <!-- <div class="card-header">
-                    <h4 class="card-title" id="bordered-layout-basic-form">Info</h4>
-                </div> -->
                 <div class="card-content collpase show">
                     <div class="card-body">
-                        <!-- <div class="card-text">
-                            <p>Info</p>
-                        </div> -->
-                        <form method="post" action="{{ route('admin_profile_update') }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
+
+                        <form method="post" action="{{ route('admin_profile_update') }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="" autocomplete="off">
                         	{{ csrf_field() }}
 
                             <div class="form-body">
@@ -41,7 +36,6 @@
                                         <input type="password" id="password" class="form-control border-primary" placeholder="************" name="password" data-parsley-validate-if-empty="true">
                                     </div>
                                 </div>
-
                             </div>
                             <div class="form-actions">
                                 <a href="{{ route('admin_dashboard') }}" class="btn btn-warning mr-1">

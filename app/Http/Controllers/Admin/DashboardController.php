@@ -57,6 +57,7 @@ class DashboardController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
+            'password' => 'nullable|min:6',
         ]);
 
         $admin = Auth::guard('admin')->user();

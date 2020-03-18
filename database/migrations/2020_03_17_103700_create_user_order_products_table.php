@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClinicInventoriesTable extends Migration
+class CreateUserOrderProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateClinicInventoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('clinic_inventories', function (Blueprint $table) {
+        Schema::create('user_order_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('unqId')->index();
-            $table->unsignedBigInteger('clinicId');
+            $table->unsignedBigInteger('userOrderId');
             $table->unsignedBigInteger('productId');
-            $table->integer('stockQuantity')->default(0);
+            $table->integer('quantity');
+            $table->decimal('subTotal', 10, 2);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -26,8 +26,8 @@ class CreateClinicInventoriesTable extends Migration
         /**
          * Foreign Key Constraint
          */
-        Schema::table('clinic_inventories', function (Blueprint $table) {
-            $table->foreign('clinicId')->references('id')->on('clinic_admins')->onDelete('cascade');
+        Schema::table('user_order_products', function (Blueprint $table) {
+            $table->foreign('userOrderId')->references('id')->on('user_orders')->onDelete('cascade');
             $table->foreign('productId')->references('id')->on('products')->onDelete('cascade');
         });
     }
@@ -39,6 +39,6 @@ class CreateClinicInventoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clinic_inventories');
+        Schema::dropIfExists('user_order_products');
     }
 }

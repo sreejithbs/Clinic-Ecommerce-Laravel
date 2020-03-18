@@ -16,7 +16,7 @@ class CreateClinicProfilestable extends Migration
         Schema::create('clinic_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('createdByAdminId')->nullable();
-            $table->unsignedBigInteger('clinicAdminId')->nullable();
+            $table->unsignedBigInteger('clinicAdminId');
             $table->string('clinicRefNum', 50)->unique();
             $table->text('clinicName');
             $table->longText('clinicAddress');
@@ -37,7 +37,7 @@ class CreateClinicProfilestable extends Migration
          */
         Schema::table('clinic_profiles', function (Blueprint $table) {
             $table->foreign('createdByAdminId')->references('id')->on('admins')->onDelete('set null');
-            $table->foreign('clinicAdminId')->references('id')->on('clinic_admins')->onDelete('set null');
+            $table->foreign('clinicAdminId')->references('id')->on('clinic_admins')->onDelete('cascade');
         });
     }
 

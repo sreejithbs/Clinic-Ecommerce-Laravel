@@ -7,7 +7,7 @@
                     <span class="menu-title">Home Dashboard</span>
                 </a>
             </li>
-            
+
             <li class="nav-item {{ \StringHelper::setActive(['clinic_profile_edit']) }}" >
                 <a href="{{ route('clinic_profile_edit') }}">
                     <i class="la la-user"></i>
@@ -20,12 +20,22 @@
                     <span class="menu-title">Inventory Summary</span>
                 </a>
                 <ul class="menu-content">
-                    <li class="{{ \StringHelper::setActive(['clinic_inventory_*']) }}">
+                    <li class="{{ \StringHelper::setActive(['clinic_inventory_list']) }}">
                         <a class="menu-item" href="{{ route('clinic_inventory_list') }}">List all Inventory Summary</a>
                     </li>
                 </ul>
             </li>
 
+            <li class="nav-item {{ \StringHelper::setActive(['clinic_sales_*'], 'open') }}">
+                <a href="javascript:void(0);"><i class="la la-list"></i>
+                    <span class="menu-title">Direct Sale Management</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="{{ \StringHelper::setActive(['clinic_sales_list']) }}">
+                        <a class="menu-item" href="{{ route('clinic_sales_list') }}">List all Direct Sales</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

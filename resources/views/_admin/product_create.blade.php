@@ -8,16 +8,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <!-- <div class="card-header">
-                    <h4 class="card-title" id="bordered-layout-basic-form">Info</h4>
-                </div> -->
                 <div class="card-content collpase show">
                     <div class="card-body">
-                        <!-- <div class="card-text">
-                            <p>Info</p>
-                        </div> -->
+
                         <form method="post" action="{{ route('admin_product_store') }}" enctype="multipart/form-data" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
                         	{{ csrf_field() }}
+
                             <div class="form-body">
                                 <h4 class="form-section">
                                 	<i class="ft-clipboard"></i> Product Info
@@ -78,10 +74,9 @@
                                         <div id="sel_div"></div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="form-actions">
-                                <a href="{{ route('admin_product_list' ) }}" class="btn btn-warning mr-1">
+                                <a href="{{ route('admin_product_list') }}" class="btn btn-warning mr-1">
                                     <i class="la la-close"></i> Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary">
@@ -104,14 +99,11 @@
 		function previewThumbnail(elm){
 			if (elm.files) {
 			    var filesAmount = elm.files.length;
-
 			    for (i = 0; i < filesAmount; i++) {
 			        var reader = new FileReader();
-
 			        reader.onload = function(event) {
 		            	$('<div class="col-md-6" style="margin-top:10px;"><img src="' + event.target.result + '" height="200px" width="250px"></div>').appendTo("#previewThumbnailDiv");
 			        }
-
 			        reader.readAsDataURL(elm.files[i]);
 			    }
 			}

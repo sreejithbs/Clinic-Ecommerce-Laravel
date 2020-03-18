@@ -38,7 +38,7 @@ class InventoryTransferController extends Controller
      */
     public function index()
     {
-        // 
+        //
     }
 
     /**
@@ -114,7 +114,6 @@ class InventoryTransferController extends Controller
             DB::commit();
 
         } catch (\Exception $e) {
-            dd($e->getMessage());
             DB::rollback();
             // return $e->getMessage();
             return back()->withErrors(['error' => static::INVENTORY_TRANSFER_CREATE_FAIL]);

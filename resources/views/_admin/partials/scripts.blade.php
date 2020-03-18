@@ -51,8 +51,6 @@
 	});
 	// var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-
-	// var BASE_URL = '{!! url('/') !!}';
 	var BASE_URL = '{!! URL::to('/') !!}';
 
 </script>
@@ -69,11 +67,6 @@
 			placeholder: "-- Select an option --",
 			allowClear: true
 		});
-
-		$('.skin-square input').iCheck({
-		     // radioClass: 'iradio_square-blue',
-		     radioClass: 'iradio_square-green',
-		 });
 
 		$('#datetimepicker').datetimepicker({
 			format: 'd/m/Y h:i A',

@@ -5,22 +5,17 @@
 @section('content')
 
 <section id="basic-form-layouts">
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <!-- <div class="card-header">
-                    <h4 class="card-title" id="bordered-layout-basic-form">Info</h4>
-                </div> -->
                 <div class="card-content collpase show">
                     <div class="card-body">
-                        <!-- <div class="card-text">
-                            <p>Info</p>
-                        </div> -->
-                        <form method="post" action="{{ route('admin_user_store') }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
+
+                        <form method="post" action="{{ route('admin_user_store') }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="" autocomplete="off">
                         	{{ csrf_field() }}
 
                             <div class="form-body">
-
                                 <h4 class="form-section">
                                     <i class="ft-user-plus"></i> Admin Login Details
                                 </h4>
@@ -48,10 +43,9 @@
                                         <input type="password" id="password_confirmation" class="form-control" placeholder="Confirm Password" name="password_confirmation" required data-parsley-required-message="Please re-enter Password">
                                     </div>
                                 </div>
-
                             </div>
                             <div class="form-actions">
-                                <a href="{{ route('admin_user_list' ) }}" class="btn btn-warning mr-1">
+                                <a href="{{ route('admin_user_list') }}" class="btn btn-warning mr-1">
                                     <i class="la la-close"></i> Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary">

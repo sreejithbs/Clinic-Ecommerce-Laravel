@@ -7,7 +7,7 @@
 	<!-- <meta name="description" content=""> -->
 	<!-- <meta name="keywords" content=""> -->
 	<!-- <meta name="author" content=""> -->
-	
+
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -45,9 +45,7 @@
 			@include('_admin.partials.sidebar')
 
 			<div class="content-body">
-
 				@yield('content')
-
 			</div>
 		</div>
 	</div>
@@ -58,7 +56,6 @@
 	<!-- Scripts -->
 	@include('_admin.partials.scripts')
 	@stack('page_scripts')
-	<!-- @yield('page_scripts') -->
 
 	@include('flash_msgs')
 

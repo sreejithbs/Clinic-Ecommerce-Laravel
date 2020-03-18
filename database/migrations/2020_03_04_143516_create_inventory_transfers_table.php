@@ -18,7 +18,7 @@ class CreateInventoryTransfersTable extends Migration
             $table->uuid('unqId')->index();
             $table->unsignedBigInteger('createdByAdminId')->nullable();
             $table->unsignedBigInteger('productId');
-            $table->unsignedBigInteger('clinicId')->nullable()->comment('clinic, where product to be transferred');
+            $table->unsignedBigInteger('clinicId')->comment('clinic, where product to be transferred');
             $table->string('transferRefNum', 50)->unique();
             $table->string('transferNumber')->nullable();
             $table->integer('quantity');
@@ -35,7 +35,7 @@ class CreateInventoryTransfersTable extends Migration
         Schema::table('inventory_transfers', function (Blueprint $table) {
             $table->foreign('createdByAdminId')->references('id')->on('admins')->onDelete('set null');
             $table->foreign('productId')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('clinicId')->references('id')->on('clinic_admins')->onDelete('set null');
+            $table->foreign('clinicId')->references('id')->on('clinic_admins')->onDelete('cascade');
         });
     }
 

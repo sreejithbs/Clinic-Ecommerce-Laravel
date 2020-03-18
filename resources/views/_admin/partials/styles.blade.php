@@ -42,6 +42,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('modern_admin_assets/vendors/css/extensions/sweetalert.css') }}">
 
 <style type="text/css">
+
 	/* Parsley CSS */
 	input:not([type=radio]).parsley-success,
 	textarea.parsley-success,
@@ -74,14 +75,6 @@
 	.parsley-errors-list.filled {
 		opacity: 1;
 	}
-
-	/*.appendDiv tr:not(.no-data){
-		background-color: #d7e7ff;
-	}
-
-	.no-data{
-		background-color: #ffb1b19e;
-	}*/
 
 	table:not(.txt-left) tr{
 		text-align: center !important;

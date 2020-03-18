@@ -5,7 +5,6 @@
 @section('content')
 
 <section id="basic-form-layouts">
-
     <div class="row">
         <div class="col-md-3 ml-auto">
             <div class="float-md-right">
@@ -20,9 +19,6 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <!-- <div class="card-header"> -->
-                    <!-- <h4 class="card-title" id="bordered-layout-basic-form"></h4> -->
-                <!-- </div> -->
                 <div class="card-content collpase show">
                     <div class="card-body card-dashboard">
                         <table class="table table-striped table-bordered dtTable">

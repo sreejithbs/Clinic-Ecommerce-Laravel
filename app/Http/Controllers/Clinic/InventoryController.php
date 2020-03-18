@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 
 use App\Models\Admin\ClinicInventory;
+use App\Models\Admin\Product;
 
 class InventoryController extends Controller
 {
@@ -31,14 +32,14 @@ class InventoryController extends Controller
         return view('_clinic.inventory_listing', compact('clinic_inventories'));
     }
 
-    /**', '
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -49,7 +50,7 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        //
     }
 
     /**
@@ -95,5 +96,21 @@ class InventoryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // Append New Product Row
+    public function appendProduct(Request $request)
+    {
+        if($request->ajax()){
+            $product = Product::fetchModelByUnqId($request->product);
+            $clinic_inventory = ClinicInventory::where([
+                'productId' => $product->id,
+                'clinicId' => Auth::guard('clinic')->id()
+            ])->first();
+
+            $contents = view('_clinic.components.inventory_product_child', compact('clinic_inventory'))->render();
+
+            return response()->json(['status' => TRUE, 'renderHtml' => $contents]);
+        }
     }
 }

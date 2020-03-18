@@ -8,16 +8,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <!-- <div class="card-header">
-                    <h4 class="card-title" id="bordered-layout-basic-form">Info</h4>
-                </div> -->
                 <div class="card-content collpase show">
                     <div class="card-body">
-                        <!-- <div class="card-text">
-                            <p>Info</p>
-                        </div> -->
-                        <form method="post" action="{{ route('admin_product_update', $product->unqId) }}" enctype="multipart/form-data" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="">
+
+                        <form method="post" action="{{ route('admin_product_update', $product->unqId) }}" enctype="multipart/form-data" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="" autocomplete="off">
                         	{{ csrf_field() }}
+
                             <div class="form-body">
                                 <h4 class="form-section">
                                 	<i class="ft-clipboard"></i> Product Info
@@ -53,7 +49,6 @@
                                     			<small>Only Image files (jpeg, jpg, png, gif) format allowed</small>
                                     		</div>
                                     	</div>
-
                                         <div class="row" id="previewThumbnailDiv">
                                             @foreach($product->product_images as $single)
                                                 <div class="col-md-6" style="margin-top:10px;">
@@ -72,7 +67,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control" for="stock_qty">Initial Stock Quantity</label>
                                     <div class="col-md-9">
-                                        <input type="number" id="stock_qty" class="form-control" value="{{ $product->initialStockQuantity }}" placeholder="Initial Stock Quantity" name="stock_qty" min="0" required data-parsley-required-message="Please enter Initial Stock Quantity" disabled>
+                                        <input type="number" id="stock_qty" class="form-control" value="{{ $product->initialStockQuantity }}" placeholder="Initial Stock Quantity" name="stock_qty" min="0" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -93,10 +88,9 @@
                                         <div id="sel_div"></div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="form-actions">
-                                <a href="{{ route('admin_product_list' ) }}" class="btn btn-warning mr-1">
+                                <a href="{{ route('admin_product_list') }}" class="btn btn-warning mr-1">
                                     <i class="la la-close"></i> Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary">
@@ -119,14 +113,11 @@
 		function previewThumbnail(elm){
 			if (elm.files) {
 			    var filesAmount = elm.files.length;
-
 			    for (i = 0; i < filesAmount; i++) {
 			        var reader = new FileReader();
-
 			        reader.onload = function(event) {
 		            	$('<div class="col-md-6" style="margin-top:10px;"><img src="' + event.target.result + '" height="200px" width="250px"></div>').appendTo("#previewThumbnailDiv");
 			        }
-
 			        reader.readAsDataURL(elm.files[i]);
 			    }
 			}
@@ -136,22 +127,21 @@
         window.Parsley.addValidator("requiredIf", {
             messages: {en: 'Please select atleast one Product Image'},
             validateString : function(value, requirement) {
-              if (! jQuery(requirement).length){
-                 return !!value;
-              }
-
-              return true;
-           },
-           priority: 33
-        })
+                if (! jQuery(requirement).length){
+                    return !!value;
+                }
+                return true;
+            },
+            priority: 33
+        });
 
         $(function(){
             $(".delImg").click(function(){
                 $(this).parent().fadeOut(300, function(){
                     $(this).remove();
                 });
-            })
-        })
+            });
+        });
 
 	</script>
 @endpush
