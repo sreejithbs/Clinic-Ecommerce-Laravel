@@ -8,6 +8,8 @@ use App\Traits\UuidTrait;
 use Carbon\Carbon;
 
 use App\Models\Admin\Product;
+use App\Models\Clinic;
+use App\Models\User;
 
 class UserOrder extends Model
 {
@@ -30,7 +32,7 @@ class UserOrder extends Model
 
     public function getDateTimeAttribute()
     {
-       return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y H:i A');
+       return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y g:i A');
     }
 
 	/**
@@ -42,4 +44,18 @@ class UserOrder extends Model
 	    ->withPivot('quantity', 'subTotal')
 	    ->withTimestamps();
 	}
+
+    /**
+     * The user_order that belong to the clinic.
+     */
+    public function created_clinic(){
+        return $this->belongsTo(Clinic::class, 'saleClinicId');
+    }
+
+    /**
+     * The user_order that belong to the customer.
+     */
+    public function customer(){
+        return $this->belongsTo(User::class, 'userId');
+    }
 }

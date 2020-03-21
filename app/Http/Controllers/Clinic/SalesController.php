@@ -140,9 +140,10 @@ class SalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function view($uuid)
     {
-        //
+        $user_order = UserOrder::fetchModelByUnqId($uuid);
+        return view('_clinic.sales_view', compact('user_order'));
     }
 
     /**

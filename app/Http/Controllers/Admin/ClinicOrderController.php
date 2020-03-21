@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Admin\Product;
-use App\Models\Admin\InventoryLog;
+use App\Models\UserOrder;
 
-class InventoryLogController extends Controller
+class ClinicOrderController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -25,14 +24,13 @@ class InventoryLogController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index($uuid)
+    public function index()
     {
-        $product =  Product::fetchModelByUnqId($uuid);
-        $inventory_logs = $product->inventory_logs()->get();
-        return view('_admin.inventory_logs_listing', compact('product', 'inventory_logs'));
+        $user_orders = UserOrder::where('saleChannel', 'clinic')->latest()->get();
+        return view('_admin.order_clinic_listing', compact('user_orders'));
     }
 
-    /**', '
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -61,26 +59,8 @@ class InventoryLogController extends Controller
      */
     public function view($uuid)
     {
-        $inventory_log = InventoryLog::fetchModelByUnqId($uuid);
-        $statusCode = $inventory_log->eventCode;
-        if($statusCode == 0){ // Initial Stock
-            $product = $inventory_log->relatedEntryModel::find($inventory_log->relatedEntryModelId);
-            $extra_view = array('product');
-        } else if($statusCode == 1){ // Purchase
-            $inventory_purchase = $inventory_log->relatedEntryModel::find($inventory_log->relatedEntryModelId);
-            $extra_view = array('inventory_purchase');
-        } else if($statusCode == 2){ // Transfer
-            $inventory_transfer = $inventory_log->relatedEntryModel::find($inventory_log->relatedEntryModelId);
-            $extra_view = array('inventory_transfer');
-        } else if($statusCode == 4){ // Clinic Sale
-            $product = Product::find($inventory_log->productId);
-            $user_order = $inventory_log->relatedEntryModel::find($inventory_log->relatedEntryModelId);
-            $extra_view = array('user_order', 'product');
-        } else{
-            return;
-        }
-
-        return view('_admin.inventory_log_view', compact('inventory_log', 'statusCode', $extra_view ));
+        $user_order = UserOrder::fetchModelByUnqId($uuid);
+        return view('_admin.order_clinic_view', compact('user_order'));
     }
 
     /**

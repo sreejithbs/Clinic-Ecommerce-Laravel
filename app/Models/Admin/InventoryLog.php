@@ -28,6 +28,6 @@ class InventoryLog extends Model
 
     public function getDateTimeAttribute()
     {
-       return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y H:i A');
+       return Carbon::parse($this->attributes['dateTime'])->format('d/m/Y g:i A');
     }
 }

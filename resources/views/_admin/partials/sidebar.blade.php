@@ -49,6 +49,17 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="nav-item {{ \StringHelper::setActive(['admin_order_*'], 'open') }}">
+                <a href="javascript:void(0);"><i class="la la-list"></i>
+                    <span class="menu-title">Order Management</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="{{ \StringHelper::setActive(['admin_order_clinic_list']) }}">
+                        <a class="menu-item" href="{{ route('admin_order_clinic_list') }}">List all Clinic Orders</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

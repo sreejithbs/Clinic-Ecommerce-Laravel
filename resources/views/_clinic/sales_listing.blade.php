@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-content collpase show">
+                <div class="card-content">
                     <div class="card-body card-dashboard">
                         <table class="table table-striped table-bordered dtTable">
                             <thead>
@@ -29,7 +29,8 @@
                                     <th>Order ID</th>
                                     <th>Products</th>
                                     <th>Customer Type</th>
-                                    <th>Total Price</th>
+                                    <th>Total Amount</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,7 +44,7 @@
                                                 $count = $user_order->products()->count();
                                                 $title = $user_order->products()->first()->title;
                                                 if($count > 1){
-                                                    $title .= "<strong> & " . ($count-1) ." more products</strong>";
+                                                    $title .= "<br/><strong> & " . ($count-1) ." more </strong>";
                                                 }
                                                 echo $title;
                                             @endphp
@@ -56,6 +57,11 @@
                                             @endif
                                         </td>
                                         <td> ${{ $user_order->netTotal }} </td>
+                                        <td>
+                                            <a href="{{ route('clinic_sales_view', $user_order->unqId ) }}" class="btn btn-icon btn-info btn-sm">
+                                                <i class="la la-eye"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

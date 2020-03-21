@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-content collpase show">
+                <div class="card-content">
                     <div class="card-body">
 
                         <form method="post" action="{{ route('clinic_sales_store') }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="" data-parsley-excluded="input[type=hidden], [disabled], :hidden" autocomplete="off">

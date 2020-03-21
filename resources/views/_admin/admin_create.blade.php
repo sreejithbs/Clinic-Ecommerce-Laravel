@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-content collpase show">
+                <div class="card-content">
                     <div class="card-body">
 
                         <form method="post" action="{{ route('admin_user_store') }}" class="form form-horizontal form-bordered" novalidate="" data-parsley-validate="" autocomplete="off">

@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
+        Darryldecode\Cart\CartServiceProvider::class,
 
         /*
          * My Custom Service Providers...
@@ -234,6 +235,7 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
 
         /*
          * My Custom Aliases...
@@ -241,7 +243,6 @@ return [
         'StringHelper' => App\Helpers\StringHelper::class,
         'ArrayHelper' => App\Helpers\ArrayHelper::class,
         'MiscHelper' => App\Helpers\MiscHelper::class,
-
     ],
 
 ];

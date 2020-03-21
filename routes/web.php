@@ -75,6 +75,11 @@ Route::prefix('admin')->group(function () {
 	    Route::delete('/delete/{uuid}', 'Admin\ClinicController@destroy')->name('delete');
 	    Route::post('/toggleClinicStatus', 'Admin\ClinicController@toggleClinicStatus')->name('toggle_status');
 	});
+
+	Route::group(['prefix' => 'clinic/order', 'as' => 'admin_order_clinic_'], function(){
+	    Route::get('/all', 'Admin\ClinicOrderController@index')->name('list');
+	    Route::get('/view/{uuid}', 'Admin\ClinicOrderController@view')->name('view');
+	});
 });
 
 
@@ -93,5 +98,6 @@ Route::prefix('clinic')->group(function () {
 	    Route::get('/all', 'Clinic\SalesController@index')->name('list');
 	    Route::get('/create', 'Clinic\SalesController@create')->name('create');
 	    Route::post('/store', 'Clinic\SalesController@store')->name('store');
+	    Route::get('/view/{uuid}', 'Clinic\SalesController@view')->name('view');
 	});
 });
