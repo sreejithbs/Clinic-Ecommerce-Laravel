@@ -34,4 +34,17 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
+    'stripe' => [
+        'model' => App\User::class,
+        'mode' => env('STRIPE_MODE'),
+        'test_key' => env('STRIPE_TEST_KEY'),
+        'test_secret' => env('STRIPE_TEST_SECRET'),
+        'live_key' => env('STRIPE_LIVE_KEY'),
+        'live_secret' => env('STRIPE_LIVE_SECRET'),
+        // 'webhook' => [
+        //     'secret' => env('STRIPE_WEBHOOK_SECRET'),
+        //     'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
+        // ],
+    ],
+
 ];

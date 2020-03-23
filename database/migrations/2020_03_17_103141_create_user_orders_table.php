@@ -26,6 +26,8 @@ class CreateUserOrdersTable extends Migration
             // $table->string('couponCode')->nullable();
             // $table->decimal('discount', 6, 2)->nullable();
             $table->longText('notes')->nullable();
+            $table->enum('orderStatus', ['processing', 'completed', 'failed'])->default('processing');
+            $table->enum('paymentStatus', ['processing', 'completed', 'failed'])->default('processing');
             $table->enum('saleChannel', ['ecommerce', 'clinic'])->default('ecommerce');
             $table->unsignedBigInteger('saleClinicId')->nullable();
             $table->softDeletes();

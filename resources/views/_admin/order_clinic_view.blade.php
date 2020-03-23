@@ -58,7 +58,7 @@
 			                            <th>Product Name</th>
 			                            <th>Quantity</th>
 			                            <th>Sub-Total</th>
-			                            <th>Order Notes</th>
+			                            <!-- <th>Order Notes</th> -->
 			                        </tr>
 			                    </thead>
 			                    <tbody>
@@ -75,7 +75,7 @@
 				                            <td>
 				                                <div> ${{ $product->pivot->subTotal }} </div>
 				                            </td>
-				                            <td> {{ $user_order->notes }} </td>
+				                            <!-- <td> {{ $user_order->notes }} </td> -->
 				                        </tr>
 				                    @endforeach
 			                    </tbody>

@@ -242,7 +242,6 @@ return [
          */
         'StringHelper' => App\Helpers\StringHelper::class,
         'ArrayHelper' => App\Helpers\ArrayHelper::class,
-        'MiscHelper' => App\Helpers\MiscHelper::class,
     ],
 
 ];

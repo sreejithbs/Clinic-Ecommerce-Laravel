@@ -9,7 +9,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="javascript:void(0);">
                         <img class="brand-logo" alt="modern admin logo" src="{{ asset('modern_admin_assets/images/logo/logo.png')}}">
                         <h3 class="brand-text">Inner Beauty</h3>
                     </a>

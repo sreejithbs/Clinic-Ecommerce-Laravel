@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2020 at 02:33 PM
+-- Generation Time: Mar 23, 2020 at 05:45 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -46,8 +46,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `unqId`, `name`, `email`, `password`, `isSuper`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '831bf3e6', 'Quinoid Super-Admin', 'superadmin@demo.com', '$2y$10$1WwpPQj4brqur/RaNqwks.FgWXRnf5ELhBuH6d16kBuD2HzvAHArm', 1, NULL, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02'),
-(2, 'adc2410a', 'Admin Demo', 'admin@demo.com', '$2y$10$18FxYKckT.me8renO5KNE.Wd2VArA74mdWXevGJnxY6VgeMf1Fgaq', 0, NULL, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02');
+(1, 'b7c7dfbc', 'Quinoid Super-Admin', 'superadmin@demo.com', '$2y$10$VvlMjDr2D6GTOJF0nxLLou8n5sgWrNo5mMoPP/EU4SoTGm8ikvuNO', 1, NULL, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33'),
+(2, '63ac0ab4', 'Admin Demo', 'admin@demo.com', '$2y$10$2dZf7GbJfDu1a8VmRNEnYe8IWanz.EuOcZA96pHKLAP8QX8ao74h.', 0, NULL, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33');
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,7 @@ CREATE TABLE `clinic_admins` (
 --
 
 INSERT INTO `clinic_admins` (`id`, `unqId`, `name`, `email`, `password`, `status`, `hasFirstTimeActivated`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '88e6caa1', 'Clinic Demo', 'clinic@demo.com', '$2y$10$ckcy4tITYxFJfGoGL36YaedDmmIZoT0sGpX2beNHJxKILpigdXCgW', 'active', 1, NULL, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02');
+(1, '72c81c15', 'Clinic Demo', 'clinic@demo.com', '$2y$10$Lp.6gY.Z0RSJ0PMzhJxiJO17V.kfmamAnDbplyy29IpoboXZ5Zzb6', 'active', 1, NULL, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33');
 
 -- --------------------------------------------------------
 
@@ -124,7 +124,7 @@ CREATE TABLE `clinic_profiles` (
 --
 
 INSERT INTO `clinic_profiles` (`id`, `createdByAdminId`, `clinicAdminId`, `clinicRefNum`, `clinicName`, `clinicAddress`, `phoneNumber`, `secondaryEmail`, `bankAcNumber`, `bankAcHolderName`, `bankName`, `bankCode`, `bankAddress`, `commissionPercentage`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'clinic#67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02');
+(1, 1, 1, 'clinic#67b432c3', 'Demo Clinic', 'Test address, Test Street, CA', '9219592195', 'demo_secondary@gmail.com', '12345678', 'Demo Name', 'Demo Bank', 'DEMO000336', 'Demo bank address, Demo Street, CA', '10.00', NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33');
 
 -- --------------------------------------------------------
 
@@ -155,9 +155,9 @@ CREATE TABLE `inventory_logs` (
 --
 
 INSERT INTO `inventory_logs` (`id`, `unqId`, `productId`, `refNum`, `logEvent`, `eventCode`, `dateTime`, `openingQty`, `quantity`, `closingQty`, `relatedEntryModel`, `relatedEntryModelId`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'b184b0a2', 1, '-', 'Initial Inventory Added', 0, '2020-02-01 00:00:00', 0, 110, 110, 'App\\Models\\Admin\\Product', 1, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02'),
-(2, '4f9a8e1f', 2, '-', 'Initial Inventory Added', 0, '2020-02-18 07:00:00', 0, 10000, 10000, 'App\\Models\\Admin\\Product', 2, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02'),
-(3, 'bdc3afcd', 3, '-', 'Initial Inventory Added', 0, '2020-02-18 07:00:00', 0, 10000, 10000, 'App\\Models\\Admin\\Product', 3, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02');
+(1, '8c980fda', 1, '-', 'Initial Inventory Added', 0, '2020-02-01 00:00:00', 0, 110, 110, 'App\\Models\\Admin\\Product', 1, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33'),
+(2, '3ac31f8c', 2, '-', 'Initial Inventory Added', 0, '2020-02-18 07:00:00', 0, 10000, 10000, 'App\\Models\\Admin\\Product', 2, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33'),
+(3, '2814de56', 3, '-', 'Initial Inventory Added', 0, '2020-02-18 07:00:00', 0, 10000, 10000, 'App\\Models\\Admin\\Product', 3, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33');
 
 -- --------------------------------------------------------
 
@@ -224,18 +224,20 @@ CREATE TABLE `migrations` (
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2020_02_10_153636_create_admins_table', 1),
-(4, '2020_02_10_154025_create_clinic_admins_table', 1),
-(5, '2020_02_10_164025_create_clinic_profiles_table', 1),
-(6, '2020_02_18_162807_create_products_table', 1),
-(7, '2020_02_18_163241_create_product_images_table', 1),
-(8, '2020_02_27_135538_create_inventory_purchases_table', 1),
-(9, '2020_03_04_143516_create_inventory_transfers_table', 1),
-(10, '2020_03_04_143815_create_clinic_inventories_table', 1),
-(11, '2020_03_13_055451_create_inventory_logs_table', 1),
-(12, '2020_03_17_103037_create_user_addresses_table', 1),
-(13, '2020_03_17_103141_create_user_orders_table', 1),
-(14, '2020_03_17_103700_create_user_order_products_table', 1);
+(3, '2019_05_03_000001_create_customer_columns', 1),
+(4, '2019_05_03_000002_create_subscriptions_table', 1),
+(5, '2020_02_10_153636_create_admins_table', 1),
+(6, '2020_02_10_154025_create_clinic_admins_table', 1),
+(7, '2020_02_10_164025_create_clinic_profiles_table', 1),
+(8, '2020_02_18_162807_create_products_table', 1),
+(9, '2020_02_18_163241_create_product_images_table', 1),
+(10, '2020_02_27_135538_create_inventory_purchases_table', 1),
+(11, '2020_03_04_143516_create_inventory_transfers_table', 1),
+(12, '2020_03_04_143815_create_clinic_inventories_table', 1),
+(13, '2020_03_13_055451_create_inventory_logs_table', 1),
+(14, '2020_03_17_103037_create_user_addresses_table', 1),
+(15, '2020_03_17_103141_create_user_orders_table', 1),
+(16, '2020_03_17_103700_create_user_order_products_table', 1);
 
 -- --------------------------------------------------------
 
@@ -278,9 +280,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `unqId`, `createdByAdminId`, `title`, `slug`, `description`, `remarks`, `dateTime`, `initialStockQuantity`, `stockQuantity`, `stockStatus`, `sellingPrice`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'eaf578f2', 1, 'Demo Face Gel', 'demo-face-gel', 'This is a test description for Face Gel. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.', 'This is a test remark', '2020-02-01 00:00:00', 110, 110, 'in_stock', '499.00', NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02'),
-(2, '2b0b93a7', 1, 'Womens Collagen', 'womens-collagen', 'Womens Collagen by Fourseas', NULL, '2020-02-18 07:00:00', 10000, 10000, 'in_stock', '200.00', NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02'),
-(3, 'ec466da9', 1, 'Mens Collagen', 'mens-collagen', 'Mens Collagen by Fourseas', NULL, '2020-02-18 07:00:00', 10000, 10000, 'in_stock', '100.00', NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02');
+(1, '85b8ff76', 1, 'Demo Face Gel', 'demo-face-gel', 'This is a test description for Face Gel. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.', 'This is a test remark', '2020-02-01 00:00:00', 110, 110, 'in_stock', '499.00', NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33'),
+(2, '0555335d', 1, 'Womens Collagen', 'womens-collagen', 'Womens Collagen by Fourseas', NULL, '2020-02-18 07:00:00', 10000, 10000, 'in_stock', '200.00', NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33'),
+(3, 'd5df64ce', 1, 'Mens Collagen', 'mens-collagen', 'Mens Collagen by Fourseas', NULL, '2020-02-18 07:00:00', 10000, 10000, 'in_stock', '100.00', NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33');
 
 -- --------------------------------------------------------
 
@@ -303,10 +305,30 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `productId`, `originalImagePath`, `thumbImagePath`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, '/uploads/products/1584200000-ageless.png', NULL, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02'),
-(2, 1, '/uploads/products/1584200000-anti-wrinkle-cream.jpg', NULL, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02'),
-(3, 2, '/uploads/products/1584200000-womens-collagen.jpg', NULL, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02'),
-(4, 3, '/uploads/products/1584200000-mens-collagen.jpg', NULL, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02');
+(1, 1, '/uploads/products/1584200000-ageless.png', NULL, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33'),
+(2, 1, '/uploads/products/1584200000-anti-wrinkle-cream.jpg', NULL, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33'),
+(3, 2, '/uploads/products/1584200000-womens-collagen.jpg', NULL, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33'),
+(4, 3, '/uploads/products/1584200000-mens-collagen.jpg', NULL, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subscriptions`
+--
+
+CREATE TABLE `subscriptions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stripe_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stripe_status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stripe_plan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `trial_ends_at` timestamp NULL DEFAULT NULL,
+  `ends_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -324,15 +346,19 @@ CREATE TABLE `users` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `stripe_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `card_brand` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `card_last_four` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trial_ends_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `unqId`, `name`, `email`, `email_verified_at`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'a103aa71', 'User Demo', 'user@demo.com', NULL, '$2y$10$/lVSHHXIxzSaunN1dRCAleTpROpeRB6c9yIoLwcE25yBxXqE9qUkq', NULL, NULL, '2020-03-20 08:03:02', '2020-03-20 08:03:02');
+INSERT INTO `users` (`id`, `unqId`, `name`, `email`, `email_verified_at`, `password`, `deleted_at`, `remember_token`, `created_at`, `updated_at`, `stripe_id`, `card_brand`, `card_last_four`, `trial_ends_at`) VALUES
+(1, '6850b97d', 'User Demo', 'user@demo.com', NULL, '$2y$10$bbMuVZgNG2DiCYwfNMKTa.mehfp8pVYyPSPE5oVMR0KKV1pO2bWLq', NULL, NULL, '2020-03-22 23:15:33', '2020-03-22 23:15:33', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -342,11 +368,10 @@ INSERT INTO `users` (`id`, `unqId`, `name`, `email`, `email_verified_at`, `passw
 
 CREATE TABLE `user_addresses` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `customerId` bigint(20) UNSIGNED NOT NULL,
+  `userId` bigint(20) UNSIGNED NOT NULL,
   `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phoneNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address1` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `address2` text COLLATE utf8mb4_unicode_ci,
   `city` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -375,6 +400,8 @@ CREATE TABLE `user_orders` (
   `netTotal` decimal(10,2) NOT NULL,
   `customerAddressId` bigint(20) UNSIGNED DEFAULT NULL,
   `notes` longtext COLLATE utf8mb4_unicode_ci,
+  `orderStatus` enum('processing','completed','failed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'processing',
+  `paymentStatus` enum('processing','completed','failed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'processing',
   `saleChannel` enum('ecommerce','clinic') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ecommerce',
   `saleClinicId` bigint(20) UNSIGNED DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -495,19 +522,27 @@ ALTER TABLE `product_images`
   ADD KEY `product_images_productid_foreign` (`productId`);
 
 --
+-- Indexes for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subscriptions_user_id_stripe_status_index` (`user_id`,`stripe_status`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD KEY `users_unqid_index` (`unqId`);
+  ADD KEY `users_unqid_index` (`unqId`),
+  ADD KEY `users_stripe_id_index` (`stripe_id`);
 
 --
 -- Indexes for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_addresses_customerid_foreign` (`customerId`);
+  ADD KEY `user_addresses_userid_foreign` (`userId`);
 
 --
 -- Indexes for table `user_orders`
@@ -578,7 +613,7 @@ ALTER TABLE `inventory_transfers`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -591,6 +626,12 @@ ALTER TABLE `products`
 --
 ALTER TABLE `product_images`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -671,7 +712,7 @@ ALTER TABLE `product_images`
 -- Constraints for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  ADD CONSTRAINT `user_addresses_customerid_foreign` FOREIGN KEY (`customerId`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `user_addresses_userid_foreign` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user_orders`

@@ -74,20 +74,12 @@ class SalesController extends Controller
             $order_reference_num = "order#" . ($lastEntryId ? $lastEntryId->id + 101 : 101);
             $date_time = Carbon::now();
 
-            $sync_data = [];
-            $mainTotal = 0;
-            foreach ($request->quantity as $prd => $qty) {  //Looping products
-                $product = Product::fetchModelByUnqId($prd);
-                $subTotal = (float)$product->sellingPrice * (int)$qty;
-                $mainTotal += $subTotal;
-                $sync_data[$product->id] = ['quantity' => $qty, 'subTotal' => $subTotal];
-            }
-
             $user_order = new UserOrder();
             $user_order->orderRefNum = $order_reference_num;
             $user_order->dateTime = $date_time;
-            $user_order->grossTotal = $user_order->netTotal = $mainTotal;
+            $user_order->grossTotal = $user_order->netTotal = 0; //temporary value setting
             $user_order->notes = $request->notes;
+            $user_order->orderStatus = $user_order->paymentStatus = 'completed';
             $user_order->saleChannel = 'clinic';
             $user_order->saleClinicId = Auth::guard('clinic')->id();
             if($request->customer_type == 'registered'){
@@ -96,29 +88,38 @@ class SalesController extends Controller
                 $user_order->userId = $user->id;
             }
             $user_order->save();
-            $user_order->products()->sync($sync_data);
 
-            foreach ($request->quantity as $prd => $qty) {  //Looping products
+            $mainTotal = 0;
+            foreach ($request->quantity as $prd => $deductQty) {  //Looping products
                 $product = Product::fetchModelByUnqId($prd);
                 $clinic_inventory = ClinicInventory::where([
                     'productId' => $product->id,
                     'clinicId' => Auth::guard('clinic')->id()
                 ])->first();
-                $opening_qty = $clinic_inventory->stockQuantity;
-                $clinic_inventory->decrement('stockQuantity', $qty); // Decrement Clinic Inventory Stock Qty
+                $openingQty = $clinic_inventory->stockQuantity;
+                $clinic_inventory->decrement('stockQuantity', $deductQty); // Decrement Clinic Inventory Stock Qty
+
+                $subTotal = (float)$product->sellingPrice * (int)$deductQty;
+                $mainTotal += $subTotal;
+
+                $user_order->products()->attach($product->id, ['quantity' => $deductQty, 'subTotal' => $subTotal]);
 
                 $inventory_log = new InventoryLog();
                 $inventory_log->refNum = $order_reference_num;
                 $inventory_log->logEvent = static::LOG_CLINIC_SALE;
                 $inventory_log->eventCode = static::STATUS_CLINIC_SALE;
                 $inventory_log->dateTime = $date_time;
-                $inventory_log->openingQty = $opening_qty;
-                $inventory_log->quantity = $qty;
+                $inventory_log->openingQty = $openingQty;
+                $inventory_log->quantity = $deductQty;
                 $inventory_log->closingQty = $clinic_inventory->stockQuantity;
                 $inventory_log->relatedEntryModel = 'App\Models\UserOrder';
                 $inventory_log->relatedEntryModelId = $user_order->id;
                 $product->inventory_logs()->save($inventory_log);
             }
+
+            // Update Total Amount
+            $user_order->grossTotal = $user_order->netTotal = $mainTotal;
+            $user_order->save();
 
             // ### TODO
             // Mail Notification Event

@@ -52,6 +52,16 @@ class LoginController extends Controller
     }
 
     /**
+     * USER : Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showUserLoginForm()
+    {
+        return view('auth.user_login');
+    }
+
+    /**
      * COMMON : Handle a login request to the application.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -76,9 +86,27 @@ class LoginController extends Controller
             return redirect()->intended('/clinic/dashboard');
         }
 
-        // } elseif (Auth::attempt($request->only('email', 'password'), $request->get('remember'))) {
-        //     return redirect()->intended('/user/dashboard');
-        // }
+        return redirect()->back()
+            ->withInput($request->only('email', 'remember'))
+            ->withErrors(['error' => 'These credentials do not match our records.']);
+    }
+
+    /**
+     * USER : Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     */
+    public function handleUserLogin(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if (Auth::attempt($request->only('email', 'password'), $request->get('remember'))) {
+            return redirect()->intended('/user/dashboard');
+        }
 
         return redirect()->back()
             ->withInput($request->only('email', 'remember'))

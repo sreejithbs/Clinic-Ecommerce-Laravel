@@ -15,11 +15,10 @@ class CreateUserAddressesTable extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('customerId');
+            $table->unsignedBigInteger('userId');
             $table->string('firstName');
             $table->string('lastName');
-            $table->string('email');
-            $table->string('phone');
+            $table->string('phoneNumber');
             $table->text('address1');
             $table->text('address2')->nullable();
             $table->string('city');
@@ -34,7 +33,7 @@ class CreateUserAddressesTable extends Migration
          * Foreign Key Constraint
          */
         Schema::table('user_addresses', function (Blueprint $table) {
-            $table->foreign('customerId')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

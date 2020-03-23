@@ -11,21 +11,33 @@
 |
 */
 
-// Route::get('/clear', function(){
-// 	Artisan::call('view:clear');
-// 	Artisan::call('cache:clear');
-// 	Artisan::call('config:cache');
-// });
+Route::get('/clear', function(){
+	Artisan::call('view:clear');
+	Artisan::call('config:clear');
+	Artisan::call('cache:clear');
+	Artisan::call('config:cache');
+});
 
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
+// Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('common_login_form');
 Route::post('/login', 'Auth\LoginController@handleLogin')->name('common_login_handle');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('/', 'Site\CartController@index')->name('home');
+Route::get('/cart', 'Site\CartController@viewCart')->name('view_cart');
+Route::get('/cart/add/{uuid}', 'Site\CartController@addToCart')->name('add_to_cart');
+Route::get('/cart/remove/{uuid}', 'Site\CartController@removeFromCart')->name('remove_from_cart');
+Route::get('/cart/clear', 'Site\CartController@clearCart')->name('clear_cart');
+
+Route::get('/checkout', 'Site\CheckoutController@createCheckout')->name('checkout_create');
+Route::post('/checkout/store', 'Site\CheckoutController@storeCheckout')->name('checkout_store');
 
 
 // ************************* Start of USER ROUTES ******************************
 Route::prefix('user')->group(function () {
 	Route::group(['as' => 'user_'], function(){
+		Route::get('/login', 'Auth\LoginController@showUserLoginForm')->name('login_form');
+		Route::post('/login', 'Auth\LoginController@handleUserLogin')->name('login_handle');
 		Route::get('/dashboard', 'User\DashboardController@index')->name('dashboard');
 	});
 });

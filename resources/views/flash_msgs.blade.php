@@ -2,10 +2,6 @@
     @if(Session::has($notification))
         <script type="text/javascript">
             jQuery(document).ready(function() {
-                // toastr.options.positionClass = 'toast-bottom-right';
-                // toastr.success("{{ Session::get($notification) }}", {timeOut: 5000});
-
-                // swal("Good job!", "You clicked the button!", "success");
                 swal({
                     // position: 'top-end',
                     type: '{{ $notification }}',
@@ -17,21 +13,6 @@
         </script>
     @endif
 @endforeach
-
-<!-- @if(Session::has('errorMsg'))
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-         // toastr.error("{{ Session::get('errorMsg') }}", {timeOut: 5000});
-        swal({
-           // position: 'top-end',
-           type: 'error',
-           title: '{{ Session::get("errorMsg") }}',
-           showConfirmButton: true,
-           timer: 3000
-        })
-     });
-</script>
-@endif -->
 
 @if (count($errors) > 0)
     @foreach ($errors->all() as $error)
